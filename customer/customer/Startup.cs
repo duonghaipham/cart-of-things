@@ -50,13 +50,42 @@ namespace customer
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}");
                 endpoints.MapControllerRoute(
                     name: "product",
                     pattern: "{controller=Product}");
                 endpoints.MapControllerRoute(
                     name: "product",
-                    pattern: "{controller=Product}/{action=View}/{id?}");
+                    pattern: "{controller=Product}/{action=View}/{ProductId?}");
+
+                #region Auth
+
+                endpoints.MapControllerRoute(
+                    name: "auth",
+                    pattern: "{controller=Auth}/{action=SignIn}");
+                endpoints.MapControllerRoute(
+                    name: "auth",
+                    pattern: "{controller=Auth}/{action=SignUp}");
+                endpoints.MapControllerRoute(
+                    name: "auth",
+                    pattern: "{controller=Auth}/{action=ForgetPassword}");
+                endpoints.MapControllerRoute(
+                    name: "auth",
+                    pattern: "{controller=Auth}/{action=SignOut}");
+                endpoints.MapControllerRoute(
+                    name: "auth",
+                    pattern: "{controller=Auth}/{action=ViewInformation}/{UserId?}");
+                endpoints.MapControllerRoute(
+                    name: "auth",
+                    pattern: "{controller=Auth}/{action=Update}/{UserId?}");
+                endpoints.MapControllerRoute(
+                    name: "auth",
+                    pattern: "{controller=Auth}/{action=ChangePassword}/{UserId?}");
+                endpoints.MapControllerRoute(
+                    name: "auth",
+                    pattern: "{controller=Auth}/{action=CheckPassword}/{UserId?}");
+                
+                #endregion
             });
         }
     }
