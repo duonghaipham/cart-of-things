@@ -1,0 +1,105 @@
+﻿@{
+}
+<section id="product">
+    <div class="product__header">
+        <h1 class="title__thin">Product detail</h1>
+        <div>
+            <a href="/"> <span>Home</span> </a>
+            <span>|</span>
+            <a href="/shop"><span>Shop</span> </a><span>|</span>
+            <span>@ViewData["Id"]</span>
+        </div>
+    </div>
+    <div class="product__detail">
+        <div class="product__detail__img">
+            <img src="<%= cake.figure %>" alt="" />
+        </div>
+        <div class="product__detail__info">
+            <span id="product__id" style="display: none"><%= cake._id%></span>
+            <div class="product__detail__info__header">
+                <span><%= cake.category.name %></span>
+                <h3><%= cake.name %></h3>
+                <h4>
+                    $ <span id="product__detail__info__price"><%= cake.price %></span>
+                </h4>
+            </div>
+            <div class="product__detail__info__describe">
+                <p><%= cake.introduction %></p>
+                <div class="product__detail__info__label">
+                    <ul>
+                        <li>SKU: <span><%= cake.sku %></span></li>
+                        <li>Category: <span><%= cake.category.name %></span></li>
+                        <li>Tags: <span><%= cake.tags.join(', ') %></span></li>
+                    </ul>
+                </div>
+                <div class="product__detail__option">
+                    <button id="product__cart__btn" class="cart" style="border: none">
+                        Add to cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="product__detail__tab">
+        <span>Description</span>
+        <div class="tab-content">
+            <p><%= cake.description %></p>
+        </div>
+    </div>
+</section>
+<section class="relatedProduct" style="padding: 10px 50px; text-align: center">
+    <h3 class="section__title">Related Products</h3>
+    <div class="products" style="padding: 0">
+        <% relatedProducts.forEach(cake => { %>
+        <div class="product">
+            <span id="product__id" style="display: none"><%= cake._id%></span>
+            <a href="/cakes/<%= cake._id %>">
+                <div class="product__img">
+                    <img src="<%= cake.figure %>"
+                         alt="product"
+                         style="width: 250px; height: 250px" />
+                    <span class="product__category"><%= cake.category.name %></span>
+                </div>
+                <div class="product__info">
+                    <h5 id="product__name"><%= cake.name %></h5>
+                    <h5 style="
+              font-size: large;
+              font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman',
+                serif;
+            ">
+                        $ <span id="product__price"><%= cake.price %></span>
+                    </h5>
+                </div>
+            </a>
+            <div class="product__cart">
+                <button class="product__cart__btn">ADD TO CART</button>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+</section>
+<section class="review">
+    <h3 class="section__title">Product reviews</h3>
+    <div class="review__comments">
+        <div id="comments"></div>
+        <% if (user) { %>
+        <form id="form-comment">
+            <div class="sendComment">
+                <input id="comment-input"
+                       class="comment__input"
+                       type="text"
+                       placeholder="Your comment"
+                       name="content"
+                       required />
+                <button type="button"
+                        class="send__btn"
+                        onclick="handleComment('<%= cake._id %>')"
+                        id="btn-comment">
+                    <img src="/img/send.png" alt="send-icon" />
+                </button>
+            </div>
+        </form>
+        <% } %>
+        <div id="pagination-bar" class="pagination-bar"></div>
+    </div>
+</section>

@@ -1,48 +1,109 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/global.css" />
+    <link rel="stylesheet" href="~/css/home.css" />
+    <link rel="stylesheet" href="~/css/about.css" />
+    <link rel="stylesheet" href="~/css/checkout.css" />
+    <link rel="stylesheet" href="~/css/contact.css" />
+    <link rel="stylesheet" href="~/css/product.css" />
+    <link rel="stylesheet" href="~/css/shop.css" />
+    <link rel="stylesheet" href="~/css/shoppingCart.css" />
+    <link rel="stylesheet" href="~/css/signIn.css" />
+    <link rel="stylesheet" href="~/css/signUp.css" />
+
     <title>@ViewData["Title"] - customer</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">customer</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+        <div class="header__top">
+            <div class="header__top__left">
+                <% if (user) { %>
+                <img src="<%= user.avatar %>" alt="avatar" class="rounded-circle" style="height:40px; width:40px; object-fit: contain;">
+                <a href="/users/<%= user._id %>" class="mx-3"><%= user.name %></a>
+                <a href="/signOut" class=" rounded border border-warning p-2">Sign out</a>
+                <% } else { %>
+                <a href="/signIn" class=" rounded border border-warning p-2">Sign in</a>
+                <% } %>s
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+            <div class="header__top__mid">
+                <img src="/img/logo.png" alt="logo" />
+            </div>
+            <div class="header__top__right">
+                <div class="header__search">
+                    <input type="text" />
+                    <img src="/img/search.png" alt="search icon" />
+                </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - customer - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                <span>|</span>
+                <img src="/img/heart.png" alt="heart icon" />
+                <a href="/shoppingCart" class="header__cart__icon">
+                    <img src="/img/cart.png" alt="cart icon" />
+                    <span class="header__cart__amount">0</span>
+                </a>
+                <p>Cart: $0.00</p>
+            </div>
+        </div>
+        <div class="header__bottom">
+            <a href="/" <% if (which == 'home') { %> class="active" <% } %>>Home</a>
+            <a href="/shop" <% if (which == 'shop') { %> class="active" <% } %>>Shop</a>
+            <a href="/about" <% if (which == 'about') { %> class="active" <% } %>>About</a>
+            <a href="/contact" <% if (which == 'contact') { %> class="active" <% } %>>Contact</a>
+        </div>
+    </header>
+
+    @RenderBody()
+
+    <footer style="background-image: url(/img/footer-bg.jpg)">
+        <div class="footer__top">
+            <div class="footer__top__left">
+                <h4>Working hours</h4>
+                <span>Monday - Friday: 08:00 am - 08:30 pm</span>
+                <span>Saturday: 10:00 am - 16:30 pm</span>
+                <span>Sunday: 10:00 am - 16:30 pm</span>
+            </div>
+            <div class="footer__top__mid">
+                <img src="/img/footer-logo.png" alt="footer-logo" />
+                <p>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi
+                    quasi excepturi obcaecati nobis deserunt. In maxime veritatis vero
+                </p>
+            </div>
+            <div class="footer__top__right">
+                <h4>Subscribe</h4>
+                <p>Get latest updates and offers</p>
+                <input type="text" placeholder="Email" />
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <div class="footer__bottom__left">
+                <span>
+                    Copyright ©2021 All rights reserved | This template is made with by
+                    Colorlib
+                </span>
+            </div>
+            <div class="footer__bottom__right">
+                <span>Privacy Policy</span>
+                <span>Terms & Conditions</span>
+                <span>Site Map</span>
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/cart.js" asp-append-version="true"></script>
+    <script src="~/js/changePassword.js" asp-append-version="true"></script>
+    <script src="~/js/checkout.js" asp-append-version="true"></script>
+    <script src="~/js/comment.js" asp-append-version="true"></script>
+    <script src="~/js/queryParam.js" asp-append-version="true"></script>
+    <script src="~/js/signIn.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

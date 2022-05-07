@@ -1,0 +1,116 @@
+﻿@{
+}
+<section class="shop">
+    <div class="shop__header">
+        <h1 class="title__thin">Shop</h1>
+        <div>
+            <a href="/">Home</a>
+            <span>|</span>
+            <span>Shop</span>
+        </div>
+    </div>
+    <form id="form-query" class="shop__features">
+        <div class="shop__features__left">
+            <div class="shop__features__categories">
+                <select id="select-category"
+                        class="form-select query-control"
+                        aria-label="Default select example"
+                        name="category">
+                    <option>Category</option>
+                    @*<% categories.forEach(categoryItem => { %>
+                              <option value="<%= categoryItem.name %>"
+                          <% if (category == categoryItem.name) { %> selected <% } %>
+                        ><%= categoryItem.name %></option>
+                              <% }); %>*@
+                </select>
+            </div>
+            <div class="shop__features__search">
+                <input id="input-search"
+                       class="query-control"
+                       type="text"
+                       placeholder="Search"
+                       name="search"
+                <% if (search !== undefined) { %><%= `value=${search} ` %><% } %>/>
+                <button id="btn-submit" type="submit" class="search__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="shop__features__right">
+            <div class="shop__features__sort">
+                <select id="select-sort"
+                        class="form-select query-control"
+                        aria-label="Default select example"
+                        name="sort">
+                    <option>Default sorting</option>
+                    @*<option value="name" <% if (sort === 'name') { %>selected<% } %>>Name</option>
+                        <option value="price" <% if (sort === 'price') { %>selected<% } %>>Price</option>*@
+                </select>
+            </div>
+        </div>
+    </form>
+    <div class="shop__products">
+        <% cakes.forEach(cake => { %>
+        <div class="product">
+            <span id="product__id" style="display: none;"><%= cake._id%></span>
+            <a href="/cakes/<%= cake._id %>">
+                <div class="product__img">
+                    <img src="<%= cake.figure %>" alt="product" style="width: 250px; height: 250px;" />
+                    <span class="product__category"><%= cake.category.name %></span>
+                </div>
+                <div class="product__info">
+                    <h5 id="product__name"><%= cake.name %></h5>
+                    <h5 style="font-size:large; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; ">$ <span id="product__price"><%= cake.price %></span></h5>
+
+                </div>
+            </a>
+            <div class="product__cart">
+                <button class="product__cart__btn">ADD TO CART</button>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+
+    <div class="row">
+        <div class="col text-center">
+            <div class="pagination-bar">
+                <% if (pagination.order > 1) { %>
+                <a href="<%= url %>page=<%= pagination.unit %>" class="previous-button">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="10"
+                         height="25.5"
+                         viewBox="0 0 24 24">
+                        <path d="M3 12l18-12v24z"></path>
+                    </svg>
+                </a>
+                <% } %>
+                <% for (let i = 0; i < pagination.end; i++) { %>
+                <a href="<%= url %>page=<%= i + pagination.unit + 1 %>"
+            <% if (i + pagination.unit + 1 == pagination.curr) { %>
+            class="active"
+            <% } %>
+            ><%= i + pagination.unit + 1 %>
+          </a>
+                <% } %>
+                <% if (pagination.num > pagination.max) { %>
+                <a href="<%= url %>page=<%= 1 + pagination.max %>" class="next-button">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="10"
+                         height="25.5"
+                         viewBox="0 0 24 24">
+                        <path d="M21 12l-18 12v-24z"></path>
+                    </svg>
+                </a>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</section>
