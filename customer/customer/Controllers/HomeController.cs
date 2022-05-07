@@ -18,12 +18,36 @@ namespace customer.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        [Route("About")]
+        public IActionResult ViewAbout()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Route("Contact")]
+        public IActionResult ViewContact()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Route("CheckOut")]
+        public IActionResult CheckOut()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Route("Cart")]
+        public IActionResult ViewCart()
         {
             return View();
         }

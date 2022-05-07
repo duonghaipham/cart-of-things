@@ -48,15 +48,25 @@ namespace customer
 
             app.UseEndpoints(endpoints =>
             {
+                #region Home
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}");
                 endpoints.MapControllerRoute(
-                    name: "product",
-                    pattern: "{controller=Product}");
+                    name: "default",
+                    pattern: "{controller=Home}/{action=ViewAbout}");
                 endpoints.MapControllerRoute(
-                    name: "product",
-                    pattern: "{controller=Product}/{action=View}/{ProductId?}");
+                    name: "default",
+                    pattern: "{controller=Home}/{action=ViewContact}");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=CheckOut}");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=ViewCart}");
+
+                #endregion
 
                 #region Auth
 
@@ -84,7 +94,33 @@ namespace customer
                 endpoints.MapControllerRoute(
                     name: "auth",
                     pattern: "{controller=Auth}/{action=CheckPassword}/{UserId?}");
-                
+
+                #endregion
+
+                #region Cart
+
+                #endregion
+
+                #region Comment
+
+                endpoints.MapControllerRoute(
+                    name: "comment",
+                    pattern: "{controller=Comment}/{action=RetrieveComment}");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Comment}/{action=CreateComment}");
+
+                #endregion
+
+                #region Product
+
+                endpoints.MapControllerRoute(
+                    name: "product",
+                    pattern: "{controller=Product}");
+                endpoints.MapControllerRoute(
+                    name: "product",
+                    pattern: "{controller=Product}/{action=View}/{ProductId?}");
+
                 #endregion
             });
         }
