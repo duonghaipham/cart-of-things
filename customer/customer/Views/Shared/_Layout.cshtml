@@ -50,10 +50,10 @@
             </div>
         </div>
         <div class="header__bottom">
-            <a href="/" <% if (which == 'home') { %> class="active" <% } %>>Home</a>
-            <a href="/shop" <% if (which == 'shop') { %> class="active" <% } %>>Shop</a>
-            <a href="/about" <% if (which == 'about') { %> class="active" <% } %>>About</a>
-            <a href="/contact" <% if (which == 'contact') { %> class="active" <% } %>>Contact</a>
+            <a href="/Home" @if (ViewData["Tab"].ToString() == "home") { @("class=active") }>Home</a>
+            <a href="/Shop" @if (ViewData["Tab"].ToString() == "shop") { @("class=active") }>Shop</a>
+            <a href="/About" @if (ViewData["Tab"].ToString() == "about") { @("class=active") }>About</a>
+            <a href="/Contact" @if (ViewData["Tab"].ToString() == "contact") { @("class=active") }>Contact</a>
         </div>
     </header>
 
@@ -97,13 +97,11 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="~/js/avatar.js" asp-append-version="true"></script>
     <script src="~/js/cart.js" asp-append-version="true"></script>
-    <script src="~/js/changePassword.js" asp-append-version="true"></script>
-    <script src="~/js/checkout.js" asp-append-version="true"></script>
-    <script src="~/js/comment.js" asp-append-version="true"></script>
-    <script src="~/js/queryParam.js" asp-append-version="true"></script>
-    <script src="~/js/signIn.js" asp-append-version="true"></script>
+
     @RenderSection("Scripts", required: false)
+
 </body>
 </html>
