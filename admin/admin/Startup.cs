@@ -48,9 +48,28 @@ namespace admin
 
             app.UseEndpoints(endpoints =>
             {
+                #region User
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    name: "user",
+                    pattern: "{controller=User}/{action=Retrieve}");
+                endpoints.MapControllerRoute(
+                    name: "user",
+                    pattern: "{controller=User}/{action=Create}");
+                endpoints.MapControllerRoute(
+                    name: "user",
+                    pattern: "{controller=User}/{action=Update}/{Id?}");
+                endpoints.MapControllerRoute(
+                    name: "user",
+                    pattern: "{controller=User}/{action=Lock}/{Id?}");
+                #endregion
+
+                #region Place
+                endpoints.MapControllerRoute(
+                    name: "place",
+                    pattern: "{controller=Place}/{action=Retrieve}");
+                #endregion
+
+
             });
         }
     }
