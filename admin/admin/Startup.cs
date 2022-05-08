@@ -67,6 +67,9 @@ namespace admin
                 endpoints.MapControllerRoute(
                     name: "place",
                     pattern: "{controller=Place}/{action=Retrieve}");
+                endpoints.MapControllerRoute(
+                    name: "place",
+                    pattern: "{controller=Place}/{action=Update}/{Id?}");
                 #endregion
 
 
