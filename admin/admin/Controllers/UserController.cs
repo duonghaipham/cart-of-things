@@ -11,16 +11,16 @@ namespace admin.Controllers
     {
         [HttpGet]
         [Route("Users")]
-        //public IActionResult Retrieve()
-        //{
-        //    return View();
-        //}
-        public IEnumerable<Place> Retrieve()
+        public IActionResult Retrieve()
         {
-            ShopContext context = new ShopContext();
-
-            return context.Places.ToList();
+            return View();
         }
+        //public IEnumerable<Place> Retrieve()
+        //{
+        //    ShopContext context = new ShopContext();
+
+        //    return context.Places.ToList();
+        //}
 
         [HttpGet]
         [Route("Users/create")]

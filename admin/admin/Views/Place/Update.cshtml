@@ -12,10 +12,8 @@
     <link rel="stylesheet" href="~/css/product_admin.css" />
     <link rel="stylesheet" href="~/css/userList_admin.css" />
     <link rel="stylesheet" href="~/css/user_admin.css" />
-    <link rel="stylesheet" type="text/css" href="~css/signUp_admin.css" />
-    <link rel="stylesheet" type="text/css" href="~css/signIn_admin.css" />
-    <link rel="stylesheet" type="text/css" href="~css/profile_admin.css" />
-    <link rel="stylesheet" type="text/css" href="~css/statistics.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/profile_admin.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/statistics.css" />
     <!-- Jquery ui CSS -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
     <!-- Bootstrap CSS CDN -->
@@ -46,11 +44,11 @@
                            class="form-control"
                            id="txtPlaceID"
                            name="txtPlaceID"
-                           value="{{this.place.Id}}"
+                           value="abc"
                            readonly />
                 </div>
                 <div class="form-group">
-                    <label for="txtNamePlace">Tên địa điểm</label>
+                    <label for="txtNamePlace">Place name</label>
                     <input type="text"
                            class="form-control"
                            id="txtNamePlace"
@@ -61,14 +59,22 @@
                            {{/unless}} />
                 </div>
                 <div class="form-group {{#if error}}ui-state-error{{/if}}">
-                    <label for="txtSize">Sức chứa</label>
+                    <label for="txtSize">Number staff</label>
                     <input type="number"
                            class="form-control"
-                           id="txtSize"
-                           name="txtSize"
+                           id="txtNumberStaff"
+                           name="txtNumberStaff"
                            value="{{this.place.Size}}" />
                 </div>
 
+                <div class="form-group {{#if error}}ui-state-error{{/if}}">
+                    <label for="txtSize">Address</label>
+                    <input type="number"
+                           class="form-control"
+                           id="txtAddress"
+                           name="txtAddress"
+                           value="123" />
+                </div>
                 <div class="form-group {{#if error}}ui-state-error{{/if}}">
                     <label for="txtAmount">Số lượng tiếp nhận hiện tại</label>
                     {{#if error}}
@@ -80,15 +86,6 @@
                            name="txtAmount"
                            value="{{this.place.Amount}}"
                            {{#if error}} autofocus{{/if}} />
-                </div>
-                <div class="form-group">
-                    <label for="txtRole">Khu (0: Cách ly, 1: Điều trị)</label>
-                    <input type="number"
-                           class="form-control"
-                           id="txtRole"
-                           name="txtRole"
-                           value="{{this.place.Role}}"
-                           readonly />
                 </div>
                 <a class="btn btn-success"
                    href="/admin/places?page={{page}}"

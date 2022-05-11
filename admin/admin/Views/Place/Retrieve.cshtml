@@ -15,9 +15,9 @@
         $(document).ready(function () {
             var dialog, form,
                 placeName = $("#placeName"),
-                capacity = $("#capacity"),
-                number = $("#number"),
-                allFields = $([]).add(placeName).add(capacity).add(number),
+                number_staff = $("#number_staff"),
+                address = $("#address"),
+                allFields = $([]).add(placeName).add(number_staff).add(address),
                 tips = $(".validateTips");
 
             function updateTips(t) {
@@ -52,11 +52,11 @@
                 var valid = true;
                 allFields.removeClass("ui-state-error");
 
-                valid = valid && checkRegexp(placeName, /^\S*[AĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴA-Z]+\S*/i, "Tên địa điểm có thể bao gồm a-z, 0-9, dấu cách và phải bắt đầu bằng một chữ cái.");
+                //valid = valid && checkRegexp(placeName, /^\S*[AĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴA-Z]+\S*/i, "Tên địa điểm có thể bao gồm a-z, 0-9, dấu cách và phải bắt đầu bằng một chữ cái.");
 
-                valid = valid && checkRegexp(capacity, /\d/, "Điền thông tin sức chứa.");
-                valid = valid && checkRegexp(number, /\d/, "Điền thông tin số lượng hiện tại.");
-                valid = valid && checkNumber(capacity, number, "Số lương tiếp nhận phải nhỏ hơn sức chứa.");
+                //valid = valid && checkRegexp(number_staff, /\d/, "Điền thông tin sức chứa.");
+                //valid = valid && checkRegexp(number, /\d/, "Điền thông tin số lượng hiện tại.");
+                //valid = valid && checkNumber(number_staff, number, "Số lương tiếp nhận phải nhỏ hơn sức chứa.");
 
                 if (valid) {
                     $.ajax({
@@ -65,8 +65,8 @@
                         contentType: "application/json",
                         data: JSON.stringify({
                             placeName: placeName.val(),
-                            capacity: capacity.val(),
-                            number: number.val(),
+                            number_staff: number_staff.val(),
+                            address: address.val(),
                             option: option.val()
                         }),
                         success: function (res) {
@@ -131,8 +131,6 @@
     <link rel="stylesheet" href="~/css/product_admin.css" />
     <link rel="stylesheet" href="~/css/userList_admin.css" />
     <link rel="stylesheet" href="~/css/user_admin.css" />
-    <link rel="stylesheet" type="text/css" href="~css/signUp_admin.css" />
-    <link rel="stylesheet" type="text/css" href="~css/signIn_admin.css" />
     <link rel="stylesheet" type="text/css" href="~css/profile_admin.css" />
     <link rel="stylesheet" type="text/css" href="~css/statistics.css" />
     <!-- Jquery ui CSS -->
@@ -199,56 +197,68 @@
     </style>
 }
 
-<div id="content" style="margin:25px 50px 25px;">
+<div style="margin:50px 300px 25px;">
     <div class="card" style="border: black solid 2px;">
         <div class="card-header text-center bg-linear">
             <div class="row align-items-center">
                 <div class="mx-auto pl-5">
-                    <i class="fas fa-clinic-medical" aria-hidden="true" style="font-size: 25px;"></i>
+                    <i class="fa-solid fa-location-dot" style="font-size: 25px;"></i>
                     <b style="font-size: 25px;">Quản lí địa điểm</b>
                 </div>
                 <div class="float-right">
-                    <a class="btn btn-primary float-right" style="color: white;" id="create-place" href="javascript:;"
+                    <a class="btn btn-primary float-right" style="color: white;" id="create-place" href="cs:;"
                        role="button" title="Add">
                         <i class="fa fa-plus" aria-hidden="true"></i> Thêm
                     </a>
                 </div>
             </div>
         </div>
-        {{#if this.empty}}
+        @*{{#if this.empty}}
         <div class="card-body">
             <p class="card-text">Không có dữ liệu.</p>
         </div>
-        {{else}}
+        {{else}}*@
         <div class="card-body">
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Tên</th>
-                        <th scope="col">Sức chứa</th>
-                        <th scope="col">Số lượng tiếp nhận hiện tại</th>
+                        <th scope="col">Tên địa điểm</th>
+                        <th scope="col">Địa chỉ</th>
+                        <th scope="col">Số lượng nhân viên</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each this.places}}
-                    <tr>
-                        <th scope="row">{{Stt}}</th>
-                        <td>{{NamePlace}}</td>
-                        <td>{{Size}}</td>
-                        <td style="padding-left: 100px">{{Amount}}</td>
-                        <td class="text-right">
-                            <a class="btn btn-primary" href="/admin/places/edit?id={{Id}}&&page={{../page}}" role="button" title="edit">
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    {{/each}}
+                    @*{{#each this.places}}*@
+                    @*<tr>
+            <th scope="row">1{{Stt}}</th>
+            <td>{{NamePlace}}</td>
+            <td>{{Size}}</td>
+            <td style="padding-left: 100px">{{Amount}}</td>
+            <td class="text-right">
+                <a class="btn btn-primary" href="/admin/places/edit?id={{Id}}&&page={{../page}}" role="button" title="edit">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                </a>
+            </td>
+        </tr>*@
+
+             <tr>
+                <th scope="row">1</th>
+                <td>Vân Anh 1</td>
+                <td>123 Hồ Hảo</td>
+                <td style="padding-left: 100px">5</td>
+                <td class="text-right">
+                    <a class="btn btn-primary" href="/admin/places/edit" role="button" title="edit">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                </td>
+            </tr>
+                    @*{{/each}}*@
                 </tbody>
             </table>
         </div>
-        {{/if}}
+        @*{{/if}}*@
     </div>
 
 </div>
@@ -256,26 +266,12 @@
     <p class="validateTips">Điền các trường được yêu cầu</p>
     <form method="POST">
         <fieldset>
-            <label for="placeName">Tên địa điểm</label>
+            <label for="placeName">Place name</label>
             <input type="text" name="placeName" id="placeName" class="text ui-widget-content ui-corner-all" autofocus>
-            <label for="capacity">Sức chứa</label>
-            <input type="number" name="capacity" id="capacity" class="text ui-widget-content ui-corner-all">
-            <label for="number">Số lượng tiếp nhận hiện tại</label>
-            <input type="number" name="number" id="number" class="text ui-widget-content ui-corner-all">
-            <div class="row  ml-3">
-                <div class="form-check ml-5">
-                    <input class="form-check-input" type="radio" name="gridRadios" value="1" checked>
-                    <label class="form-check-label" for="gridRadios">
-                        Điều trị
-                    </label>
-                </div>
-                <div class="form-check ml-3">
-                    <input class="form-check-input" type="radio" name="gridRadios" value="0">
-                    <label class="form-check-label" for="gridRadios">
-                        Cách ly
-                    </label>
-                </div>
-            </div>
+            <label for="text">Address</label>
+            <input type="text" name="text" id="text" class="text ui-widget-content ui-corner-all">
+            <label for="number_staff">Number staff</label>
+            <input type="number" name="number_staff" id="number_staff" class="text ui-widget-content ui-corner-all">
             <!-- Allow form submission with keyboard without duplicating the dialog button -->
             <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
         </fieldset>
