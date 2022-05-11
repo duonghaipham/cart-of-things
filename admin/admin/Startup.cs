@@ -48,6 +48,15 @@ namespace admin
 
             app.UseEndpoints(endpoints =>
             {
+                #region SignIn
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=SignIn}");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}");
+                #endregion
+
                 #region User
                 endpoints.MapControllerRoute(
                     name: "user",
@@ -71,8 +80,6 @@ namespace admin
                     name: "place",
                     pattern: "{controller=Place}/{action=Update}/{Id?}");
                 #endregion
-
-
             });
         }
     }

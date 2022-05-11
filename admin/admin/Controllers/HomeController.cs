@@ -20,10 +20,26 @@ namespace admin.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return new RedirectResult(url: "/SignIn", permanent: true,
+                             preserveMethod: true);
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Route("SignIn")]
+        //[Route("")]
+        public IActionResult SignIn()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("SignIn")]
+        public IActionResult SignIn(string a)
         {
             return View();
         }

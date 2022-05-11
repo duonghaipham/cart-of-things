@@ -1,0 +1,71 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutSignIn.cshtml";
+    ViewData["Title"] = "SignIn";
+}
+
+@section Css {
+    <link rel="stylesheet" href="~/css/global.css" />
+    <link rel="stylesheet" href="~/css/shop.css" />
+    <link rel="stylesheet" href="~/css/productList_admin.css" />
+    <link rel="stylesheet" href="~/css/product_admin.css" />
+    <link rel="stylesheet" href="~/css/userList_admin.css" />
+    <link rel="stylesheet" href="~/css/user_admin.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/signUp_admin.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/signIn_admin.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/profile_admin.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/statistics.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+}
+@section Scripts {
+}
+<main class="signin-admin">
+    <section>
+        <div class="container1">
+            <div class="login">
+                <div class="login__img">
+                    <img src="~/img/avatar-login.png"
+                         alt="IMG" />
+                </div>
+
+                <form method="post"
+                      class="login__form">
+                    <span class="login__form__title">ACCOUNT LOGIN</span>
+
+                    <div class="wrap-input">
+                        <input class="login__input"
+                               type="text"
+                               name="email"
+                               placeholder="Email" />
+                    </div>
+
+                    <div class="wrap-input">
+                        <input class="login__input"
+                               type="password"
+                               name="password"
+                               placeholder="Password" />
+                    </div>
+
+                    <div class="login-button">
+                        
+                        @*<button class="button-login">
+                            Login
+                        </button>*@
+                        <a class="button-login" href="/Users">Login</a>
+                    </div>
+
+                    <div class="text-center forgot-password">
+                        <span class="txt1"> Forgot </span>
+                        <a class="txt2"
+                           href="#">
+                            Username
+                            /
+                            Password?
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
