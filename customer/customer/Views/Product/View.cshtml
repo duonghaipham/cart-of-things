@@ -13,30 +13,29 @@
         <div>
             <a href="/"> <span>Home</span> </a>
             <span>|</span>
-            <a href="/shop"><span>Shop</span> </a><span>|</span>
-            <span>@ViewData["Id"]</span>
+            <a href="/Shop"><span>Shop</span> </a><span>|</span>
+            <span>Cupcake</span>
         </div>
     </div>
     <div class="product__detail">
         <div class="product__detail__img">
-            <img src="<%= cake.figure %>" alt="" />
+            <img src="~/img/product-5.jpg" alt="" />
         </div>
         <div class="product__detail__info">
-            <span id="product__id" style="display: none"><%= cake._id%></span>
+            <span id="product__id" style="display: none">1</span>
             <div class="product__detail__info__header">
-                <span><%= cake.category.name %></span>
-                <h3><%= cake.name %></h3>
+                <span>Bánh ngọt</span>
+                <h3>Cupcake</h3>
                 <h4>
-                    $ <span id="product__detail__info__price"><%= cake.price %></span>
+                    <span id="product__detail__info__price">10000</span>
                 </h4>
             </div>
             <div class="product__detail__info__describe">
-                <p><%= cake.introduction %></p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu enim ac sem luctus sodales sed nec sem. Integer iaculis et elit vitae aliquet. Maecenas sodales ligula in purus hendrerit euismod in eu libero. Nulla quis iaculis quam. Etiam sed est enim. Phasellus nisl lacus, mollis sed mi at, congue lobortis metus. In hac habitasse platea dictumst. Phasellus varius pulvinar nisl, in placerat leo iaculis in.</p>
                 <div class="product__detail__info__label">
                     <ul>
-                        <li>SKU: <span><%= cake.sku %></span></li>
-                        <li>Category: <span><%= cake.category.name %></span></li>
-                        <li>Tags: <span><%= cake.tags.join(', ') %></span></li>
+                        <li>SKU: <span>10</span></li>
+                        <li>Category: <span>Bánh ngọt</span></li>
                     </ul>
                 </div>
                 <div class="product__detail__option">
@@ -50,31 +49,31 @@
     <div class="product__detail__tab">
         <span>Description</span>
         <div class="tab-content">
-            <p><%= cake.description %></p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu enim ac sem luctus sodales sed nec sem. Integer iaculis et elit vitae aliquet. Maecenas sodales ligula in purus hendrerit euismod in eu libero. Nulla quis iaculis quam. Etiam sed est enim. Phasellus nisl lacus, mollis sed mi at, congue lobortis metus. In hac habitasse platea dictumst. Phasellus varius pulvinar nisl, in placerat leo iaculis in.</p>
         </div>
     </div>
 </section>
 <section class="relatedProduct" style="padding: 10px 50px; text-align: center">
     <h3 class="section__title">Related Products</h3>
     <div class="products" style="padding: 0">
-        <% relatedProducts.forEach(cake => { %>
+
         <div class="product">
             <span id="product__id" style="display: none"><%= cake._id%></span>
-            <a href="/cakes/<%= cake._id %>">
+            <a href="/Products/2">
                 <div class="product__img">
-                    <img src="<%= cake.figure %>"
+                    <img src="~/img/product-2.jpg"
                          alt="product"
                          style="width: 250px; height: 250px" />
-                    <span class="product__category"><%= cake.category.name %></span>
+                    <span class="product__category">Bánh ngọt</span>
                 </div>
                 <div class="product__info">
-                    <h5 id="product__name"><%= cake.name %></h5>
+                    <h5 id="product__name">Cupcake</h5>
                     <h5 style="
               font-size: large;
               font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman',
                 serif;
             ">
-                        $ <span id="product__price"><%= cake.price %></span>
+                        <span id="product__price">15000</span>
                     </h5>
                 </div>
             </a>
@@ -82,14 +81,14 @@
                 <button class="product__cart__btn">ADD TO CART</button>
             </div>
         </div>
-        <% }); %>
+
     </div>
 </section>
 <section class="review">
     <h3 class="section__title">Product reviews</h3>
     <div class="review__comments">
         <div id="comments"></div>
-        <% if (user) { %>
+        @*<% if (user) { %>*@
         <form id="form-comment">
             <div class="sendComment">
                 <input id="comment-input"
@@ -106,7 +105,7 @@
                 </button>
             </div>
         </form>
-        <% } %>
+        @*<% } %>*@
         <div id="pagination-bar" class="pagination-bar"></div>
     </div>
 </section>

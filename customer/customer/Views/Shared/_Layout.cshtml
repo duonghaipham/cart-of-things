@@ -17,19 +17,15 @@
 
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
         <div class="header__top">
             <div class="header__top__left">
-                <% if (user) { %>
-                <img src="<%= user.avatar %>" alt="avatar" class="rounded-circle" style="height:40px; width:40px; object-fit: contain;">
+                @*<img src="<%= user.avatar %>" alt="avatar" class="rounded-circle" style="height:40px; width:40px; object-fit: contain;">
                 <a href="/users/<%= user._id %>" class="mx-3"><%= user.name %></a>
-                <a href="/signOut" class=" rounded border border-warning p-2">Sign out</a>
-                <% } else { %>
+                <a href="/signOut" class=" rounded border border-warning p-2">Sign out</a>*@
                 <a href="/signIn" class=" rounded border border-warning p-2">Sign in</a>
-                <% } %>s
             </div>
             <div class="header__top__mid">
                 <img src="/img/logo.png" alt="logo" />
