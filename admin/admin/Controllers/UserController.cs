@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using admin.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,15 @@ namespace admin.Controllers
     {
         [HttpGet]
         [Route("Users")]
-        public IActionResult Retrieve()
+        //public IActionResult Retrieve()
+        //{
+        //    return View();
+        //}
+        public IEnumerable<Place> Retrieve()
         {
-            return View();
+            ShopContext context = new ShopContext();
+
+            return context.Places.ToList();
         }
 
         [HttpGet]
