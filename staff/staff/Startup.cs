@@ -48,9 +48,23 @@ namespace staff
 
             app.UseEndpoints(endpoints =>
             {
+                #region Product
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    name: "product",
+                    pattern: "{controller=Product}/{action=Retrieve}");
+                endpoints.MapControllerRoute(
+                    name: "product",
+                    pattern: "{controller=Product}/{action=Create}");
+                endpoints.MapControllerRoute(
+                    name: "product",
+                    pattern: "{controller=Product}/{action=Update}/{Id?}");
+                #endregion
+
+                #region Customer
+                endpoints.MapControllerRoute(
+                    name: "customer",
+                    pattern: "{controller=Customer}/{action=Retrieve}");
+                #endregion
             });
         }
     }
