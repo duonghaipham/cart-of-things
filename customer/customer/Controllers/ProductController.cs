@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
+using customer.Models;
 
 namespace customer.Controllers
 {
@@ -12,16 +10,23 @@ namespace customer.Controllers
         [Route("Shop")]
         public IActionResult Index()
         {
+            string jsonCategories = Category.GetAll();
+            string jsonProducts = Product.RetrieveProducts();
+
+            ViewData["jsonCategories"] = jsonCategories;
+            ViewData["jsonProducts"] = jsonProducts;
+
             return View();
         }
 
         [HttpGet]
-        [Route("Products/{ProductId?}")]
-        public IActionResult View(int id)
+        [Route("Products/{productId?}")]
+        public IActionResult View(int productId)
         {
+            string jsonProduct = Product.RetrieveProduct(productId);
 
-            // truy vấn lấy ra Product có id
-            ViewData["Id"] = id;
+            ViewData["jsonProduct"] = jsonProduct;
+            Console.WriteLine(jsonProduct);
 
             return View();
         }

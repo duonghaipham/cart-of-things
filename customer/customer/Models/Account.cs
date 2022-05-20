@@ -1,7 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
+
 
 #nullable disable
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 
 namespace customer.Models
 {
@@ -16,5 +21,16 @@ namespace customer.Models
         public string Role { get; set; }
         public int? IdState { get; set; }
         public int? IdPlace { get; set; }
+
+        private static ShopContext _context = new ShopContext();
+
+        public static Account SignIn(string email, string password)
+        {
+            var account = (from a in _context.Accounts
+                          where a.Email == email && a.Password == password
+                          select a).SingleOrDefault();
+            
+            return account;
+        }
     }
 }

@@ -12,14 +12,14 @@ namespace customer.Controllers
         [Route("Comments")]
         public IActionResult RetrieveComments()
         {
-            return View();
+            return null;
         }
 
         [HttpPost]
         [Route("Comments")]
         public IActionResult CreateComments()
         {
-            return View();
+            return null;
         }
     }
 }

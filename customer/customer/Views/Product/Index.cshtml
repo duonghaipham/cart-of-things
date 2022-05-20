@@ -1,6 +1,11 @@
-﻿@{
+﻿@using Newtonsoft.Json.Linq
+@using Newtonsoft.Json
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@{
     ViewData["Title"] = "Our products";
     ViewData["Tab"] = "shop";
+    var products = JsonConvert.DeserializeObject((string)ViewData["jsonProducts"]) as JArray;
+    var categories = JsonConvert.DeserializeObject((string)ViewData["jsonCategories"]) as JArray;
 }
 
 @section Scripts {
@@ -24,6 +29,10 @@
                         aria-label="Default select example"
                         name="category">
                     <option>Category</option>
+                    @foreach (var category in categories)
+                    {
+                        <option value="@category["Name"]">@category["Name"]</option>
+                    }
                     @*<% categories.forEach(categoryItem => { %>
                               <option value="<%= categoryItem.name %>"
                           <% if (category == categoryItem.name) { %> selected <% } %>
@@ -66,41 +75,25 @@
         </div>
     </form>
     <div class="shop__products">
-        @*<% cakes.forEach(cake => { %>*@
-        <div class="product">
-            <span id="product__id" style="display: none;">1</span>
-            <a href="/Products/1">
-                <div class="product__img">
-                    <img src="~/img/product-1.jpg" alt="product" style="width: 250px; height: 250px;" />
-                    <span class="product__category">Bánh ngọt</span>
+        @foreach (var product in products)
+        {
+            <div class="product">
+                <span id="product__id" style="display: none;">@product["Id"]</span>
+                <a href="/Products/@product["Id"]">
+                    <div class="product__img">
+                        <img src="~/img/product-1.jpg" alt="product" style="width: 250px; height: 250px;"/>
+                        <span class="product__category">@product["CategoryName"]</span>
+                    </div>
+                    <div class="product__info">
+                        <h5 id="product__name">@product["Name"]</h5>
+                        <h5 style="font-size:large; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; "><span id="product__price">@product["Price"]</span></h5>
+                    </div>
+                </a>
+                <div class="product__cart">
+                    <button class="product__cart__btn">ADD TO CART</button>
                 </div>
-                <div class="product__info">
-                    <h5 id="product__name">Cupcake</h5>
-                    <h5 style="font-size:large; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; "><span id="product__price">10000</span></h5>
-                </div>
-            </a>
-            <div class="product__cart">
-                <button class="product__cart__btn">ADD TO CART</button>
             </div>
-        </div>
-
-        <div class="product">
-            <span id="product__id" style="display: none;">2</span>
-            <a href="/Products/2">
-                <div class="product__img">
-                    <img src="~/img/product-2.jpg" alt="product" style="width: 250px; height: 250px;" />
-                    <span class="product__category">Bánh ngọt</span>
-                </div>
-                <div class="product__info">
-                    <h5 id="product__name">Cupcake</h5>
-                    <h5 style="font-size:large; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; "><span id="product__price">15000</span></h5>
-                </div>
-            </a>
-            <div class="product__cart">
-                <button class="product__cart__btn">ADD TO CART</button>
-            </div>
-        </div>
-        @*<% }); %>*@
+        }
     </div>
 
     @*<div class="row">
