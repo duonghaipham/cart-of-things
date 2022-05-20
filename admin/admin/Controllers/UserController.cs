@@ -13,6 +13,9 @@ namespace admin.Controllers
         [Route("Users")]
         public IActionResult Retrieve()
         {
+            var context = new Account();
+            List<Account> list = context.getList();
+            ViewData["listStaff"] = list;
             return View();
         }
         //public IEnumerable<Place> Retrieve()

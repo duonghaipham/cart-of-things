@@ -10,7 +10,7 @@
 body {
   font-family: "Montserrat", sans-serif;
   font-family: "Playfair Display", serif;
-  min-width: 1820px;
+  /*min-width: 1820px;*/
 }
 
 a {
@@ -69,9 +69,9 @@ header {
 }
 
 .header__bottom {
-  display: flex;
-  justify-content: center;
-  background-color: rgb(240, 134, 50);
+    display: flex;
+    justify-content: center;
+    background-color: #1A94FF;
 }
 
 .header__bottom > * {
@@ -134,11 +134,12 @@ footer {
   background-size: cover;
   background-position: top center;
   padding-top: 40px;
+  background-color: black;
 }
 
 .footer__top {
   display: flex;
-  padding: 20px 300px 100px 300px;
+  padding: 20px 300px 10px;
   color: #a4a4a4;
 }
 

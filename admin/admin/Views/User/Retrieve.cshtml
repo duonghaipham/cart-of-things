@@ -26,10 +26,10 @@
 }
 
 @section Css {
-    <link rel="stylesheet" href="~/css/global.css"/>
-    <link rel="stylesheet" href="~/css/Admin/admin.css"/>
-    <link rel="stylesheet" href="~/css/Admin/ListAdmin.css"/>
-    <link rel="stylesheet" href="~/css/Admin/navbar.css"/>
+    <link rel="stylesheet" href="~/css/global.css" />
+    <link rel="stylesheet" href="~/css/Admin/admin.css" />
+    <link rel="stylesheet" href="~/css/Admin/ListAdmin.css" />
+    <link rel="stylesheet" href="~/css/Admin/navbar.css" />
 }
 
 <main>
@@ -38,18 +38,18 @@
             <div class="row justify-content-center">
                 <div class="col-auto">
                     <div class="title__thin">
-                        <h1><b>Users List</b></h1>
+                        <h1><b>Staffs List</b></h1>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <section class="main__product-list">
+    <section>
         <div class="container">
             <div class="row">
-                <form class="shop__features" id="form-query">
-                    <div class="shop__features__left">
-                        <div class="shop__features__search">
+                <form class="user__features" id="form-query">
+                    <div class="user__features__left">
+                        <div class="user__features__search">
                             <input type="text"
                                    placeholder="Search"
                                    class="query-control"
@@ -69,56 +69,9 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="filter-role">
-                        <div class="form-check form-check-inline">
-                            <label class="form-check-label">
-                                <input type="radio"
-                                       class="form-check-input query-control"
-                                       name="role"
-                                       id="role1"
-                                       value="all"
-                                       checked
-                                       @*<% if (role === "all") { %>checked<% } %>*@>
-                                <span>All</span>
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <label class="form-check-label">
-                                <input type="radio"
-                                       class="form-check-input query-control"
-                                       name="role"
-                                       id="role2"
-                                       value="admin"
-                                       @*<% if (role === "admin") { %>checked<% } %>*@>
-                                <span>Admin</span>
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <label class="form-check-label">
-                                <input type="radio"
-                                       class="form-check-input query-control"
-                                       name="role"
-                                       id="role3"
-                                       value="buyer"
-                                       @*<% if (role === "buyer") { %>checked<% } %>*@>
-                                <span>Buyer</span>
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <label class="form-check-label">
-                                <input type="radio"
-                                       class="form-check-input query-control"
-                                       name="role"
-                                       id="role2"
-                                       value="shipper"
-                                       @*<% if (role === "shipper") { %>checked<% } %>*@>
-                                <span>Shipper</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="shop__features__right">
+                    <div class="user__features__right">
                         <span>Sort by:</span>
-                        <div class="shop__features__sort">
+                        <div class="user__features__sort">
                             <select id="select-sort"
                                     class="form-select query-control"
                                     name="sort"
@@ -135,47 +88,52 @@
                     </div>
                 </form>
             </div>
-            <div class="row">
-                <!-- <div class="col"> -->
-                <div class="add-product" style="padding-left: 80px;">
+            <div class="row" style="display: flex; align-items: center; justify-content: center;">
+                <div class="add-user">
                     <button type="button"
-                            class="btn btn-secondary"
+                            class="btn btn-primary"
                             onclick="location.href='/users/create'">
                         <img src="~/img/add-icon.png" alt="Add icon" />
                         <span>&nbsp;Add a new user</span>
                     </button>
                 </div>
-                <!-- </div> -->
+
             </div>
 
-            <div class="row" style="margin-top:10px">
-                <ul class="user-list">
-                    <li class="user user-header">
-                        <div class="user__avatar"><h5>AVATAR</h5></div>
-                        <div class="user__phone"><h5>PHONE</h5></div>
-                        <div class="user__name"><h5>NAME</h5></div>
-                        <div class="user__email"><h5>EMAIL</h5></div>
-                        <div class="user__state"><h5>STATE</h5></div>
-                        <div class="user__options"><h5>OPTIONS</h5></div>
-                    </li>
-                    @*<% users.forEach(currentUser => { %>
-                        <li class="user">
-                            <div class="user__avatar">
-                                <img src="<%= currentUser.avatar %>" />
-                            </div>
-                            <div class="user__phone">
-                                <h5><%= currentUser.phone %></h5>
-                            </div>
-                            <div class="user__name">
-                                <h5><%= currentUser.name %></h5>
-                            </div>
-                            <div class="user__email">
-                                <h5><%= currentUser.email %></h5>
-                            </div>
-                            <div class="user__state">
-                                <h5><%= currentUser.state.value.charAt(0).toUpperCase() + currentUser.state.value.slice(1) %></h5>
-                            </div>
-                            <div class="user__options">
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Avatar</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Identity card</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">State</th>
+                            <th scope="col">Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{int i = 1;}
+                        @foreach (var data in (List<Account>)ViewData["listStaff"])
+                        {
+                        <tr>
+                            <th scope="row">@i</th>
+                            @{i++;}
+                            <td><img src="https://i.pinimg.com/originals/3c/82/97/3c82973b1e4b053838217ef119713c95.jpg" /></td>
+                            <td>@data.Name</td>
+                            <td>@data.IdentityCard</td>
+                            <td>@data.Email</td>
+                            @if (data.IdState == 1)
+                            {
+                                <td>Active</td>
+                            }
+                            else
+                            {
+                                <td>Inactive</td>
+                            }
+
+                            <td>
                                 <div class="user__options__edit"
                                      onclick="location.href='/users/<%= currentUser._id %>/update'">
                                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -199,26 +157,146 @@
                                 </div>
                                 <div class="user__options__block"
                                      onclick="handleLock(this, '<%= currentUser._id %>')">
-                                    <% if (currentUser._id.toString() !== user._id.toString()) { %>
-                                    <% if (currentUser.state.value === 'active') { %>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                         height="24" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd" />
-                                    </svg>
-                                    <span>Lock user</span>
-                                    <% } else { %>
+                                    @*<% if (currentUser._id.toString() !== user._id.toString()) { %>
+                <% if (currentUser.state.value === 'active') { %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                     height="24" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd" />
+                </svg>
+                <span>Lock user</span>*@
+                                    @*<% } else { %>*@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                          class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
                                     </svg>
                                     <span>Unlock user</span>
-                                    <% } %>
-                                    <% } %>
+                                    @*<% } %>
+                <% } %>*@
                                 </div>
+                            </td>
+                        </tr>
+                        }
+                        <!--<tr>
+                        <th scope="row">1</th>
+                        <td><img src="https://i.pinimg.com/originals/3c/82/97/3c82973b1e4b053838217ef119713c95.jpg" /></td>
+                        <td>Duy</td>
+                        <td>225627089</td>
+                        <td>hoduy220@gmail.com</td>
+                        <td>Active</td>
+                        <td>
+                            <div class="user__options__edit"
+                                 onclick="location.href='/users/<%= currentUser._id %>/update'">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="24"
+                                     height="24"
+                                     viewBox="0 0 24 24">
+                                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-5 17l1.006-4.036 3.106 3.105-4.112.931zm5.16-1.879l-3.202-3.202 5.841-5.919 3.201 3.2-5.84 5.921z"></path>
+                                </svg>
+                                <span>Edit user</span>
                             </div>
-                        </li>
-                        <% }); %>*@
+
+                            <div class="user__options__remove"
+                                 onclick="location.href='/users/<%= currentUser._id %>/delete'">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="24"
+                                     height="24"
+                                     viewBox="0 0 24 24">
+                                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"></path>
+                                </svg>
+                                <span>Remove user</span>
+                            </div>
+                            <div class="user__options__block"
+                                 onclick="handleLock(this, '<%= currentUser._id %>')">-->
+                        @*<% if (currentUser._id.toString() !== user._id.toString()) { %>
+                            <% if (currentUser.state.value === 'active') { %>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                 height="24" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Lock user</span>*@
+                        @*<% } else { %>*@
+                        <!--<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                        </svg>
+                        <span>Unlock user</span>-->
+                        @*<% } %>
+                            <% } %>*@
+                        <!--</div>
+                            </td>
+                        </tr>-->
+                    </tbody>
+                </table>
+                <!--<ul>
+                <li class="user user-header">
+                    <div class="user__avatar"><h5>AVATAR</h5></div>
+                    <div class="user__name"><h5>NAME</h5></div>
+                    <div class="user__name"><h5>NAME</h5></div>
+                    <div class="user__email"><h5>EMAIL</h5></div>
+                    <div class="user__state"><h5>STATE</h5></div>
+                    <div class="user__options"><h5>OPTIONS</h5></div>
+                </li>-->
+                @*<% users.forEach(currentUser => { %>
                     <li class="user">
+                        <div class="user__avatar">
+                            <img src="<%= currentUser.avatar %>" />
+                        </div>
+                        <div class="user__phone">
+                            <h5><%= currentUser.phone %></h5>
+                        </div>
+                        <div class="user__name">
+                            <h5><%= currentUser.name %></h5>
+                        </div>
+                        <div class="user__email">
+                            <h5><%= currentUser.email %></h5>
+                        </div>
+                        <div class="user__state">
+                            <h5><%= currentUser.state.value.charAt(0).toUpperCase() + currentUser.state.value.slice(1) %></h5>
+                        </div>
+                        <div class="user__options">
+                            <div class="user__options__edit"
+                                 onclick="location.href='/users/<%= currentUser._id %>/update'">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="24"
+                                     height="24"
+                                     viewBox="0 0 24 24">
+                                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-5 17l1.006-4.036 3.106 3.105-4.112.931zm5.16-1.879l-3.202-3.202 5.841-5.919 3.201 3.2-5.84 5.921z"></path>
+                                </svg>
+                                <span>Edit user</span>
+                            </div>
+
+                            <div class="user__options__remove"
+                                 onclick="location.href='/users/<%= currentUser._id %>/delete'">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="24"
+                                     height="24"
+                                     viewBox="0 0 24 24">
+                                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"></path>
+                                </svg>
+                                <span>Remove user</span>
+                            </div>
+                            <div class="user__options__block"
+                                 onclick="handleLock(this, '<%= currentUser._id %>')">
+                                <% if (currentUser._id.toString() !== user._id.toString()) { %>
+                                <% if (currentUser.state.value === 'active') { %>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                     height="24" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span>Lock user</span>
+                                <% } else { %>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                     class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                                </svg>
+                                <span>Unlock user</span>
+                                <% } %>
+                                <% } %>
+                            </div>
+                        </div>
+                    </li>
+                    <% }); %>*@
+                <!--<li class="user">
                         <div class="user__avatar">
                             <img src="http://ativn.edu.vn/wp-content/uploads/2018/03/user.png" />
                         </div>
@@ -266,7 +344,7 @@
                             </div>
                         </div>
                     </li>
-                </ul>
+                </ul>-->
             </div>
             <div class="row">
                 <div class="col text-center">
