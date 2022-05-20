@@ -14,8 +14,7 @@ namespace customer.Controllers
         {
             _config = config;
         }
-        
-        
+
         [HttpGet]
         [Route("SignIn")]
         public IActionResult SignIn()
@@ -33,7 +32,7 @@ namespace customer.Controllers
             {
                 HttpContext.Session.SetInt32("id", account.Id);
                 HttpContext.Session.SetString("name", account.Name);
-                HttpContext.Session.SetString("ava", account.Avatar);
+                HttpContext.Session.SetString("avatar", account.Avatar);
             
                 return Redirect("/Home");
             }
@@ -68,25 +67,36 @@ namespace customer.Controllers
         {
             return View();
         }
-
-        [HttpGet]
+        
         [Route("SignOut")]
         public IActionResult SignOut()
         {
-            return null;
+            HttpContext.Session.Clear();
+            
+            return Redirect("/");
         }
 
         [HttpGet]
         [Route("Users/{UserId?}")]
         public IActionResult ViewInformation()
         {
-            // var account = 
+            int id = HttpContext.Session.GetInt32("id").GetValueOrDefault();
+            var account = Account.ViewInformation(id);
+            
+            ViewData["Account"] = account;
+            
+            return View();
         }
 
         [HttpGet]
         [Route("Users/{UserId?}/Update")]
         public IActionResult UpdateInformation()
         {
+            int id = HttpContext.Session.GetInt32("id").GetValueOrDefault();
+            var account = Account.ViewInformation(id);
+            
+            ViewData["Account"] = account;
+            
             return View();
         }
 
@@ -94,10 +104,19 @@ namespace customer.Controllers
         [Route("Users/{UserId?}/Update")]
         public IActionResult UpdateInformation(IFormFile avatar, string name, string phone)
         {
-            var uploadResult = ImageManager.getInstance().Upload(avatar).SecureUrl;
-            Console.WriteLine(uploadResult);
+            string newAvatar = null;
             
-            return View();
+            if (avatar != null)
+                newAvatar = ImageManager.getInstance().Upload(avatar).SecureUrl.AbsoluteUri;
+            
+            int id = HttpContext.Session.GetInt32("id").GetValueOrDefault();
+            var account = Account.UpdateInformation(id, newAvatar, name);
+            
+            HttpContext.Session.SetInt32("id", account.Id);
+            HttpContext.Session.SetString("name", account.Name);
+            HttpContext.Session.SetString("avatar", account.Avatar);
+
+            return Redirect($"/Users/{id}/Update");
         }
 
         [HttpGet]

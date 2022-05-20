@@ -32,5 +32,29 @@ namespace customer.Models
             
             return account;
         }
+        
+        public static Account ViewInformation(int id)
+        {
+            var account = (from a in _context.Accounts
+                           where a.Id == id
+                           select a).SingleOrDefault();
+            
+            return account;
+        }
+
+        public static Account UpdateInformation(int id, string avatar, string name)
+        {
+            var account = (from a in _context.Accounts
+                where a.Id == id
+                select a).SingleOrDefault();
+
+            if (avatar != null)
+                account.Avatar = avatar;
+            account.Name = name;
+
+            _context.SaveChanges();
+
+            return account;
+        }
     }
 }
