@@ -1,7 +1,7 @@
 const btnSignIn = document.getElementById('btn-sign-in');
 
 btnSignIn.addEventListener('click', async () => {
-  const url = '/signIn';
+  const url = '/SignIn';
 
   const response = await fetch(url, {
     method: "POST",

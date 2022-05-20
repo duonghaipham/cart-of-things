@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using System.Net.Http
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -22,10 +27,16 @@
     <header>
         <div class="header__top">
             <div class="header__top__left">
-                @*<img src="<%= user.avatar %>" alt="avatar" class="rounded-circle" style="height:40px; width:40px; object-fit: contain;">
-                <a href="/users/<%= user._id %>" class="mx-3"><%= user.name %></a>
-                <a href="/signOut" class=" rounded border border-warning p-2">Sign out</a>*@
-                <a href="/signIn" class=" rounded border border-warning p-2">Sign in</a>
+                @if (Context.Session.GetString("id") != null)
+                {
+                    <img src="@Context.Session.GetString("avatar")" alt="avatar" class="rounded-circle" style="height:40px; width:40px; object-fit: contain;">
+                    <a href="/users/@Context.Session.GetInt32("id")" class="mx-3">@Context.Session.GetString("name")</a>
+                    <a href="/signOut" class=" rounded border border-warning p-2">Sign out</a>
+                }
+                else
+                {
+                    <a href="/signIn" class=" rounded border border-warning p-2">Sign in</a>
+                }
             </div>
             <div class="header__top__mid">
                 <img src="/img/logo.png" alt="logo" />

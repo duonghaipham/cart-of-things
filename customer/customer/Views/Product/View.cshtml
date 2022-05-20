@@ -1,6 +1,10 @@
-﻿@{
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@{
     ViewData["Title"] = "Detail";
     ViewData["Tab"] = "shop";
+    var product = JsonConvert.DeserializeObject((string)ViewData["jsonProduct"]) as JObject;
 }
 
 @section Scripts {
@@ -22,20 +26,20 @@
             <img src="~/img/product-5.jpg" alt="" />
         </div>
         <div class="product__detail__info">
-            <span id="product__id" style="display: none">1</span>
+            <span id="product__id" style="display: none">@product["Id"]</span>
             <div class="product__detail__info__header">
-                <span>Bánh ngọt</span>
-                <h3>Cupcake</h3>
+                <span>@product["CategoryName"]</span>
+                <h3>@product["Name"]</h3>
                 <h4>
-                    <span id="product__detail__info__price">10000</span>
+                    <span id="product__detail__info__price">@product["Price"]</span>
                 </h4>
             </div>
             <div class="product__detail__info__describe">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu enim ac sem luctus sodales sed nec sem. Integer iaculis et elit vitae aliquet. Maecenas sodales ligula in purus hendrerit euismod in eu libero. Nulla quis iaculis quam. Etiam sed est enim. Phasellus nisl lacus, mollis sed mi at, congue lobortis metus. In hac habitasse platea dictumst. Phasellus varius pulvinar nisl, in placerat leo iaculis in.</p>
+                <p>@product["Introduction"]</p>
                 <div class="product__detail__info__label">
                     <ul>
                         <li>SKU: <span>10</span></li>
-                        <li>Category: <span>Bánh ngọt</span></li>
+                        <li>Category: <span>@product["CategoryName"]</span></li>
                     </ul>
                 </div>
                 <div class="product__detail__option">
@@ -49,7 +53,7 @@
     <div class="product__detail__tab">
         <span>Description</span>
         <div class="tab-content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu enim ac sem luctus sodales sed nec sem. Integer iaculis et elit vitae aliquet. Maecenas sodales ligula in purus hendrerit euismod in eu libero. Nulla quis iaculis quam. Etiam sed est enim. Phasellus nisl lacus, mollis sed mi at, congue lobortis metus. In hac habitasse platea dictumst. Phasellus varius pulvinar nisl, in placerat leo iaculis in.</p>
+            <p>@product["Description"]</p>
         </div>
     </div>
 </section>

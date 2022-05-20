@@ -1,13 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using customer.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace customer.Controllers
 {
     public class AuthController : Controller
     {
+        private IConfiguration _config;
+        
+        public AuthController(IConfiguration config)
+        {
+            _config = config;
+        }
+        
+        
         [HttpGet]
         [Route("SignIn")]
         public IActionResult SignIn()
@@ -19,7 +27,18 @@ namespace customer.Controllers
         [Route("SignIn")]
         public IActionResult SignIn(string email, string password)
         {
-            return View();
+            var account = Account.SignIn(email, password);
+            
+            if (account != null)
+            {
+                HttpContext.Session.SetInt32("id", account.Id);
+                HttpContext.Session.SetString("name", account.Name);
+                HttpContext.Session.SetString("ava", account.Avatar);
+            
+                return Redirect("/Home");
+            }
+
+            return Redirect("/SignIn");
         }
 
         [HttpGet]
@@ -54,14 +73,14 @@ namespace customer.Controllers
         [Route("SignOut")]
         public IActionResult SignOut()
         {
-            return View();
+            return null;
         }
 
         [HttpGet]
         [Route("Users/{UserId?}")]
         public IActionResult ViewInformation()
         {
-            return View();
+            // var account = 
         }
 
         [HttpGet]
@@ -73,8 +92,11 @@ namespace customer.Controllers
 
         [HttpPost]
         [Route("Users/{UserId?}/Update")]
-        public IActionResult UpdateInformation(string atLeastOneInfor)
+        public IActionResult UpdateInformation(IFormFile avatar, string name, string phone)
         {
+            var uploadResult = ImageManager.getInstance().Upload(avatar).SecureUrl;
+            Console.WriteLine(uploadResult);
+            
             return View();
         }
 
@@ -96,7 +118,7 @@ namespace customer.Controllers
         [Route("Users/{id?}/CheckPassword")]
         public IActionResult CheckPassword()
         {
-            return View();
+            return null;
         }
     }
 }

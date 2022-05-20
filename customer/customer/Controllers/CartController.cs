@@ -10,7 +10,7 @@ namespace customer.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return null;
         }
     }
 }
