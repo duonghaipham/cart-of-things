@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using customer.Models;
 
 namespace customer.Controllers
@@ -23,9 +22,12 @@ namespace customer.Controllers
         [Route("Products/{productId?}")]
         public IActionResult View(int productId)
         {
-            string jsonProduct = Product.RetrieveProduct(productId);
+            var jsonProduct = Product.RetrieveProduct(productId);
+            var categoryId = Product.RetrieveCategoryId(productId);
+            var jsonRelatedProducts = Product.RetrieveProductsRelatedToCategory(categoryId ?? 1, productId);
 
             ViewData["jsonProduct"] = jsonProduct;
+            ViewData["jsonRelatedProducts"] = jsonRelatedProducts;
 
             return View();
         }
