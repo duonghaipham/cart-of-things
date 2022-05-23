@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 #nullable disable
 
@@ -16,5 +17,13 @@ namespace admin.Models
         public string Role { get; set; }
         public int? IdState { get; set; }
         public int? IdPlace { get; set; }
+        public List<Account> getList(){
+            ShopContext context = new ShopContext();
+            var listStaff = context.Accounts
+                                   .Where(s => s.Role == "staff").ToList();
+
+            return listStaff;
+        }
+
     }
 }

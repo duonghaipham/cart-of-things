@@ -1,5 +1,12 @@
-@import "global.css";
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+.search__icon {
+    height: 25px;
+    cursor: pointer;
+    width: 25px;
+    background-color: transparent;
+    border: none;
+}
 
 .main__top {
     padding: 40px 330px;
@@ -60,4 +67,48 @@
     width: 200px;
     background-color: black;
     font-size: 18px;
+}
+
+.user__features {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.user__features__left,
+.user__features__right {
+    display: flex;
+    align-items: center;
+    border: 1px solid gray;
+    padding: 0px 10px;
+    border-radius: 7px;
+}
+
+.user__features__search input {
+    border: none;
+    font-size: 20px;
+    color: gray;
+    padding: 4px 10px 4px 20px;
+    width: 190px;
+}
+
+.user__features__search input:focus-visible {
+    outline-width: 0;
+}
+
+.user__features__sort {
+    width: 150px;
+    padding-left: 15px;
+}
+
+.table td, .table th {
+    vertical-align: middle; 
+}
+
+td img {
+    display: block;
+    width: 50px;
+    height: 50px;
 }
