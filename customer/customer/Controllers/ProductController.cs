@@ -26,7 +26,6 @@ namespace customer.Controllers
             string jsonProduct = Product.RetrieveProduct(productId);
 
             ViewData["jsonProduct"] = jsonProduct;
-            Console.WriteLine(jsonProduct);
 
             return View();
         }

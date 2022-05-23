@@ -23,7 +23,7 @@ namespace customer
             _cloudinary = new Cloudinary(account);
         }
         
-        public static ImageManager getInstance()
+        public static ImageManager GetInstance()
         {
             if (_instance == null)
             {

@@ -1,6 +1,7 @@
 ﻿@using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "Detail";
     ViewData["Tab"] = "shop";
@@ -92,24 +93,24 @@
     <h3 class="section__title">Product reviews</h3>
     <div class="review__comments">
         <div id="comments"></div>
-        @*<% if (user) { %>*@
-        <form id="form-comment">
-            <div class="sendComment">
-                <input id="comment-input"
-                       class="comment__input"
-                       type="text"
-                       placeholder="Your comment"
-                       name="content"
-                       required />
-                <button type="button"
-                        class="send__btn"
-                        onclick="handleComment('<%= cake._id %>')"
-                        id="btn-comment">
-                    <img src="/img/send.png" alt="send-icon" />
-                </button>
-            </div>
-        </form>
-        @*<% } %>*@
+        @if (Context.Session.GetString("id") != null) {
+            <form id="form-comment">
+                <div class="sendComment">
+                    <input id="comment-input"
+                           class="comment__input"
+                           type="text"
+                           placeholder="Your comment"
+                           name="content"
+                           required />
+                    <button type="button"
+                            class="send__btn"
+                            onclick="handleComment(`@product["Id"]`)"
+                            id="btn-comment">
+                        <img src="/img/send.png" alt="send-icon" />
+                    </button>
+                </div>
+            </form>
+        }
         <div id="pagination-bar" class="pagination-bar"></div>
     </div>
 </section>

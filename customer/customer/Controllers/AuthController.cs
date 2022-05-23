@@ -51,7 +51,7 @@ namespace customer.Controllers
         [Route("SignUp")]
         public IActionResult SignUp(string name, string phone, string email, string password, string securityQuestion, string securityAnswer)
         {
-            return View();
+			return View();
         }
 
         [HttpGet]
@@ -107,7 +107,7 @@ namespace customer.Controllers
             string newAvatar = null;
             
             if (avatar != null)
-                newAvatar = ImageManager.getInstance().Upload(avatar).SecureUrl.AbsoluteUri;
+                newAvatar = ImageManager.GetInstance().Upload(avatar).SecureUrl.AbsoluteUri;
             
             int id = HttpContext.Session.GetInt32("id").GetValueOrDefault();
             var account = Account.UpdateInformation(id, newAvatar, name);
