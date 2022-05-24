@@ -14,10 +14,10 @@ const renderComments = (comments) => {
   for (const comment of comments) {
     const [commentTag] = createElement(
       `<div class="comment__box">
-      <img src="${comment.user.avatar}" alt="" />
+      <img src="${comment.accountAvatar}" alt="" />
       <div class="comment__content">
       <div class="comment__customer__info">
-          <h4>${comment.user.name}</h4>
+          <h4>${comment.accountName}</h4>
           <span>${new Date(comment.createdAt).toLocaleString()}</span>
       </div>
       <div class="comment__message">
@@ -31,7 +31,7 @@ const renderComments = (comments) => {
   }
 };
 
-const handleLoadComment = async (cakeId, page) => {
+const handleLoadComment = async (productId, page) => {
   for (let i = 0; i < paginationBar.childElementCount; i++) {
     paginationBar.children[i].classList.remove("active");
 
@@ -40,7 +40,7 @@ const handleLoadComment = async (cakeId, page) => {
     }
   }
 
-  const fetchUrl = `/comments?cake=${cakeId}&page=${page}`;
+  const fetchUrl = `/comments?product=${productId}&page=${page}`;
   const response = await fetch(fetchUrl, {
     method: "GET",
   });
@@ -52,9 +52,9 @@ const handleLoadComment = async (cakeId, page) => {
 
 (async () => {
   const url = new URL(location.href);
-  const cakeId = url.pathname.split("/cakes/")[1];
+  const productId = url.pathname.split("/Products/")[1];
 
-  const fetchUrl = `/comments?cake=${cakeId}`;
+  const fetchUrl = `/comments?product=${productId}`;
   const response = await fetch(fetchUrl, {
     method: "GET",
   });
@@ -66,18 +66,18 @@ const handleLoadComment = async (cakeId, page) => {
   for (let i = 0; i < pagination.num; i++) {
     const literal =
       i === 0
-        ? `<a class='active' onclick='handleLoadComment("${cakeId}", ${
+        ? `<a class='active' onclick='handleLoadComment("${productId}", ${
             i + 1
           })'>${i + 1}</a>`
-        : `<a onclick='handleLoadComment("${cakeId}", ${i + 1})'>${i + 1}</a>`;
+        : `<a onclick='handleLoadComment("${productId}", ${i + 1})'>${i + 1}</a>`;
 
     const [number] = createElement(literal);
     paginationBar.appendChild(number);
   }
 })();
 
-const handleComment = async (cakeId) => {
-  const url = `/comments?cake=${cakeId}`;
+const handleComment = async (productId) => {
+  const url = `/comments?product=${productId}`;
 
   const response = await fetch(url, {
     method: "POST",

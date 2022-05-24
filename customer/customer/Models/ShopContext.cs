@@ -32,7 +32,7 @@ namespace customer.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=localhost;Database=Shop;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=localhost;Database=Shop;Trusted_Connection=True;MultipleActiveResultSets=true");
             }
         }
 

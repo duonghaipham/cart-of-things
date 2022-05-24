@@ -46,8 +46,7 @@
                        type="text"
                        placeholder="Search"
                        name="search"
-                @*<% if (search !== undefined) { %><%= `value=${search} ` %><% } %>*@
-                />
+                       @*<% if (search !== undefined) { %><%= `value=${search} ` %><% } %>*@/>
                 <button id="btn-submit" type="submit" class="search__icon">
                     <svg xmlns="http://www.w3.org/2000/svg"
                          fill="none"
@@ -56,7 +55,8 @@
                         <path stroke-linecap="round"
                               stroke-linejoin="round"
                               stroke-width="2"
-                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z">
+                        </path>
                     </svg>
                 </button>
             </div>
@@ -81,12 +81,14 @@
                 <span id="product__id" style="display: none;">@product["Id"]</span>
                 <a href="/Products/@product["Id"]">
                     <div class="product__img">
-                        <img src="~/img/product-1.jpg" alt="product" style="width: 250px; height: 250px;"/>
+                        <img src="@product["Avatar"]" alt="product" style="width: 250px; height: 250px;"/>
                         <span class="product__category">@product["CategoryName"]</span>
                     </div>
                     <div class="product__info">
                         <h5 id="product__name">@product["Name"]</h5>
-                        <h5 style="font-size:large; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; "><span id="product__price">@product["Price"]</span></h5>
+                        <h5 style="font-size:large; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; ">
+                            <span id="product__price">@product["Price"]</span>
+                        </h5>
                     </div>
                 </a>
                 <div class="product__cart">

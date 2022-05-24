@@ -43,7 +43,7 @@ namespace customer.Models
         {
             var product = (from p in _context.Products
                 join c in _context.Categories on p.IdCategory equals c.Id
-                where p.Id == id
+                where p.Id == id && p.IsArchived == 0
                 select new
                 {
                     p.Id,
@@ -53,12 +53,42 @@ namespace customer.Models
                     p.Price,
                     p.Avatar,
                     p.IsArchived,
+                    p.IdCategory,
                     CategoryName = c.Name
                 }).SingleOrDefault();
             
             var jsonProduct = JsonConvert.SerializeObject(product);
 
             return jsonProduct;
+        }
+        
+        public static int? RetrieveCategoryId(int productId)
+        {
+            var categoryId = (from p in _context.Products
+                where p.Id == productId
+                select p.IdCategory).SingleOrDefault();
+            
+            return categoryId;
+        }
+        
+        public static string RetrieveProductsRelatedToCategory(int idCategory, int idProduct)
+        {
+            var products = (from p in _context.Products
+                join c in _context.Categories on p.IdCategory equals c.Id
+                where p.IdCategory == idCategory && p.IsArchived == 0 && p.Id != idProduct
+                orderby p.Id descending
+                select new
+                {
+                    p.Id,
+                    p.Name,
+                    p.Price,
+                    p.Avatar,
+                    CategoryName = c.Name
+                }).ToList();
+            
+            var jsonProducts = JsonConvert.SerializeObject(products);
+
+            return jsonProducts;
         }
     }
 }
