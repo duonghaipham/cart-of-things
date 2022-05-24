@@ -13,8 +13,7 @@ namespace admin.Controllers
         [Route("Users")]
         public IActionResult Retrieve()
         {
-            var context = new Account();
-            List<Account> list = context.getList();
+            List<Account> list = Account.getList();
             ViewData["listStaff"] = list;
             return View();
         }
@@ -55,9 +54,12 @@ namespace admin.Controllers
 
         [HttpPut]
         [Route("Users/{Id?}/lock")]
-        public IActionResult Lock(string a)
+        public IActionResult Lock(int Id)
         {
-            return View();
+            var account = Account.updateLock(Id);
+            if(account != null)
+                return Json(new { msg = "successed", newState = account.Lock});
+            return Json(new { msg = "failed" });
         }   
     }
 }

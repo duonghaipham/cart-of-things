@@ -126,13 +126,6 @@
 @section Css {
 
     <link rel="stylesheet" href="~/css/global.css" />
-    <link rel="stylesheet" href="~/css/shop.css" />
-    <link rel="stylesheet" href="~/css/productList_admin.css" />
-    <link rel="stylesheet" href="~/css/product_admin.css" />
-    <link rel="stylesheet" href="~/css/userList_admin.css" />
-    <link rel="stylesheet" href="~/css/user_admin.css" />
-    <link rel="stylesheet" type="text/css" href="~css/profile_admin.css" />
-    <link rel="stylesheet" type="text/css" href="~css/statistics.css" />
     <!-- Jquery ui CSS -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
     <!-- Bootstrap CSS CDN -->
@@ -197,7 +190,7 @@
     </style>
 }
 
-<div style="margin:50px 300px 25px;">
+<div style="margin:50px 300px 100px;">
     <div class="card" style="border: black solid 2px;">
         <div class="card-header text-center bg-linear">
             <div class="row align-items-center">
@@ -243,17 +236,21 @@
             </td>
         </tr>*@
 
-             <tr>
-                <th scope="row">1</th>
-                <td>Vân Anh 1</td>
-                <td>123 Hồ Hảo</td>
-                <td style="padding-left: 100px">5</td>
-                <td class="text-right">
-                    <a class="btn btn-primary" href="/admin/places/edit" role="button" title="edit">
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </a>
-                </td>
-            </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Vân Anh 1</td>
+                        <td>123 Hồ Hảo</td>
+                        <td style="padding-left: 100px">5</td>
+                        <td class="text-right">
+                            <a class="btn btn-primary" href="/admin/places/edit" role="button" title="edit">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </a>
+                            <a class="btn btn-danger" href="/admin/places/edit" role="button" title="edit">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+
                     @*{{/each}}*@
                 </tbody>
             </table>

@@ -17,13 +17,23 @@ namespace admin.Models
         public string Role { get; set; }
         public int? IdState { get; set; }
         public int? IdPlace { get; set; }
-        public List<Account> getList(){
-            ShopContext context = new ShopContext();
+        public int? Lock { get; set; }
+
+        private static ShopContext context = new ShopContext();
+        public static List<Account> getList(){
+      
             var listStaff = context.Accounts
                                    .Where(s => s.Role == "staff").ToList();
 
             return listStaff;
         }
 
+        public static Account updateLock(int Id)
+        {
+            var account = context.Accounts.Find(Id);
+            account.Lock = account.Lock == 1 ? 0 : 1;
+            context.SaveChanges();
+            return account;            
+        }
     }
 }
