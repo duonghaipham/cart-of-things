@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 using customer.Helpers;
 using customer.Models;
 using Microsoft.AspNetCore.Http;
@@ -85,9 +86,24 @@ namespace customer.Controllers
 
         [HttpPost]
         [Route("ForgetPassword")]
-        public IActionResult ForgetPassword(string email, string securityQuestion, string securityAnswer, string newPassword)
+        public async Task<IActionResult> ForgetPassword(string email)
         {
-            return View();
+            string token = Account.ForgotPassword(email);
+            
+            string verifiedUrl = $"https://localhost:5001/ResetPassword?token={token}&email={email}";
+
+            try
+            {
+                await MailUtil.GetInstance().SendGmail(email, "Forgot Password", verifiedUrl);
+                ViewBag.Message = "Please check your email to reset your password";
+
+                return View("ForgetPassword");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
         }
         
         [Route("SignOut")]
@@ -186,6 +202,38 @@ namespace customer.Controllers
                 return Json(new {msg = "success"});
             
             return Json(new {msg= "failed"});
+        }
+        
+        [HttpGet]
+        [Route("ResetPassword")]
+        public IActionResult ResetPassword()
+        {
+            string token = HttpContext.Request.Query["token"].ToString();
+            string email = HttpContext.Request.Query["email"].ToString();
+
+            if (Account.ValidateTokenForResetPassword(token, email))
+            {
+                ViewData["email"] = email;
+                return View();
+            }
+            
+            ViewBag.Message = "Invalid token";
+            return View("ForgetPassword");
+        }
+        
+        [HttpPost]
+        [Route("ResetPassword")]
+        public IActionResult ResetPassword(string password)
+        {
+            string email = HttpContext.Request.Query["email"].ToString();
+            
+            if (Account.ResetPassword(email, password))
+            {
+                ViewBag.Message = "Password has been reset";
+                return View("ResetPassword");
+            }
+
+            return View();
         }
     }
 }

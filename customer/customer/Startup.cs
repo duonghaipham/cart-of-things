@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using customer.Helpers;
+using Microsoft.AspNetCore.Http;
 
 namespace customer
 {
@@ -106,6 +108,9 @@ namespace customer
                 endpoints.MapControllerRoute(
                     name: "auth",
                     pattern: "{controller=Auth}/{action=CheckPassword}/{UserId?}");
+                endpoints.MapControllerRoute(
+                    name: "auth",
+                    pattern: "{controller=Auth}/{action=ResetPassword}");
 
                 #endregion
 
@@ -134,6 +139,16 @@ namespace customer
                     pattern: "{controller=Product}/{action=View}/{ProductId?}");
 
                 #endregion
+
+                // endpoints.MapGet("/TestGmail", async context =>
+                // {
+                //     var message = await MailUtil.SendGmail(
+                //         "duonghaipham2001@gmail.com", 
+                //         "Email spam nè", 
+                //         "Đây là email spam");
+                //
+                //     await context.Response.WriteAsync(message.ToString());
+                // });
             });
         }
     }

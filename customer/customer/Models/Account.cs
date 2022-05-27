@@ -24,6 +24,7 @@ namespace customer.Models
         public string Role { get; set; }
         public int? IdState { get; set; }
         public int? IdPlace { get; set; }
+        public int? Lock { get; set; }
 
         private static ShopContext _context = new ShopContext();
 
@@ -113,13 +114,8 @@ namespace customer.Models
 
         public static Account ChangePassword(int id, string newPassword)
         {
-            Console.WriteLine(newPassword);
-            Console.WriteLine(id);
-
-            
             string hashedNewPassword = Hash.GetInstance().GetHash(newPassword);
             
-
             var account = (from a in _context.Accounts
                 where a.Id == id
                 select a).SingleOrDefault();
@@ -128,6 +124,63 @@ namespace customer.Models
             _context.SaveChanges();
 
             return account;
+        }
+
+        public static string ForgotPassword(string email)
+        {
+            string token = Guid.NewGuid().ToString();
+
+            var state = new State()
+            {
+                MinuteLimit = 15,
+                Token = token
+            };
+            
+            _context.States.Add(state);
+            _context.SaveChanges();
+            
+            var account = (from a in _context.Accounts
+                where a.Email == email
+                select a).SingleOrDefault();
+            
+            account.IdState = state.Id;
+            _context.SaveChanges();
+
+            return token;
+        }
+
+        public static bool ValidateTokenForResetPassword(string token, string email)
+        {
+            var account = (from a in _context.Accounts
+                join s in _context.States on a.IdState equals s.Id 
+                where a.Email == email && s.Token == token
+                select a).SingleOrDefault();
+
+            if (account != null)
+                return true;
+            
+            return false;
+        }
+
+        public static bool ResetPassword(string email, string password)
+        {
+            try
+            {
+                var account = (from a in _context.Accounts
+                    where a.Email == email
+                    select a).SingleOrDefault();
+                
+                string hashedPassword = Hash.GetInstance().GetHash(password);
+                account.Password = hashedPassword;
+                _context.SaveChanges();
+                
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
         }
     }
 }

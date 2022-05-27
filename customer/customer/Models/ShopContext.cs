@@ -58,6 +58,9 @@ namespace customer.Models
                 entity.Property(e => e.IdPlace).HasColumnName("id_place");
 
                 entity.Property(e => e.IdState).HasColumnName("id_state");
+                
+                entity.Property(e => e.Lock).HasColumnName("lock");
+                entity.Property(e => e.Lock).HasColumnName("lock");
 
                 entity.Property(e => e.IdentityCard)
                     .IsRequired()

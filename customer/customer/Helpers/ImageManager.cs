@@ -12,7 +12,7 @@ namespace customer.Helpers
 
         private ImageManager()
         {
-            var config = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build().GetSection("Cloudinary");
+            var config = new ConfigurationBuilder().AddJsonFile("appsettings.Dev.json").Build().GetSection("Cloudinary");
             
             var account = new Account(
                 config["CloudName"],
