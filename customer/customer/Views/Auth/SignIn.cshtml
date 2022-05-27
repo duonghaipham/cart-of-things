@@ -14,6 +14,10 @@
         </div>
         <div class="signIn__right">
             <h3>ACCOUNT LOGIN</h3>
+            @if (ViewBag.Error != null)
+            {
+                <p style="color: red">@ViewBag.Error</p>
+            }
             <form method="post">
                 <div class="signIn__right__input">
                     <div class="signIn__right__input__username">

@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using customer.Helpers;
 using customer.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace customer.Controllers
 {
@@ -26,20 +29,22 @@ namespace customer.Controllers
         [Route("SignIn")]
         public IActionResult SignIn(string email, string password)
         {
-            var account = Account.SignIn(email, password);
+            var jsonAccount = Account.SignIn(email, password);
+            var user = JsonConvert.DeserializeObject(jsonAccount) as JObject;
             
-            if (account != null)
+            if (user["Error"] != null)
             {
-                HttpContext.Session.SetInt32("id", account.Id);
-                HttpContext.Session.SetString("name", account.Name);
-                HttpContext.Session.SetString("avatar", account.Avatar);
-            
-                return Redirect("/Home");
+                ViewBag.Error = user["Error"].ToString();
+                return View();
             }
 
-            return Redirect("/SignIn");
+            HttpContext.Session.SetInt32("id", (int) user["Account"]["Id"]);
+            HttpContext.Session.SetString("name", user["Account"]["Name"].ToString());
+            HttpContext.Session.SetString("avatar", user["Account"]["Avatar"].ToString());
+            
+            return Redirect("/Home");
         }
-
+        
         [HttpGet]
         [Route("SignUp")]
         public IActionResult SignUp()
@@ -49,9 +54,26 @@ namespace customer.Controllers
 
         [HttpPost]
         [Route("SignUp")]
-        public IActionResult SignUp(string name, string phone, string email, string password, string securityQuestion, string securityAnswer)
+        public IActionResult SignUp(string name, string email, string password, string confirmPassword, string phone)
         {
-			return View();
+            if (password != confirmPassword)
+            {
+                ViewBag.Error = "Passwords do not match";
+                return View("SignUp");
+            }
+            else
+            {
+                if (Account.IsExistedEmail(email) != null)
+                {
+                    ViewBag.Error = "Email is existed";
+                    return View("SignUp");
+                }
+                else
+                {
+                    var account = Account.SignUp(name, email, password, phone);
+                    return Redirect("/SignIn");
+                }
+            }
         }
 
         [HttpGet]
@@ -125,19 +147,45 @@ namespace customer.Controllers
         {
             return View();
         }
+        
+        public class ChangingPassword
+        {
+            public string NewPassword { get; set; }
+        }
 
         [HttpPut]
-        [Route("Users/{id?}/ChangePassword")]
-        public IActionResult ChangePassword(string oldPassword, string newPassword)
+        [Route("Users/ChangePassword")]
+        public IActionResult ChangePassword([FromBody] ChangingPassword password)
         {
-            return View();
+            int id = HttpContext.Session.GetInt32("id") ?? 0;
+            
+            Console.WriteLine();
+            
+            var account = Account.ChangePassword(id, password.NewPassword);
+            
+            if (account != null)
+            {
+                return Json(new { msg = "success" });
+            }
+
+            return Json(new { msg = "failed" });
+        }
+        
+        public class CheckingPassword
+        {
+            public string CurrentPassword { get; set; }
         }
 
         [HttpPost]
-        [Route("Users/{id?}/CheckPassword")]
-        public IActionResult CheckPassword()
+        [Route("Users/CheckPassword")]
+        public IActionResult CheckPassword([FromBody] CheckingPassword password)
         {
-            return null;
+            int id = HttpContext.Session.GetInt32("id") ?? 0;
+            
+            if (Account.CheckPassword(id, password.CurrentPassword))
+                return Json(new {msg = "success"});
+            
+            return Json(new {msg= "failed"});
         }
     }
 }

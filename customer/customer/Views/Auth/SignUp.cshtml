@@ -10,11 +10,15 @@
         </div>
         <div class="signUp__right">
             <h3>ACCOUNT SIGN UP</h3>
+            @if (ViewBag.Error != null)
+            {
+                <p style="color: red">@ViewBag.Error</p>
+            }
             <form method="post">
                 <label for="name">Name</label>
                 <input type="text" name="name" id="name" required />
 
-                <label for="username">Email</label>
+                <label for="email">Email</label>
                 <input type="email" name="email" id="email" required />
 
                 <label for="password">Password</label>

@@ -31,9 +31,7 @@ formChangePassword.addEventListener('submit', async event => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            currentPassword,
-            newPassword,
-            confirmedPassword
+            newPassword
           })
         });
 

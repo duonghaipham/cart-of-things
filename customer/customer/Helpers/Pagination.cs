@@ -1,7 +1,6 @@
 ﻿using System;
-using CloudinaryDotNet.Actions;
 
-namespace customer
+namespace customer.Helpers
 {
     public class Pagination
     {
