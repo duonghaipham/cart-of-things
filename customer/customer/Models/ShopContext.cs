@@ -60,7 +60,10 @@ namespace customer.Models
                 entity.Property(e => e.IdState).HasColumnName("id_state");
                 
                 entity.Property(e => e.Lock).HasColumnName("lock");
-                entity.Property(e => e.Lock).HasColumnName("lock");
+
+                entity.Property(e => e.VerifiedEmail)
+                    .HasColumnName("verified_email")
+                    .HasDefaultValue(0);
 
                 entity.Property(e => e.IdentityCard)
                     .IsRequired()

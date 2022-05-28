@@ -25,6 +25,8 @@ namespace customer.Models
         public int? IdState { get; set; }
         public int? IdPlace { get; set; }
         public int? Lock { get; set; }
+        
+        public int? VerifiedEmail { get; set; }
 
         private static ShopContext _context = new ShopContext();
 
@@ -54,6 +56,15 @@ namespace customer.Models
         {
             var account = (from a in _context.Accounts
                            where a.Id == id
+                           select a).SingleOrDefault();
+            
+            return account;
+        }
+
+        public static Account ViewInformation(string email)
+        {
+            var account = (from a in _context.Accounts
+                           where a.Email == email
                            select a).SingleOrDefault();
             
             return account;
@@ -126,7 +137,7 @@ namespace customer.Models
             return account;
         }
 
-        public static string ForgotPassword(string email)
+        public static string GenerateToken(string email)
         {
             string token = Guid.NewGuid().ToString();
 
@@ -149,7 +160,7 @@ namespace customer.Models
             return token;
         }
 
-        public static bool ValidateTokenForResetPassword(string token, string email)
+        public static bool ValidateToken(string token, string email)
         {
             var account = (from a in _context.Accounts
                 join s in _context.States on a.IdState equals s.Id 
@@ -159,6 +170,21 @@ namespace customer.Models
             if (account != null)
                 return true;
             
+            return false;
+        }
+
+        public static bool VerifyEmail(string email)
+        {
+            var account = (from a in _context.Accounts
+                where a.Email == email
+                select a).SingleOrDefault();
+            
+            account.VerifiedEmail = 1;
+            _context.SaveChanges();
+            
+            if (account.VerifiedEmail == 1)
+                return true;
+
             return false;
         }
 

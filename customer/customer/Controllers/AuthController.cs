@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using customer.Helpers;
 using customer.Models;
@@ -38,6 +39,20 @@ namespace customer.Controllers
                 ViewBag.Error = user["Error"].ToString();
                 return View();
             }
+            
+            int lockVal = int.TryParse(user["Account"]["Lock"].ToString(), out lockVal) ? lockVal : 0;
+            if (lockVal == 1)
+            {
+                ViewBag.Error = "Your account is locked. Please contact your administrator.";
+                return View();
+            }
+
+            int verifiedEmail = int.TryParse(user["Account"]["VerifiedEmail"].ToString(), out verifiedEmail) ? verifiedEmail : 0;
+            if (verifiedEmail != 1)
+            {
+                ViewBag.Error = "Your email is not verified. Please verify your email.";
+                return View();
+            }
 
             HttpContext.Session.SetInt32("id", (int) user["Account"]["Id"]);
             HttpContext.Session.SetString("name", user["Account"]["Name"].ToString());
@@ -55,25 +70,39 @@ namespace customer.Controllers
 
         [HttpPost]
         [Route("SignUp")]
-        public IActionResult SignUp(string name, string email, string password, string confirmPassword, string phone)
+        public async Task<IActionResult> SignUp(string name, string email, string password, string confirmPassword, string phone)
         {
             if (password != confirmPassword)
             {
                 ViewBag.Error = "Passwords do not match";
                 return View("SignUp");
             }
-            else
+
+            if (Account.IsExistedEmail(email) != null)
             {
-                if (Account.IsExistedEmail(email) != null)
-                {
-                    ViewBag.Error = "Email is existed";
-                    return View("SignUp");
-                }
-                else
-                {
-                    var account = Account.SignUp(name, email, password, phone);
-                    return Redirect("/SignIn");
-                }
+                ViewBag.Error = "Email is existed";
+                return View("SignUp");
+            }
+
+            var account = Account.SignUp(name, email, password, phone);
+            
+            string token = Account.GenerateToken(email);
+
+            string verifiedUrl = $"https://localhost:5001/VerifyEmail?token={token}&email={email}";
+            string verifiedBody = $"Please confirm your account by clicking this link: <a href='{verifiedUrl}'>link</a>";
+
+            try
+            {
+                await MailUtil.GetInstance().SendGmail(email, "Confirm your account", verifiedBody);
+                ViewBag.Message = "Please check your email to confirm your account";
+
+                return View("SignIn");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                ViewBag.Error = e.Message;
+                return View("SignUp");
             }
         }
 
@@ -88,13 +117,14 @@ namespace customer.Controllers
         [Route("ForgetPassword")]
         public async Task<IActionResult> ForgetPassword(string email)
         {
-            string token = Account.ForgotPassword(email);
+            string token = Account.GenerateToken(email);
             
             string verifiedUrl = $"https://localhost:5001/ResetPassword?token={token}&email={email}";
+            string verifiedBody = $"<h1>Reset Password</h1><p>Click <a href='{verifiedUrl}'>here</a> to reset your password</p>";
 
             try
             {
-                await MailUtil.GetInstance().SendGmail(email, "Forgot Password", verifiedUrl);
+                await MailUtil.GetInstance().SendGmail(email, "Forgot Password", verifiedBody);
                 ViewBag.Message = "Please check your email to reset your password";
 
                 return View("ForgetPassword");
@@ -211,7 +241,7 @@ namespace customer.Controllers
             string token = HttpContext.Request.Query["token"].ToString();
             string email = HttpContext.Request.Query["email"].ToString();
 
-            if (Account.ValidateTokenForResetPassword(token, email))
+            if (Account.ValidateToken(token, email))
             {
                 ViewData["email"] = email;
                 return View();
@@ -234,6 +264,36 @@ namespace customer.Controllers
             }
 
             return View();
+        }
+
+        [HttpGet]
+        [Route("VerifyEmail")]
+        public IActionResult VerifyEmail()
+        {
+            string token = HttpContext.Request.Query["token"].ToString();
+            string email = HttpContext.Request.Query["email"].ToString();
+
+            if (Account.ValidateToken(token, email))
+            {
+                if (Account.VerifyEmail(email))
+                {
+                    ViewBag.Message = "Your email has been verified";
+                
+                    var account = Account.ViewInformation(email);
+                
+                    HttpContext.Session.SetInt32("id", account.Id);
+                    HttpContext.Session.SetString("name", account.Name);
+                    HttpContext.Session.SetString("avatar", account.Avatar);
+                
+                    return View("VerifiedEmail");
+                }
+
+                ViewBag.Message = "There was an error verifying your email, please try again";
+                return View("SignUp");
+            }
+
+            ViewBag.Message = "Invalid token";
+            return View("SignUp");
         }
     }
 }
