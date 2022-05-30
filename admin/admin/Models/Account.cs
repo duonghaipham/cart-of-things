@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using admin.Helpers;
+using System.Web;
 
 #nullable disable
 
@@ -34,6 +36,25 @@ namespace admin.Models
             account.Lock = account.Lock == 1 ? 0 : 1;
             context.SaveChanges();
             return account;            
+        }
+        public static int createStaff(string avatar, string name, string email, string identityCard, string password, int id)
+        {
+            string hashedPassword = Hash.GetInstance().GetHash(password);
+            var staff = new Account()
+            {
+                Name = name,
+                Email = email,
+                Password = hashedPassword,
+                Avatar = avatar,
+                Role = "staff",
+                IdentityCard = identityCard,
+                IdPlace = id,
+                Lock = 0
+            };
+            context.Accounts.Add(staff);
+            var rs = context.SaveChanges();
+
+            return rs;
         }
     }
 }

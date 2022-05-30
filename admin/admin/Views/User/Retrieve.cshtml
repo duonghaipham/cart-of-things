@@ -105,7 +105,7 @@
                         <tr>
                             <th scope="row">@i</th>
                             @{i++;}
-                            <td><img src="https://i.pinimg.com/originals/3c/82/97/3c82973b1e4b053838217ef119713c95.jpg" /></td>
+                            <td><img src="@data.Avatar" /></td>
                             <td>@data.Name</td>
                             <td>@data.IdentityCard</td>
                             <td>@data.Email</td>
@@ -143,55 +143,6 @@
                             </td>
                         </tr>
                         }
-                        <!--<tr>
-                        <th scope="row">1</th>
-                        <td><img src="https://i.pinimg.com/originals/3c/82/97/3c82973b1e4b053838217ef119713c95.jpg" /></td>
-                        <td>Duy</td>
-                        <td>225627089</td>
-                        <td>hoduy220@gmail.com</td>
-                        <td>Active</td>
-                        <td>
-                            <div class="user__options__edit"
-                                 onclick="location.href='/users/<%= currentUser._id %>/update'">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     width="24"
-                                     height="24"
-                                     viewBox="0 0 24 24">
-                                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-5 17l1.006-4.036 3.106 3.105-4.112.931zm5.16-1.879l-3.202-3.202 5.841-5.919 3.201 3.2-5.84 5.921z"></path>
-                                </svg>
-                                <span>Edit user</span>
-                            </div>
-
-                            <div class="user__options__remove"
-                                 onclick="location.href='/users/<%= currentUser._id %>/delete'">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     width="24"
-                                     height="24"
-                                     viewBox="0 0 24 24">
-                                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.151 17.943l-4.143-4.102-4.117 4.159-1.833-1.833 4.104-4.157-4.162-4.119 1.833-1.833 4.155 4.102 4.106-4.16 1.849 1.849-4.1 4.141 4.157 4.104-1.849 1.849z"></path>
-                                </svg>
-                                <span>Remove user</span>
-                            </div>
-                            <div class="user__options__block"
-                                 onclick="handleLock(this, '<%= currentUser._id %>')">-->
-                        @*<% if (currentUser._id.toString() !== user._id.toString()) { %>
-                            <% if (currentUser.state.value === 'active') { %>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                 height="24" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd" />
-                            </svg>
-                            <span>Lock user</span>*@
-                        @*<% } else { %>*@
-                        <!--<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                             class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
-                        </svg>
-                        <span>Unlock user</span>-->
-                        @*<% } %>
-                            <% } %>*@
-                        <!--</div>
-                            </td>
-                        </tr>-->
                     </tbody>
                 </table>
             </div>
