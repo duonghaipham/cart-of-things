@@ -174,6 +174,7 @@ namespace customer.Controllers
         {
             string newAvatar = null;
             
+            Console.WriteLine(avatar);
             if (avatar != null)
                 newAvatar = ImageManager.GetInstance().Upload(avatar).SecureUrl.AbsoluteUri;
             

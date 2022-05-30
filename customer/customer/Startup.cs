@@ -139,16 +139,11 @@ namespace customer
                     pattern: "{controller=Product}/{action=View}/{ProductId?}");
 
                 #endregion
-
-                // endpoints.MapGet("/TestGmail", async context =>
-                // {
-                //     var message = await MailUtil.SendGmail(
-                //         "duonghaipham2001@gmail.com", 
-                //         "Email spam nè", 
-                //         "Đây là email spam");
-                //
-                //     await context.Response.WriteAsync(message.ToString());
-                // });
+                
+                endpoints.MapControllerRoute(
+                    name: "checkout",
+                    pattern: "{controller=Checkout}/{action=DoCheckout}"
+                );
             });
         }
     }
