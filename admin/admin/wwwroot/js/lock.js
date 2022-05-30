@@ -11,21 +11,23 @@ const createElement = (literal) => {
 const getChildrenLock = (newState) => {
     const newChildren = [];
 
+
+
     if (newState == 1) {
-        const [svg] = createElement(`<svg xmlns="http://www.w3.org/2000/svg"  width="24"
-                               height="24" viewBox="0 0 20 20" fill="currentColor">
-      <path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd" />
-    </svg>`);
-        const [span] = createElement(`<span>Lock</span>`);
+        const [svg] = createElement(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                         class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                    </svg>`);
+        const [span] = createElement(`<span>Unlock</span>`);
 
         newChildren.push(svg, span);
     }
     else {
-        const [svg] = createElement(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                       class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
-                  </svg>`);
-        const [span] = createElement(`<span>Unlock</span>`);
+        const [svg] = createElement(`<svg xmlns="http://www.w3.org/2000/svg" width="24"
+                         height="24" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd" />
+                    </svg>`);
+        const [span] = createElement(`<span>lock</span>`);
 
         newChildren.push(svg, span);
     }

@@ -37,6 +37,26 @@ namespace admin.Models
             context.SaveChanges();
             return account;            
         }
+
+        public static Account getStaff(int Id)
+        {
+            var account = context.Accounts.Find(Id);
+            return account;
+        }
+
+        public static bool updateStaff(string avatar, string name, string email, string identityCard, int idPlace, int Id)
+        {
+            var account = context.Accounts.Find(Id);
+            account.Avatar = avatar;
+            account.Name = name;
+            account.Email = email;
+            account.IdentityCard = identityCard;
+            account.IdPlace = idPlace;
+            var rs = context.SaveChanges();
+            if (rs == 0)
+                return false;
+            return true;
+        }
         public static int createStaff(string avatar, string name, string email, string identityCard, string password, int id)
         {
             string hashedPassword = Hash.GetInstance().GetHash(password);
@@ -49,7 +69,7 @@ namespace admin.Models
                 Role = "staff",
                 IdentityCard = identityCard,
                 IdPlace = id,
-                Lock = 0
+                Lock = 0 //Ko khóa
             };
             context.Accounts.Add(staff);
             var rs = context.SaveChanges();

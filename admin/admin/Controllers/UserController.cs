@@ -83,16 +83,25 @@ namespace admin.Controllers
 
         [HttpGet]
         [Route("Users/{Id?}/update")]
-        public IActionResult Update()
+        public IActionResult Update(int Id)
         {
+            Account staff= Account.getStaff(Id);
+            Place placeWork = Place.getPlace(staff.IdPlace ?? 0);
+            List<Place> listPlace = Place.getList(staff.IdPlace ?? 0);
+            ViewData["listPlace"] = listPlace;
+            ViewData["staff"] = staff;
+            ViewData["workPlace"] = placeWork;
             return View();
         }
 
         [HttpPut]
         [Route("Users/{Id?}/update")]
-        public IActionResult Update(string a)
+        public IActionResult Update([FromBody] Staff account, int Id)
         {
-            return View();
+            var result = Account.updateStaff(account.avatar, account.name, account.email, account.identityCard, account.idPlace, Id);
+            if (!result)
+                return Json(new{ msg = "failed" });
+            return Json(new{ msg = "successed" });
         }
 
         [HttpPut]

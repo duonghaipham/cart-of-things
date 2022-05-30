@@ -11,7 +11,6 @@ namespace admin.Helpers
     public class Hash
     {
         private static Hash _instance;
-
         private Hash() { }
 
         public static Hash GetInstance()
