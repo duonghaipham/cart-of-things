@@ -18,11 +18,9 @@ namespace customer.Models
         }
 
         public virtual DbSet<Account> Accounts { get; set; }
-        public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<Place> Places { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<State> States { get; set; }
@@ -86,19 +84,6 @@ namespace customer.Models
                     .HasColumnName("role");
             });
 
-            modelBuilder.Entity<Cart>(entity =>
-            {
-                entity.ToTable("Cart");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Amount).HasColumnName("amount");
-
-                entity.Property(e => e.IdAccount).HasColumnName("id_account");
-
-                entity.Property(e => e.IdProduct).HasColumnName("id_product");
-            });
-
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.ToTable("Category");
@@ -151,8 +136,13 @@ namespace customer.Models
                     .HasColumnName("created_at");
 
                 entity.Property(e => e.IdAccount).HasColumnName("id_account");
+                
+                entity.Property(e => e.Total).HasColumnName("total");
 
-                entity.Property(e => e.IdPayment).HasColumnName("id_payment");
+                entity.Property(e => e.PaymentState).HasColumnName("payment_state");
+                
+                entity.Property(e => e.PaymentId).HasColumnName("payment_id");
+
 
                 entity.Property(e => e.Note)
                     .IsRequired()
@@ -168,26 +158,6 @@ namespace customer.Models
                     .IsRequired()
                     .HasMaxLength(200)
                     .HasColumnName("recipient_name");
-            });
-
-            modelBuilder.Entity<Payment>(entity =>
-            {
-                entity.ToTable("Payment");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Cost).HasColumnName("cost");
-
-                entity.Property(e => e.Details)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("details");
-
-                entity.Property(e => e.State).HasColumnName("state");
-
-                entity.Property(e => e.Time)
-                    .HasColumnType("datetime")
-                    .HasColumnName("time");
             });
 
             modelBuilder.Entity<Place>(entity =>

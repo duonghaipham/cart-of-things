@@ -75,9 +75,6 @@ namespace customer
                     pattern: "{controller=Home}/{action=ViewContact}");
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=CheckOut}");
-                endpoints.MapControllerRoute(
-                    name: "default",
                     pattern: "{controller=Home}/{action=ViewCart}");
 
                 #endregion
@@ -141,9 +138,8 @@ namespace customer
                 #endregion
                 
                 endpoints.MapControllerRoute(
-                    name: "checkout",
-                    pattern: "{controller=Checkout}/{action=DoCheckout}"
-                );
+                    name: "default",
+                    pattern: "{controller=Home}/{action=CheckOut}");
             });
         }
     }

@@ -1,0 +1,118 @@
+﻿@{
+    ViewData["Title"] = "Check out";
+    ViewData["Tab"] = "home";
+}
+
+@section Scripts {
+    <script src="~/js/checkout.js" asp-append-version="true"></script>
+}
+
+<main>
+    <section class="main__top">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-auto">
+                    <div class="title__thin">
+                        <h1><b>Checkout</b></h1>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="main__top__path">
+                        <a href="/"><span>Home</span></a>
+                        <span>|</span>
+                        <span>Checkout</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="main__checkout">
+        <form class="container" method="post" id="form-checkout" action="Checkout">
+            <input type="hidden" name="products" id="products"/>
+            <div class="row">
+                <div class="col-8">
+                    <div class="main__checkout__left">
+                        <div class="bill-details">
+                            <div class="bill-details__title">
+                                <h5>BILLING DETAILS</h5>
+                            </div>
+                            <div class="bill-details__content">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name<span>*</span></label>
+                                    <input type="text"
+                                           class="form-control input-lg"
+                                           id="name"
+                                           name="name"
+                                           required/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="country" class="form-label">Country<span>*</span></label>
+                                    <input type="text" class="form-control" id="country" name="country" required/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="street" class="form-label">Address<span>*</span></label>
+                                    <input type="text"
+                                           class="form-control street-address"
+                                           id="street"
+                                           placeholder="Street Address"
+                                           name="street"
+                                           required/>
+                                    <input type="text"
+                                           class="form-control optional-address"
+                                           placeholder="Number, apartment, suite, unite ect (optional)"
+                                           id="number"
+                                           name="number"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="city" class="form-label">Town/City<span>*</span></label>
+                                    <input type="text" class="form-control" id="city" name="city" required/>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label for="phone" class="form-label">Phone<span>*</span></label>
+                                            <input type="tel" class="form-control" id="phone" name="phone" required/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="note" class="form-label">Order notes<span>*</span></label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="note"
+                                           placeholder="Note about your order, e.g, special notes for delivery"
+                                           name="note"
+                                           required/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="main__checkout__right">
+                        <div class="your-order">
+                            <div class="your-order__title">
+                                <h5>YOUR ORDER</h5>
+                            </div>
+                            <div class="your-order__product">
+                                <h6>Product<span>Total</span></h6>
+                                <ol id="order__product__container"></ol>
+                            </div>
+                            <ul class="your-order__total">
+                                <li>
+                                    <h6>Total<span>$750.99</span></h6>
+                                </li>
+                            </ul>
+                            <div class="place-order-button">
+                                <button type="submit"
+                                        class="btn btn-secondary">
+                                    PLACE ORDER
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</main>

@@ -39,13 +39,6 @@ namespace customer.Controllers
         }
 
         [HttpGet]
-        [Route("CheckOut")]
-        public IActionResult CheckOut()
-        {
-            return View();
-        }
-
-        [HttpGet]
         [Route("Cart")]
         public IActionResult ViewCart()
         {
