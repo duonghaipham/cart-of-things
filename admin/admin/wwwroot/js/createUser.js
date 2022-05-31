@@ -1,21 +1,4 @@
-﻿//function uploadFile(inputId) {
-//    var fileUpload = $("#" + inputId).get(0);
-//    var files = fileUpload.files;
-//    var formData = new FormData();
-//    formData.append('file', files[0]);
-
-//    $.ajax({
-//        url: '/users/create',
-//        type: 'POST',
-//        data: formData,
-//        processData: false,
-//        contentType: false,
-//        success: function (result) {
-//            alert('abc');
-//        }
-//    });
-//}
-const logSubmit = async e => {
+﻿const logSubmit = async e => {
     e.preventDefault();
     var name = document.getElementById("name").value;
     var email = document.getElementById("email").value;
