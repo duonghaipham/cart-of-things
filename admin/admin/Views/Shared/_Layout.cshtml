@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using System.Net.Http
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -11,6 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     @RenderSection("Css", required: false)
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 </head>
 <body>
 
@@ -22,20 +27,20 @@
                 <img src="~/img/logo.png" alt="logo" />
             </div>
             <div class="header__top__right">
-                <a href="/signOut">Sign out</a>
-                <a href="/view">Duy</a>
+                <a href="/Profile"><i class="fa fa-user" aria-hidden="true" style="padding-right:3px"></i>@Context.Session.GetString("userName")</a>
+                <a href="/SignOut"><i class="fa fa-sign-out" aria-hidden="true"style="padding-right:3px"></i>Sign out</a>
             </div>
         </div>
         @*<% if (user) { %>
+            <div class="header__bottom">
+                <a href="/cakes" <% if (which == 'product') { %> class="active" <% } %>><div>Products List</div></a>
+                <a href="/users" <% if (which == 'user') { %> class="active" <% } %>><div>Users List</div></a>
+                <a href="/statistics" <% if (which == 'statistics') { %> class="active" <% } %>><div>Statistics</div></a>
+            </div>
+            <% } %>*@
         <div class="header__bottom">
-            <a href="/cakes" <% if (which == 'product') { %> class="active" <% } %>><div>Products List</div></a>
-            <a href="/users" <% if (which == 'user') { %> class="active" <% } %>><div>Users List</div></a>
-            <a href="/statistics" <% if (which == 'statistics') { %> class="active" <% } %>><div>Statistics</div></a>
-        </div>
-        <% } %>*@
-        <div class="header__bottom">
-            <a href="/Places"><div>Places List</div></a>
-            <a href="/Users" class="active"><div>Users List</div></a>
+            <a href="/Places" @if (@ViewBag.Active == "Places") {@("class=active")}><div>Places List</div></a>
+            <a href="/Users" @if (@ViewBag.Active == "Users") {@("class=active")} ><div>Users List</div></a>
         </div>
     </header>
 

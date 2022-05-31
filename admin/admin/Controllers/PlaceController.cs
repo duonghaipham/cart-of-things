@@ -12,6 +12,7 @@ namespace admin.Controllers
         [Route("Places")]
         public IActionResult Retrieve()
         {
+            ViewBag.Active = "Places";
             return View();
         }
 
@@ -26,6 +27,7 @@ namespace admin.Controllers
         [Route("Places/{Id?}/update")]
         public IActionResult Update()
         {
+            ViewBag.Active = "Places";
             return View();
         }
 
