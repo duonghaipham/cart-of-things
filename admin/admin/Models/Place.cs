@@ -32,10 +32,10 @@ namespace admin.Models
             return context.Places.Find(Id);
         }
 
-        public static bool updateNumberStaff(int Id)
+        public static bool updateNumberStaff(int Id, int number)
         {
             var place = context.Places.Find(Id);
-            place.NumberStaff = place.NumberStaff + 1;
+            place.NumberStaff = place.NumberStaff + number;
             var rs = context.SaveChanges();
             if (rs == 0)
                 return false;

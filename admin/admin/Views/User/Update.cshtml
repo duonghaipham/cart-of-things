@@ -107,7 +107,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-3">
+                    @if (@account.IdPlace != null)
+                    {
+                        <div class="mb-3">
                             <label for="workplace" class="form-label">
                                 Workplace:
                                 <select id="workplace" name="workplace">
@@ -124,7 +126,7 @@
                                 </select>
                             </label>
                         </div>
-
+                    }
 
                 </div>
             </div>

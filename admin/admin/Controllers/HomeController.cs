@@ -6,7 +6,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using admin.Helpers;
+//System.Diagnostics.Debug.WriteLine(account.email);
 namespace admin.Controllers
 {
     public class HomeController : Controller
@@ -20,8 +25,7 @@ namespace admin.Controllers
 
         public IActionResult Index()
         {
-            return new RedirectResult(url: "/SignIn", permanent: true,
-                             preserveMethod: true);
+            return Redirect("/SignIn");
         }
 
         public IActionResult Privacy()
@@ -31,17 +35,55 @@ namespace admin.Controllers
 
         [HttpGet]
         [Route("SignIn")]
-        //[Route("")]
         public IActionResult SignIn()
         {
             return View();
         }
 
+        public class UserOfSignIn
+        {
+            public string email { get; set; }
+            public string password { get; set; }
+        }
+
         [HttpPost]
         [Route("SignIn")]
-        public IActionResult SignIn(string a)
+        public IActionResult SignIn([FromBody] UserOfSignIn account)
         {
-            return View();
+            var jsonAccount = Account.signin(account.email, account.password);
+            var user = JsonConvert.DeserializeObject(jsonAccount) as JObject;
+
+            if (user["Error"] != null)
+
+                return Json(new
+                {
+                    msg = "failed",
+                    error = user["Error"].ToString()
+                });
+
+            int lockVal = int.TryParse(user["Account"]["Lock"].ToString(), out lockVal) ? lockVal : 0;
+            if (lockVal == 1)
+                return Json(new
+                {
+                    msg = "failed",
+                    error = "Your account is locked. Please contact your administrator."
+                });
+
+            HttpContext.Session.SetString("profile", JsonConvert.SerializeObject(user["Account"]));
+
+            return Json(new
+            {
+                msg = "successed"
+            });
+        }
+
+        [HttpGet]
+        [Route("Profile")]
+        public IActionResult Profile()
+        {
+            var profile = JsonConvert.DeserializeObject<Account>(HttpContext.Session.GetString("profile"));
+            ViewData["Profile"] = profile;
+            return View(profile); 
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using admin.Helpers;
 using System.Web;
+using System.Security.Cryptography;
+using System.Text.Json;
+using Newtonsoft.Json;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 #nullable disable
 
@@ -75,6 +79,20 @@ namespace admin.Models
             var rs = context.SaveChanges();
 
             return rs;
+        }
+
+        public static string signin(string email, string password)
+        {
+            Account account = context.Accounts
+                                   .Where(s => s.Email == email).SingleOrDefault();
+
+            if (account == null)
+                return JsonConvert.SerializeObject(new { Error = "Account not found" });
+
+            if (!Hash.GetInstance().VerifyHash(password, account.Password))
+                return JsonConvert.SerializeObject(new { Error = "Wrong password" });
+
+            return JsonConvert.SerializeObject(new { Account = account });
         }
     }
 }

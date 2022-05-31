@@ -55,7 +55,7 @@ namespace admin.Controllers
             var resultSttaff = Account.createStaff(account.avatar, account.name, account.email, account.identityCard, account.password, account.idPlace);
             if (resultSttaff == 1)
             {
-                var updateNumberStaff = Place.updateNumberStaff(account.idPlace);
+                var updateNumberStaff = Place.updateNumberStaff(account.idPlace, 1);
                 if (updateNumberStaff)
                     return Json(new
                     { msg = "successed" });
@@ -98,8 +98,11 @@ namespace admin.Controllers
         [Route("Users/{Id?}/update")]
         public IActionResult Update([FromBody] Staff account, int Id)
         {
+            Account staff = Account.getStaff(Id);
+            var updateNumberStaffCur = Place.updateNumberStaff(staff.IdPlace ?? 0, -1);
             var result = Account.updateStaff(account.avatar, account.name, account.email, account.identityCard, account.idPlace, Id);
-            if (!result)
+            var updateNumberStaffNew = Place.updateNumberStaff(account.idPlace, 1);
+            if (!result || !updateNumberStaffCur || !updateNumberStaffNew)
                 return Json(new{ msg = "failed" });
             return Json(new{ msg = "successed" });
         }
