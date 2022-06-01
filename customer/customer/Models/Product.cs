@@ -1,6 +1,8 @@
 ﻿#nullable disable
 
 using System.Linq;
+using customer.Helpers;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace customer.Models
@@ -18,7 +20,7 @@ namespace customer.Models
 
         private static ShopContext _context = new ShopContext();
 
-        public static string RetrieveProducts()
+        public static string RetrieveProducts(int page, string category, string search, string sort)
         {
             var products = from p in _context.Products
                 join c in _context.Categories on p.IdCategory equals c.Id
@@ -34,9 +36,40 @@ namespace customer.Models
                     CategoryName = c.Name
                 };
             
-            var jsonProducts = JsonConvert.SerializeObject(products);
+            if (category != null)
+            {
+                products = products.Where(p => p.CategoryName == category);
+            }
+            
+            if (search != null)
+            {
+                products = products.Where(p => EF.Functions.Like(p.Name, $"%{search}%"));
+            }
 
-            return jsonProducts;
+            if (sort == "name")
+            {
+                products = products.OrderBy(p => p.Name);
+            }
+            if (sort == "price")
+            {
+                products = products.OrderBy(p => p.Price);
+            }
+            
+            int numObjects = products.Count();
+            
+            var productsPaged = products
+                .Skip((page - 1) * Pagination.ITEM_PER_PAGE)
+                .Take(Pagination.ITEM_PER_PAGE)
+                .ToList();
+            
+            Pagination pagination = new Pagination(numObjects, page);
+            
+            string jsonProductsAndPagination = JsonConvert.SerializeObject(new
+            {
+                products = productsPaged, pagination
+            });
+
+            return jsonProductsAndPagination;
         }
         
         public static string RetrieveProduct(int id)

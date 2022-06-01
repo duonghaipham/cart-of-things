@@ -19,7 +19,7 @@
   margin-top: 20px;
   padding: 14px 30px;
   color: #ffffff;
-  background: #f08632;
+  background: #1A94FF;
   letter-spacing: 2px;
   border: none;
   border-radius: 10px;
@@ -68,7 +68,7 @@
   text-align: center;
   cursor: pointer;
   padding-bottom: 50px;
-  border-bottom: 2px solid rgba(240, 135, 50, 0.5);
+  border-bottom: 2px solid rgba(26, 148, 255, 0.5);
 }
 
 .category:hover img {
@@ -87,7 +87,7 @@
 
 .category > h4 {
   margin-top: 20px;
-  color: #f08632;
+  color: #1A94FF;
 }
 
 .products {
@@ -105,7 +105,7 @@
 }
 
 .product:hover span {
-  background-color: #f08632;
+  background-color: #1A94FF;
   color: white;
   transition: all, 0.3s;
 }
@@ -148,7 +148,7 @@
 .product__cart__btn {
   font-weight: 600;
   border: none;
-  border-bottom: 2px solid #f08632;
+  border-bottom: 2px solid #1A94FF;
   font-family: "Franklin Gothic Medium";
   background-color: white;
 }

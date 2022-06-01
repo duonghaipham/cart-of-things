@@ -71,7 +71,7 @@ header {
 
 .header__search {
   padding: 7px 7px;
-  background-color: rgb(240, 134, 50, 0.3);
+  background-color: #1484ef;
   border-radius: 20px;
   display: flex;
   justify-content: center;
@@ -110,7 +110,7 @@ header {
 }
 
 .header__cart__icon:hover {
-  background-color: rgb(240, 134, 50, 0.3);
+  background-color: #07559a;
 }
 
 .header__cart__amount {
@@ -120,7 +120,7 @@ header {
   width: 26px;
   height: 27px;
   border-radius: 100%;
-  background-color: rgb(253 166 91);
+  background-color: #e72323;
   color: white;
   font-weight: bold;
   position: absolute;
@@ -131,7 +131,7 @@ header {
 .header__bottom {
   display: flex;
   justify-content: center;
-  background-color: rgb(240, 134, 50);
+  background-color: #1A94FF;
 }
 
 .header__bottom > * {
@@ -180,7 +180,7 @@ header {
 }
 
 .section__title {
-  color: #f08632;
+  color: #1A94FF;
   font-size: 20px;
   font-weight: 600;
   text-transform: uppercase;

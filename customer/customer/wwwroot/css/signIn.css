@@ -57,7 +57,7 @@ a:hover {
 
 .signIn__right__input__username,
 .signIn__right__input__password {
-  border: 1px solid rgba(255, 94, 2, 0.247);
+  border: 1px solid rgba(26, 148, 255, 0.247);
 }
 
 .signIn__right__input__username {
@@ -67,7 +67,7 @@ a:hover {
 .signIn__right button {
   display: block;
   text-decoration: none;
-  background-color: rgb(240, 134, 50);
+  background-color: rgb(26, 148, 255);
   color: white;
   padding: 12px 0px;
   width: 100%;
@@ -82,7 +82,7 @@ a:hover {
   margin: 10px 0px;
   display: inline-block;
   text-decoration: none;
-  color: rgb(240, 134, 50);
+  color: rgb(26, 148, 255);
   font-size: 18px;
 }
 

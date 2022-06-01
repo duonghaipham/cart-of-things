@@ -48,7 +48,7 @@
   font-size: 18px;
 }
 .bill-details__content label span {
-  color: #f08859;
+  color: #1A94FF;
   font-weight: bold;
 }
 
@@ -126,7 +126,7 @@
 
 .your-order__total > li span {
   float: right;
-  color: #f18632;
+  color: #1A94FF;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: bold;
   font-size: 90%;

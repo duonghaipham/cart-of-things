@@ -88,7 +88,7 @@
 }
 
 .product:hover .product__category {
-  background-color: #f08632;
+  background-color: #1A94FF;
   color: white;
   transition: all, 0.3s;
 }
@@ -131,7 +131,7 @@
 .product__cart__btn {
   font-weight: 600;
   border: none;
-  border-bottom: 2px solid #f08632;
+  border-bottom: 2px solid #1A94FF;
   font-family: "Franklin Gothic Medium";
   background-color: white;
 }

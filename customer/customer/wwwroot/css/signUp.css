@@ -28,7 +28,7 @@
 .signUp__right button {
   display: block;
   text-decoration: none;
-  background-color: rgb(240, 134, 50);
+  background-color: rgb(26, 148, 255);
   color: white;
   padding: 12px 0px;
   width: 100%;
@@ -43,7 +43,7 @@
   margin: 10px 0px;
   display: inline-block;
   text-decoration: none;
-  color: rgb(240, 134, 50);
+  color: rgb(26, 148, 255);
   font-size: 18px;
 }
 
@@ -61,10 +61,10 @@ form input {
   padding: 10px 0px;
   font-size: 20px;
   border: none;
-  border-bottom: 1px solid orange;
-
+  border-bottom: 1px solid #1A94FF;
   width: 100%;
 }
+
 form input:focus-visible {
   outline-width: 0 !important;
 }

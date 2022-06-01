@@ -20,7 +20,7 @@
 } */
 
 .row__cart__item {
-  border-bottom: 1px solid rgb(218, 102, 7);
+  border-bottom: 1px solid rgb(26, 148, 255);
 }
 
 .table__product__img {
@@ -115,7 +115,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .cart-total > ul > li > span {
   font-weight: bold;
-  color: #e36d0c;
+  color: #3ca2fc;
   float: right;
 }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using customer.Models;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace customer.Controllers
 {
@@ -9,11 +10,35 @@ namespace customer.Controllers
         [Route("Shop")]
         public IActionResult Index()
         {
+            int page = int.TryParse(HttpContext.Request.Query["page"], out page) ? page : 1;
+            string category = HttpContext.Request.Query["category"];
+            string search = HttpContext.Request.Query["search"];
+            string sort = HttpContext.Request.Query["sort"];
+
+            string url = HttpContext.Request.GetDisplayUrl();
+            url = url.Split("page=")[0];
+            
+            if (url[url.Length - 1] != '?' && url[url.Length - 1] != '&') {
+                if (url.Contains('?'))
+                {
+                    url += '&';
+                } 
+                else
+                {
+                    url += '?';
+                }
+            }
+            
             string jsonCategories = Category.GetAll();
-            string jsonProducts = Product.RetrieveProducts();
+            var jsonProductsAndPagination = Product.RetrieveProducts(page, category, search, sort);
 
             ViewData["jsonCategories"] = jsonCategories;
-            ViewData["jsonProducts"] = jsonProducts;
+            ViewData["jsonProducts"] = jsonProductsAndPagination;
+            ViewData["url"] = url;
+            ViewData["page"] = page;
+            ViewData["category"] = category;
+            ViewData["search"] = search;
+            ViewData["sort"] = sort;
 
             return View();
         }

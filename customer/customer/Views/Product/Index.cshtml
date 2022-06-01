@@ -4,7 +4,23 @@
 @{
     ViewData["Title"] = "Our products";
     ViewData["Tab"] = "shop";
-    var products = JsonConvert.DeserializeObject((string)ViewData["jsonProducts"]) as JArray;
+    
+    var productsAndPagination = JsonConvert.DeserializeObject((string)ViewData["jsonProducts"]) as JObject;
+    var products = productsAndPagination["products"] as JArray;
+    var pagination = productsAndPagination["pagination"] as JObject;
+
+    int paginationOrder = int.Parse(pagination["Order"].ToString());
+    int paginationCurr = int.Parse(pagination["Curr"].ToString());
+    int paginationNum = int.Parse(pagination["Num"].ToString());
+    int paginationUnit = int.Parse(pagination["Unit"].ToString());
+    int paginationMax = int.Parse(pagination["Max"].ToString());
+    int paginationEnd = int.Parse(pagination["End"].ToString());
+    
+    string url = ViewData["url"] as string;
+    string search = ViewData["search"] as string;
+    string category = ViewData["category"] as string;
+    string sort = ViewData["sort"] as string;
+
     var categories = JsonConvert.DeserializeObject((string)ViewData["jsonCategories"]) as JArray;
 }
 
@@ -29,15 +45,16 @@
                         aria-label="Default select example"
                         name="category">
                     <option>Category</option>
-                    @foreach (var category in categories)
+                    @foreach (var categoryItem in categories)
                     {
-                        <option value="@category["Name"]">@category["Name"]</option>
+                        <!option value="@categoryItem["Name"]"
+                                @if (categoryItem["Name"]?.ToString() == category)
+                                {
+                                    @("selected")
+                                }>
+                            @categoryItem["Name"]
+                        </!option>
                     }
-                    @*<% categories.forEach(categoryItem => { %>
-                              <option value="<%= categoryItem.name %>"
-                          <% if (category == categoryItem.name) { %> selected <% } %>
-                        ><%= categoryItem.name %></option>
-                              <% }); %>*@
                 </select>
             </div>
             <div class="shop__features__search">
@@ -46,7 +63,7 @@
                        type="text"
                        placeholder="Search"
                        name="search"
-                       @*<% if (search !== undefined) { %><%= `value=${search} ` %><% } %>*@/>
+                       @if (search != null) { @("value=" + search) } />
                 <button id="btn-submit" type="submit" class="search__icon">
                     <svg xmlns="http://www.w3.org/2000/svg"
                          fill="none"
@@ -68,8 +85,8 @@
                         aria-label="Default select example"
                         name="sort">
                     <option>Default sorting</option>
-                    @*<option value="name" <% if (sort === 'name') { %>selected<% } %>>Name</option>
-                        <option value="price" <% if (sort === 'price') { %>selected<% } %>>Price</option>*@
+                    <!option value="name" @if (sort == "name") { @("selected") }>Name</!option>
+                    <!option value="price"@if (sort == "price") { @("selected") }>Price</!option>
                 </select>
             </div>
         </div>
@@ -98,11 +115,11 @@
         }
     </div>
 
-    @*<div class="row">
+    <div class="row">
         <div class="col text-center">
             <div class="pagination-bar">
-                <% if (pagination.order > 1) { %>
-                <a href="<%= url %>page=<%= pagination.unit %>" class="previous-button">
+                @if (paginationOrder > 1) {
+                <a href=@(url + "page=" + paginationUnit) class="previous-button">
                     <svg xmlns="http://www.w3.org/2000/svg"
                          width="10"
                          height="25.5"
@@ -110,26 +127,28 @@
                         <path d="M3 12l18-12v24z"></path>
                     </svg>
                 </a>
-                <% } %>
-                <% for (let i = 0; i < pagination.end; i++) { %>
-                <a href="<%= url %>page=<%= i + pagination.unit + 1 %>"
-            <% if (i + pagination.unit + 1 == pagination.curr) { %>
-            class="active"
-            <% } %>
-            ><%= i + pagination.unit + 1 %>
-          </a>
-                <% } %>
-                <% if (pagination.num > pagination.max) { %>
-                <a href="<%= url %>page=<%= 1 + pagination.max %>" class="next-button">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         width="10"
-                         height="25.5"
-                         viewBox="0 0 24 24">
-                        <path d="M21 12l-18 12v-24z"></path>
-                    </svg>
-                </a>
-                <% } %>
+                }
+                @for (var i = 0; i < paginationEnd; i++)
+                {
+                    <a href=@(url + "page=" + (i + paginationUnit + 1))
+                       @if (i + paginationUnit + 1 == paginationCurr)
+                       {
+                           @("class=active")
+                       }>
+                        @(i + paginationUnit + 1)
+                    </a>
+                }
+                @if (paginationNum > paginationMax) {
+                    <a href=@(url + "page=" + (1 + paginationMax)) class="next-button">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             width="10"
+                             height="25.5"
+                             viewBox="0 0 24 24">
+                            <path d="M21 12l-18 12v-24z"></path>
+                        </svg>
+                    </a>
+                }
             </div>
         </div>
-    </div>*@
+    </div>
 </section>
