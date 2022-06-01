@@ -199,8 +199,8 @@ footer {
 
 .footer__top {
   display: flex;
-  padding: 20px 300px 100px 300px;
-  color: #a4a4a4;
+  padding: 20px 300px 0 300px;
+  color: #fff;
 }
 
 .footer__top h4 {

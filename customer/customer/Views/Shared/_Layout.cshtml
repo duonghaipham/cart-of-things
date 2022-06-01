@@ -1,114 +1,138 @@
-﻿@using System.Net.Http
-@using Microsoft.AspNetCore.Http;
+﻿@using Microsoft.AspNetCore.Http;
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="~/css/global.css" />
-    <link rel="stylesheet" href="~/css/home.css" />
-    <link rel="stylesheet" href="~/css/about.css" />
-    <link rel="stylesheet" href="~/css/checkout.css" />
-    <link rel="stylesheet" href="~/css/contact.css" />
-    <link rel="stylesheet" href="~/css/product.css" />
-    <link rel="stylesheet" href="~/css/shop.css" />
-    <link rel="stylesheet" href="~/css/shoppingCart.css" />
-    <link rel="stylesheet" href="~/css/signIn.css" />
-    <link rel="stylesheet" href="~/css/signUp.css" />
-    
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="~/css/global.css"/>
+    <link rel="stylesheet" href="~/css/home.css"/>
+    <link rel="stylesheet" href="~/css/about.css"/>
+    <link rel="stylesheet" href="~/css/checkout.css"/>
+    <link rel="stylesheet" href="~/css/contact.css"/>
+    <link rel="stylesheet" href="~/css/product.css"/>
+    <link rel="stylesheet" href="~/css/shop.css"/>
+    <link rel="stylesheet" href="~/css/shoppingCart.css"/>
+    <link rel="stylesheet" href="~/css/signIn.css"/>
+    <link rel="stylesheet" href="~/css/signUp.css"/>
+
     @RenderSection("Css", required: false)
 
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="icon" type="image/png" href="~/img/favicon.png"/>
 </head>
 <body>
-    <header>
-        <div class="header__top">
-            <div class="header__top__left">
-                @if (Context.Session.GetString("id") != null)
-                {
-                    <img src="@Context.Session.GetString("avatar")" alt="avatar" class="rounded-circle" style="height:40px; width:40px; object-fit: contain;">
-                    <a href="/users/@Context.Session.GetInt32("id")" class="mx-3">@Context.Session.GetString("name")</a>
-                    <a href="/signOut" class=" rounded border border-warning p-2">Sign out</a>
-                }
-                else
-                {
-                    <a href="/signIn" class=" rounded border border-warning p-2">Sign in</a>
-                }
-            </div>
-            <div class="header__top__mid">
-                <img src="/img/logo.png" alt="logo" />
-            </div>
-            <div class="header__top__right">
-                <div class="header__search">
-                    <input type="text" />
-                    <img src="/img/search.png" alt="search icon" />
-                </div>
-
-                <span>|</span>
-                <img src="/img/heart.png" alt="heart icon" />
-                <a href="/Cart" class="header__cart__icon">
-                    <img src="/img/cart.png" alt="cart icon" />
-                    <span class="header__cart__amount">0</span>
-                </a>
-                <p>Cart: $0.00</p>
-            </div>
+<header>
+    <div class="header__top">
+        <div class="header__top__left">
+            @if (Context.Session.GetString("id") != null)
+            {
+                <img src="@Context.Session.GetString("avatar")" alt="avatar" class="rounded-circle" style="height:40px; width:40px; object-fit: contain;">
+                <a href="/users/@Context.Session.GetInt32("id")" class="mx-3">@Context.Session.GetString("name")</a>
+                <a href="/signOut" class="rounded border border-primary p-2">Sign out</a>
+            }
+            else
+            {
+                <a href="/signIn" class=" rounded border border-primary p-2">Sign in</a>
+            }
         </div>
-        <div class="header__bottom">
-            <a href="/Home" @if (ViewData["Tab"].ToString() == "home") { @("class=active") }>Home</a>
-            <a href="/Shop" @if (ViewData["Tab"].ToString() == "shop") { @("class=active") }>Shop</a>
-            <a href="/About" @if (ViewData["Tab"].ToString() == "about") { @("class=active") }>About</a>
-            <a href="/Contact" @if (ViewData["Tab"].ToString() == "contact") { @("class=active") }>Contact</a>
+        <div class="header__top__mid">
+            <img src="/img/logo.png" alt="logo"/>
         </div>
-    </header>
+        <div class="header__top__right">
+            <div class="header__search">
+                <input type="text"/>
+                <img src="/img/search.png" alt="search icon"/>
+            </div>
 
-    @RenderBody()
-
-    <footer style="background-image: url(/img/footer-bg.jpg)">
-        <div class="footer__top">
-            <div class="footer__top__left">
-                <h4>Working hours</h4>
-                <span>Monday - Friday: 08:00 am - 08:30 pm</span>
-                <span>Saturday: 10:00 am - 16:30 pm</span>
-                <span>Sunday: 10:00 am - 16:30 pm</span>
-            </div>
-            <div class="footer__top__mid">
-                <img src="/img/footer-logo.png" alt="footer-logo" />
-                <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi
-                    quasi excepturi obcaecati nobis deserunt. In maxime veritatis vero
-                </p>
-            </div>
-            <div class="footer__top__right">
-                <h4>Subscribe</h4>
-                <p>Get latest updates and offers</p>
-                <input type="text" placeholder="Email" />
-            </div>
+            <span>|</span>
+            <img src="/img/heart.png" alt="heart icon"/>
+            <a href="/Cart" class="header__cart__icon">
+                <img src="/img/cart.png" alt="cart icon"/>
+                <span class="header__cart__amount"></span>
+            </a>
         </div>
-        <div class="footer__bottom">
-            <div class="footer__bottom__left">
-                <span>
-                    Copyright ©2021 All rights reserved | This template is made with by
-                    Colorlib
-                </span>
-            </div>
-            <div class="footer__bottom__right">
-                <span>Privacy Policy</span>
-                <span>Terms & Conditions</span>
-                <span>Site Map</span>
-            </div>
+    </div>
+    <div class="header__bottom">
+        <a href="/Home"
+           @if (ViewData["Tab"].ToString() == "home")
+           {
+               @("class=active")
+           }>
+            Home
+        </a>
+        <a href="/Shop"
+           @if (ViewData["Tab"].ToString() == "shop")
+           {
+               @("class=active")
+           }>
+            Shop
+        </a>
+        <a href="/About"
+           @if (ViewData["Tab"].ToString() == "about")
+           {
+               @("class=active")
+           }>
+            About
+        </a>
+        <a href="/Contact"
+           @if (ViewData["Tab"].ToString() == "contact")
+           {
+               @("class=active")
+           }>
+            Contact
+        </a>
+    </div>
+</header>
+
+@RenderBody()
+<footer style="background-image: url('/img/footer-bg.jpg')">
+    <div class="footer__top">
+        <div class="footer__top__left">
+            <h4>Working hours</h4>
+            <span>Monday - Friday: 08:00 am - 08:30 pm</span>
+            <span>Saturday: 10:00 am - 16:30 pm</span>
+            <span>Sunday: 10:00 am - 16:30 pm</span>
         </div>
-    </footer>
+        <div class="footer__top__mid">
+            <p>
+                Hello, welcome to our online store! We have the best products for you.
+                Please feel free to look around. You can contact us if you have any questions.
+                Happy Shopping!
+            </p>
+        </div>
+        <div class="footer__top__right">
+            <h4>Subscribe</h4>
+            <p>Get latest updates and offers</p>
+            <input type="text" placeholder="Email"/>
+        </div>
+    </div>
+    <div class="footer__bottom">
+        <div class="footer__bottom__left">
+            <span>
+                Copyright © 2022 All rights reserved
+            </span>
+        </div>
+        <div class="footer__bottom__right">
+            <span>Privacy Policy</span>
+            <span>Terms & Conditions</span>
+            <span>Site Map</span>
+        </div>
+    </div>
+</footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="~/js/avatar.js" asp-append-version="true"></script>
+<script src="~/js/avatar.js" asp-append-version="true"></script>
+<script>
+document.getElementsByClassName("header__cart__amount")[0].innerText = localStorage.cartNumbers;
+</script>
 
-    @RenderSection("Scripts", required: false)
+@RenderSection("Scripts", required: false)
 </body>
 </html>
