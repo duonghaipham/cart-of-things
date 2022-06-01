@@ -21,8 +21,8 @@ namespace admin.Controllers
         [Route("Users")]
         public IActionResult Retrieve()
         {
-            List<Account> list = Account.getList();
-            ViewData["listStaff"] = list;
+            var jsonList = Account.getList();
+            ViewData["listStaff"] = jsonList;
             ViewBag.Active = "Users";
             return View();
         }

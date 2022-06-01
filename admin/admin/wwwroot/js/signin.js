@@ -14,7 +14,7 @@
             email: email,
             password: password,
         }
-        console.log(data)
+        //console.log(data)
         const response = await fetch('/signin', {
             method: 'POST',
             headers: {

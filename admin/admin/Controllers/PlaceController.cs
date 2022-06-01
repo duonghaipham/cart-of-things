@@ -1,8 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using admin.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using admin.Helpers;
 
 namespace admin.Controllers
 {
@@ -13,29 +21,47 @@ namespace admin.Controllers
         public IActionResult Retrieve()
         {
             ViewBag.Active = "Places";
+            ViewData["listPlaces"] = Place.getList();
             return View();
+        }
+
+        public class NewPlace
+        {
+            public string placeName { get; set; }
+            public string address { get; set; }
         }
 
         [HttpPost]
         [Route("Places/create")]
-        public IActionResult Create()
+        public IActionResult Create([FromBody] NewPlace place)
         {
-            return View();
+            var result = Place.createPlace(place.placeName, place.address);
+
+            if (result)
+                return Json(new
+                { msg = "successed", url = "/Places" });
+            return Json(new{ msg = "failed" });
         }
 
         [HttpGet]
         [Route("Places/{Id?}/update")]
-        public IActionResult Update()
+        public IActionResult Update(int Id)
         {
             ViewBag.Active = "Places";
+
+            ViewData["Place"] = Place.getPlace(Id);
             return View();
         }
 
         [HttpPut]
         [Route("Places/{Id?}/update")]
-        public IActionResult Update(string a)
+        public IActionResult Update([FromBody] NewPlace place, int Id)
         {
-            return View();
+            var result = Place.updatePlace(Id, place.placeName, place.address);
+            if (result)
+                return Json(new
+                { msg = "successed", url = "/Places" });
+            return Json(new { msg = "failed" });
         }
     }
 }

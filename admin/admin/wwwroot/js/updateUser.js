@@ -58,7 +58,7 @@
             avatar: pathAvatar,
             idPlace: parseInt(idPlace)
         }
-        console.log(data)
+        //console.log(data)
         const response = await fetch(`/users/${idUser}/Update`, {
             method: 'PUT',
             headers: {

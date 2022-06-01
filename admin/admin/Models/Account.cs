@@ -7,6 +7,8 @@ using System.Security.Cryptography;
 using System.Text.Json;
 using Newtonsoft.Json;
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -19,6 +21,7 @@ namespace admin.Models
         public string IdentityCard { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+
         public string Avatar { get; set; }
         public string Role { get; set; }
         public int? IdState { get; set; }
@@ -26,12 +29,25 @@ namespace admin.Models
         public int? Lock { get; set; }
 
         private static ShopContext context = new ShopContext();
-        public static List<Account> getList(){
-      
-            var listStaff = context.Accounts
-                                   .Where(a => a.Role == "staff").ToList();
+        public static string getList()
+        {
 
-            return listStaff;
+            var listStaff = (from a in context.Accounts
+                            join p in context.Places on a.IdPlace equals p.Id
+                            where a.Role == "staff"
+                            select new
+                            {
+                                Id = a.Id,
+                                Name = a.Name,
+                                IdentityCard = a.IdentityCard,
+                                Email = a.Email,
+                                Avatar = a.Avatar,
+                                Lock = a.Lock, 
+                                NamePlace = p.Name
+                            });
+            string jsonOrders = JsonConvert.SerializeObject(listStaff);
+
+            return jsonOrders;
         }
 
         public static Account updateLock(int Id)
@@ -39,7 +55,7 @@ namespace admin.Models
             var account = context.Accounts.Find(Id);
             account.Lock = account.Lock == 1 ? 0 : 1;
             context.SaveChanges();
-            return account;            
+            return account;
         }
 
         public static Account getStaff(int Id)
@@ -52,9 +68,9 @@ namespace admin.Models
         {
             var account = context.Accounts.Find(Id);
             if (avatar == "" && account.Name == name && account.Email == email && account.IdentityCard == identityCard)
-                if (idPlace == 0 && account.Role == "admin")
+                if (account.Role == "admin")
                     return true;
-                else if (idPlace != 0 && account.Role == "staff")
+                else if (idPlace == account.IdPlace && account.Role == "staff")
                     return true;
 
             if (avatar != "")
@@ -62,7 +78,7 @@ namespace admin.Models
             account.Name = name;
             account.Email = email;
             account.IdentityCard = identityCard;
-            if(idPlace != 0)
+            if (idPlace != 0)
                 account.IdPlace = idPlace;
             var rs = context.SaveChanges();
             if (rs == 0)
@@ -105,7 +121,7 @@ namespace admin.Models
             if (rs == 0)
                 return JsonConvert.SerializeObject(new { msg = "failed update password" });
 
-            return JsonConvert.SerializeObject(new { msg = "successed"});
+            return JsonConvert.SerializeObject(new { msg = "successed" });
         }
 
         public static string signin(string email, string password)

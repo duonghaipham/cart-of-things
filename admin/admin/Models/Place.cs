@@ -11,6 +11,7 @@ namespace admin.Models
         public int Id { get; set; }
         public string Address { get; set; }
         public int NumberStaff { get; set; }
+        public string Name { get; set; }
 
         private static ShopContext context = new ShopContext();
         public static List<Place> getList()
@@ -40,6 +41,51 @@ namespace admin.Models
             if (rs == 0)
                 return false;
             return true;
+        }
+
+        public static bool createPlace(string placeName, string address)
+        {
+            Place place = context.Places
+                                   .Where(p => p.Name == placeName).SingleOrDefault();
+
+            if(place == null)
+            {
+                var newPlace = new Place()
+                {
+                    Address = address,
+                    NumberStaff = 0,
+                    Name = placeName
+                };
+                context.Places.Add(newPlace);
+                var rs = context.SaveChanges();
+                if (rs == 0)
+                    return false;
+                return true;
+            }
+            return false;
+            
+        }
+
+        public static bool updatePlace(int Id, string placeName, string address)
+        {
+            Place placeCur = context.Places.Find(Id);
+            if (placeCur.Name == placeName && placeCur.Address == address)
+                return true;
+
+            Place placeCheck = context.Places
+                                  .Where(p => p.Name == placeName).SingleOrDefault();
+
+            if (placeCheck == null)
+            {
+                placeCur.Name = placeName;
+                placeCur.Address = address;
+
+                var rs = context.SaveChanges();
+                if (rs == 0)
+                    return false;
+                return true;
+            }
+            return false;
         }
     }
 }

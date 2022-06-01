@@ -1,4 +1,13 @@
-﻿@{ ViewData["Title"] = "Staff"; }
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Staff";
+    var listStaffs = JsonConvert.DeserializeObject((string)ViewData["listStaff"]) as JArray;
+    @foreach (var data in listStaffs)
+        System.Diagnostics.Debug.WriteLine(@data);
+}
 @section Scripts {
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/lock.js"></script>
@@ -93,52 +102,56 @@
                             <th scope="col">Name</th>
                             <th scope="col">Identity card</th>
                             <th scope="col">Email</th>
+                            <th scope="col">PlaceWork</th>
                             <th scope="col">Options</th>
                         </tr>
                     </thead>
                     <tbody>
                         @{int i = 1;}
-                        @foreach (var data in (List<Account>)ViewData["listStaff"])
+                        @*@foreach (var data in (List<Account>)ViewData["listStaff"])*@
+                        @foreach (var data in listStaffs)
                         {
-                    <tr>
-                        <th scope="row">@i</th>
-                        @{i++;}
-                        <td><img src="@data.Avatar" /></td>
-                        <td>@data.Name</td>
-                        <td>@data.IdentityCard</td>
-                        <td>@data.Email</td>
-                        <td>
-                            <div class="user__options__edit"
-                                 onclick="location.href='/Users/@data.Id/update'">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     width="24"
-                                     height="24"
-                                     viewBox="0 0 24 24">
-                                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-5 17l1.006-4.036 3.106 3.105-4.112.931zm5.16-1.879l-3.202-3.202 5.841-5.919 3.201 3.2-5.84 5.921z"></path>
-                                </svg>
-                                <span>Edit user</span>
-                            </div>
+                            <tr>
+                                <th scope="row">@i</th>
+                                @{i++;}
+                                <td><img src="@data["Avatar"]" /></td>
+                                <td>@data["Name"]</td>
+                                <td>@data["IdentityCard"]</td>
+                                <td>@data["Email"]</td>
+                                <td>@data["NamePlace"]</td>
+                                <td>
+                                    <div class="user__options__edit"
+                                         onclick="location.href='/Users/@data["Id"]/update'">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
+                                             height="24"
+                                             viewBox="0 0 24 24">
+                                            <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-5 17l1.006-4.036 3.106 3.105-4.112.931zm5.16-1.879l-3.202-3.202 5.841-5.919 3.201 3.2-5.84 5.921z"></path>
+                                        </svg>
+                                        <span>Edit user</span>
+                                    </div>
 
-                            <div class="user__options__block"
-                                 onclick="handleLock(this, @data.Id)">
-                                @if (@data.Lock == 1)
-                                {
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                         class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
-                                    </svg>
-                                    <span>Unlock</span>}
-                                else
-                                {
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                     height="24" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd" />
-                                </svg>
-                                    <span>Lock</span>}
+                                    <div class="user__options__block"
+                                         onclick="handleLock(this, @data["Id"]">
+                                        @if ((int)@data["Lock"] == 1)
+                                        {
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                                            </svg>
+                                            <span>Unlock</span>}
+                                        else
+                                        {
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                 height="24" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd" />
+                                            </svg>
+                                            <span>Lock</span>}
 
-                            </div>
-                        </td>
-                    </tr>}
+                                    </div>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>

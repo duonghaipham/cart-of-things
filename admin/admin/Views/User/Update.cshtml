@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "CreateStaff";
+    ViewData["Title"] = "UpdateStaff";
     var account = (Account)ViewData["staff"];
     var placeWork = (Place)ViewData["workPlace"];
 }
@@ -114,19 +114,19 @@
                                 Workplace:
                                 <select id="workplace" name="workplace">
                                     <option value="@placeWork.Id" selected>
-                                        @placeWork.Address
+                                        @placeWork.Name
                                     </option>
 
                                     @foreach (var data in (List<Place>)ViewData["listPlace"])
                                     {
                                         <option value="@data.Id">
-                                            @data.Address
+                                            @data.Name
                                         </option>
                                     }
                                 </select>
                             </label>
                         </div>
-                    }
+                     }
 
                 </div>
             </div>
