@@ -1,7 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿
 
 #nullable disable
+
+using System;
+using System.Linq;
+using Newtonsoft.Json;
 
 namespace customer.Models
 {
@@ -15,7 +18,7 @@ namespace customer.Models
         public DateTime CreatedAt { get; set; }
         public string PaymentState{ get; set; }
         public int? IdAccount { get; set; }
-        public float? Total { get; set; }
+        public double? Total { get; set; }
         public string PaymentId { get; set; }
 
         private static ShopContext _context = new ShopContext();
@@ -53,6 +56,41 @@ namespace customer.Models
             
             order.PaymentState = paymentState;
             _context.SaveChanges();
+        }
+        
+        public static string GetOrdersByUserId(int id)
+        {
+            var orders = (from o in _context.Orders
+                where o.IdAccount == id
+                select new
+                {
+                    Id = o.Id,
+                    RecipientName = o.RecipientName,
+                    Address = o.Address,
+                    Phone = o.Phone,
+                    Note = o.Note,
+                    CreatedAt = o.CreatedAt,
+                    PaymentState = o.PaymentState,
+                    Total = o.Total,
+                    PaymentId = o.PaymentId,
+                    Wares = (from w in _context.Wares
+                        join p in _context.Products on w.IdProduct equals p.Id
+                        where w.IdOrder == o.Id
+                        select new
+                        {
+                            Id = w.Id,
+                            IdProduct = w.IdProduct,
+                            Name = p.Name,
+                            Price = p.Price,
+                            Avatar = p.Avatar,
+                            Amount = w.Amount,
+                            Total = w.Amount * p.Price
+                        }).ToList()
+                }).ToList();
+
+            string jsonOrders = JsonConvert.SerializeObject(orders);
+
+            return jsonOrders;
         }
     }
 }

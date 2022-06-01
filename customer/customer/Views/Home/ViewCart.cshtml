@@ -3,6 +3,16 @@
     ViewData["Tab"] = "home";
 }
 
+@section Css
+{
+    <link rel="stylesheet" href="~/css/orders.css" />
+}
+
+@section Scripts
+{
+    <script src="~/js/cart.js" asp-append-version="true"></script>
+}
+
 <main>
     <section class="main__top">
         <div class="container">
@@ -27,7 +37,7 @@
             <div class="row">
                 <div class="col-8">
                     <div class="row">
-                        <table id="product__cart__container">
+                        <table id="product__cart__container" style="width: 100%">
                         </table>
                     </div>
                     <div class="row justify-content-between shopping-choice">
@@ -38,13 +48,6 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="col-4">
-                            <div class="shopping-choice__update">
-                                <button type="button" class="btn btn-secondary" onclick="location.href='#'">
-                                    <img src="/img/loading-icon.png" alt="Loading icon"> UPDATE CART
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="col-4">
@@ -52,7 +55,6 @@
                         <h5><b>CART TOTAL</b></h5>
                         <ul>
                             <li>Total <span id="cart__total"></span></li>
-
                         </ul>
                         <button class="btn btn-secondary" type="submit" style="width:100%;" onclick="location.href='checkout'">PROCEED TO CHECKOUT</button>
                     </div>

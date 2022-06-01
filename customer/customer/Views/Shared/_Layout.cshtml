@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="~/css/shoppingCart.css" />
     <link rel="stylesheet" href="~/css/signIn.css" />
     <link rel="stylesheet" href="~/css/signUp.css" />
+    
+    @RenderSection("Css", required: false)
 
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -106,9 +108,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="~/js/avatar.js" asp-append-version="true"></script>
-    <script src="~/js/cart.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
-
 </body>
 </html>

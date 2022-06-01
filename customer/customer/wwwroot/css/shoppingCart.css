@@ -103,7 +103,6 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .cart-total {
-  margin-top: 50px;
   padding: 40px;
   background-color: #fdf3ea;
   font-family: Verdana, Geneva, Tahoma, sans-serif;

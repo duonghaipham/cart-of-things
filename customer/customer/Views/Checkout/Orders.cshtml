@@ -1,0 +1,97 @@
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@{
+    ViewData["Title"] = "Your orders";
+    ViewData["Tab"] = "home";
+    
+    var orders = JsonConvert.DeserializeObject((string)ViewData["jsonOrders"]) as JArray;
+}
+
+<main>
+    <section class="main__top">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-auto">
+                    <div class="title__thin">
+                        <h1>
+                            <b>Your orders</b>
+                        </h1>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="main__top__path">
+                        <a href="/">
+                            <span>Home</span>
+                        </a>
+                        <span>|</span>
+                        <span>Your orders</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="main__shopping-cart">
+        <div class="container">
+            @foreach (var order in orders)
+            {
+                <div class="row" style="margin-bottom: 40px">
+                    <div class="col-8">
+                        <div class="row">
+                            <table id="product__cart__container" style="width: 100%">
+                                <tbody>
+                                <tr class="table__head">
+                                    <th>
+                                        <h5>PRODUCT</h5>
+                                    </th>
+                                    <th>
+                                        <h5>QUANTITY</h5>
+                                    </th>
+                                    <th>
+                                        <h5>TOTAL</h5>
+                                    </th>
+                                </tr>
+                                </tbody>
+                                @foreach (var ware in (order["Wares"] as JArray))
+                                {
+                                    <tbody class="row__cart__item">
+                                    <tr>
+                                        <td class="table__product">
+                                            <div class="table__product__img">
+                                                <img src="@ware["Avatar"]" alt="@ware["Name"]">
+                                            </div>
+                                            <div class="table__product__details">
+                                                <h6 id="table__product__name">@ware["Name"]</h6>
+                                                <h5>$ <span id="table__product__price">@ware["Price"]</span></h5>
+                                            </div>
+                                        </td>
+                                        <td class="table__quantity">
+                                            <div class="table__product__details">
+                                                <h5>@ware["Amount"]</h5>
+                                            </div>
+                                        </td>
+                                        <td class="table__total">
+                                            <h5>$ <span id="table__product__total">@ware["Total"]</span></h5>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="cart-total">
+                            <ul>
+                                <li>Total: $ @order["Total"]</li>
+                                <li>Recipient: @order["RecipientName"]</li>
+                                <li>Phone: @order["Phone"]</li>
+                                <li>Date: @order["CreatedAt"]</li>
+                                <li>Payment state: @order["PaymentState"]</li>
+                                <li>Payment id: @order["PaymentId"]</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</main>

@@ -166,5 +166,22 @@ namespace customer.Controllers
             
             return View();
         }
+
+        [HttpGet]
+        [Route("Orders")]
+        public IActionResult Orders()
+        {
+            if (HttpContext.Session.GetInt32("id") == null)
+            {
+                return Redirect("SignIn");
+            }
+
+            int idUser = (int)HttpContext.Session.GetInt32("id");
+            string jsonOrders = Order.GetOrdersByUserId(idUser);
+
+            ViewData["jsonOrders"] = jsonOrders;
+
+            return View();
+        }
     }
 }
