@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.IO;
 using System;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 //System.Diagnostics.Debug.WriteLine();
 namespace admin.Controllers
 {
@@ -20,6 +23,7 @@ namespace admin.Controllers
         {
             List<Account> list = Account.getList();
             ViewData["listStaff"] = list;
+            ViewBag.Active = "Users";
             return View();
         }
         //public IEnumerable<Place> Retrieve()
@@ -35,6 +39,7 @@ namespace admin.Controllers
         {
             List<Place> list = Place.getList();
             ViewData["listPlace"] = list;
+            ViewBag.Active = "Users";
             return View();
         }
 
@@ -85,7 +90,11 @@ namespace admin.Controllers
         [Route("Users/{Id?}/update")]
         public IActionResult Update(int Id)
         {
-            Account staff= Account.getStaff(Id);
+            ViewBag.Active = "Users";
+            Account staff = Account.getStaff(Id);
+            Account profile = JsonConvert.DeserializeObject<Account>(HttpContext.Session.GetString("profile"));
+            if (profile.Id == staff.Id)
+                ViewBag.Active = "No";
             Place placeWork = Place.getPlace(staff.IdPlace ?? 0);
             List<Place> listPlace = Place.getList(staff.IdPlace ?? 0);
             ViewData["listPlace"] = listPlace;
@@ -99,18 +108,30 @@ namespace admin.Controllers
         public IActionResult Update([FromBody] Staff account, int Id)
         {
             Account staff = Account.getStaff(Id);
-            var updateNumberStaffCur = Place.updateNumberStaff(staff.IdPlace ?? 0, -1);
+            Account profile = JsonConvert.DeserializeObject<Account>(HttpContext.Session.GetString("profile"));
             var result = Account.updateStaff(account.avatar, account.name, account.email, account.identityCard, account.idPlace, Id);
+            if (profile.Id == staff.Id)
+            {
+                if (!result)
+                    return Json(new { msg = "failed" });
+                staff = Account.getStaff(Id);
+                if(staff != null)
+                    HttpContext.Session.SetString("profile", JsonConvert.SerializeObject(staff));
+                return Json(new { msg = "successed", path = "/Profile" });
+            }
+
+            var updateNumberStaffCur = Place.updateNumberStaff(staff.IdPlace ?? 0, -1);
             var updateNumberStaffNew = Place.updateNumberStaff(account.idPlace, 1);
             if (!result || !updateNumberStaffCur || !updateNumberStaffNew)
                 return Json(new{ msg = "failed" });
-            return Json(new{ msg = "successed" });
+            return Json(new{ msg = "successed", path = "/Users" });
         }
 
         [HttpPut]
         [Route("Users/{Id?}/lock")]
         public IActionResult Lock(int Id)
         {
+            ViewBag.Active = "Users";
             var account = Account.updateLock(Id);
             if (account != null)
                 return Json(new { msg = "successed", newState = account.Lock });

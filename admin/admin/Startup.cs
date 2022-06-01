@@ -66,6 +66,9 @@ namespace admin
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Frofile}");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=ChangePass}");
                 #endregion
 
                 #region User

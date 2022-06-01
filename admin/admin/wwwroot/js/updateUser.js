@@ -3,12 +3,13 @@
     var name = document.getElementById("name").value;
     var email = document.getElementById("email").value;
     var identityCard = document.getElementById("identityCard").value;
-    var id = document.getElementById("workplace").value;
-    var idUser = document.getElementById("IdUser");
-    if (idUser == null)
-        idUser = 0;
+    var idPlace = document.getElementById("workplace");
+    var idUser = document.getElementById("IdUser").value;
+    if (idPlace == null) //Update dùng chung cho profile và staff
+        idPlace = 0;
     else
-        idUser = idUser.value;
+        idPlace = idPlace.value;
+    
     //let checkName = /^[A-Z][a-z]{1,}(\s[A-Z][a-z]{1,})*$/;
     let checkName = /^\S*[AĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴA-Z]+\S*/i;
     if (!checkName.test(name))
@@ -55,9 +56,9 @@
             password: "",
             identityCard: identityCard,
             avatar: pathAvatar,
-            idPlace: parseInt(id)
+            idPlace: parseInt(idPlace)
         }
-
+        console.log(data)
         const response = await fetch(`/users/${idUser}/Update`, {
             method: 'PUT',
             headers: {
@@ -67,7 +68,7 @@
         })
         const result = await response.json()
         if (result.msg == "successed")
-            window.location.href = '/Users'
+            window.location.href = result.path
         else
             alert('Updating staff failed!')
     }

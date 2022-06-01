@@ -17,7 +17,6 @@ namespace admin.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -70,10 +69,41 @@ namespace admin.Controllers
                 });
 
             HttpContext.Session.SetString("profile", JsonConvert.SerializeObject(user["Account"]));
-
+            HttpContext.Session.SetString("userName", user["Account"]["Name"].ToString());
+            HttpContext.Session.SetString("avatar", user["Account"]["Avatar"].ToString());
             return Json(new
             {
                 msg = "successed"
+            });
+        }
+
+        public class Password
+        {
+            public string newPassword { get; set; }
+            public string curPassword { get; set; }
+        }
+
+        [HttpGet]
+        [Route("{Id?}/ChangePass")]
+        public IActionResult ChangePass(int Id)
+        {
+            ViewData["Id"] = Id;
+            ViewBag.Active = "No";
+            return View();
+        }
+
+        [HttpPost]
+        [Route("{Id?}/ChangePass")]
+        public IActionResult ChangePass([FromBody] Password password, int Id)
+        {
+            //var profile = JsonConvert.DeserializeObject<Account>(HttpContext.Session.GetString("profile"));
+            //ViewData["Profile"] = profile;
+            var jsonChangePass = Account.changePass(Id, password.newPassword, password.curPassword);
+            var changePass = JsonConvert.DeserializeObject(jsonChangePass) as JObject;
+
+            return Json(new
+            {
+                msg = changePass["msg"].ToString()
             });
         }
 
@@ -83,7 +113,15 @@ namespace admin.Controllers
         {
             var profile = JsonConvert.DeserializeObject<Account>(HttpContext.Session.GetString("profile"));
             ViewData["Profile"] = profile;
-            return View(profile); 
+            ViewBag.Active = "No";
+            return View(); 
+        }
+
+        [Route("SignOut")]
+        public IActionResult SignOut()
+        {
+            HttpContext.Session.Clear();
+            return Redirect("/");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

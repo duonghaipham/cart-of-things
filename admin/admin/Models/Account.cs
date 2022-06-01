@@ -29,7 +29,7 @@ namespace admin.Models
         public static List<Account> getList(){
       
             var listStaff = context.Accounts
-                                   .Where(s => s.Role == "staff").ToList();
+                                   .Where(a => a.Role == "staff").ToList();
 
             return listStaff;
         }
@@ -51,11 +51,19 @@ namespace admin.Models
         public static bool updateStaff(string avatar, string name, string email, string identityCard, int idPlace, int Id)
         {
             var account = context.Accounts.Find(Id);
-            account.Avatar = avatar;
+            if (avatar == "" && account.Name == name && account.Email == email && account.IdentityCard == identityCard)
+                if (idPlace == 0 && account.Role == "admin")
+                    return true;
+                else if (idPlace != 0 && account.Role == "staff")
+                    return true;
+
+            if (avatar != "")
+                account.Avatar = avatar;
             account.Name = name;
             account.Email = email;
             account.IdentityCard = identityCard;
-            account.IdPlace = idPlace;
+            if(idPlace != 0)
+                account.IdPlace = idPlace;
             var rs = context.SaveChanges();
             if (rs == 0)
                 return false;
@@ -81,10 +89,29 @@ namespace admin.Models
             return rs;
         }
 
+        public static string changePass(int id, string newPass, string curPass)
+        {
+            var account = context.Accounts.Find(id);
+
+            if (Hash.GetInstance().VerifyHash(newPass, account.Password))
+                return JsonConvert.SerializeObject(new { msg = "New password same old password" });
+
+            if (!Hash.GetInstance().VerifyHash(curPass, account.Password))
+                return JsonConvert.SerializeObject(new { msg = "Wrong password" });
+
+            string hashedPassword = Hash.GetInstance().GetHash(newPass);
+            account.Password = hashedPassword;
+            var rs = context.SaveChanges();
+            if (rs == 0)
+                return JsonConvert.SerializeObject(new { msg = "failed update password" });
+
+            return JsonConvert.SerializeObject(new { msg = "successed"});
+        }
+
         public static string signin(string email, string password)
         {
             Account account = context.Accounts
-                                   .Where(s => s.Email == email).SingleOrDefault();
+                                   .Where(a => a.Email == email).SingleOrDefault();
 
             if (account == null)
                 return JsonConvert.SerializeObject(new { Error = "Account not found" });
