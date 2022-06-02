@@ -73,7 +73,6 @@ button:hover {
 iframe {
   border: none !important;
 }
-*/
   
   
   
@@ -248,10 +247,6 @@ table {
 
 .table100.ver2 .table100-head {
   box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
-  -o-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
-  -ms-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
 }
 
 .table100.ver2 th {
@@ -277,10 +272,6 @@ table {
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
-  -o-box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
-  -ms-box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
 }
 
 .table100.ver2 .ps__rail-y {
@@ -321,10 +312,6 @@ table {
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
-  -o-box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
-  -ms-box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
 }
 
 .table100.ver3 .ps__rail-y {

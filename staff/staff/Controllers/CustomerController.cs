@@ -57,14 +57,14 @@ namespace staff.Controllers
         {
             ViewBag.Active = "Customers";
             Account account = Account.get(Id);
-            //Account profile = JsonConvert.DeserializeObject<Account>(HttpContext.Session.GetString("profile"));
-            //if (profile != null && profile.Id == account.Id)
-            //{
-            //    ViewBag.Active = "No";
-            //    Place placeWork = Place.getPlace(account.IdPlace ?? 0);
-            //    ViewData["workPlace"] = placeWork;
-            //}    
-               
+            Account profile = JsonConvert.DeserializeObject<Account>(HttpContext.Session.GetString("profile"));
+            if (profile != null && profile.Id == account.Id)
+            {
+                ViewBag.Active = "No";
+                Place placeWork = Place.getPlace(account.IdPlace ?? 0);
+                ViewData["workPlace"] = placeWork;
+            }
+
             ViewData["staff"] = account;
             return View();
         }
@@ -83,17 +83,17 @@ namespace staff.Controllers
         public IActionResult Update([FromBody] Profile account, int Id)
         {
             Account staff = Account.get(Id);
-            //Account profile = JsonConvert.DeserializeObject<Account>(HttpContext.Session.GetString("profile"));
+            Account profile = JsonConvert.DeserializeObject<Account>(HttpContext.Session.GetString("profile"));
             var result = Account.update(account.avatar, account.name, account.email, account.identityCard, Id);
             if (!result)
                 return Json(new { msg = "failed" });
-            //if (profile.Id == staff.Id)
-            //{
-            //    staff = Account.get(Id);
-            //    if(staff != null)
-            //        HttpContext.Session.SetString("profile", JsonConvert.SerializeObject(staff));
-            //    return Json(new { msg = "successed", path = "/Profile" });
-            //}
+            if (profile.Id == staff.Id)
+            {
+                staff = Account.get(Id);
+                if (staff != null)
+                    HttpContext.Session.SetString("profile", JsonConvert.SerializeObject(staff));
+                return Json(new { msg = "successed", path = "/Profile" });
+            }
 
             return Json(new{ msg = "successed", path = "/Customers" });
         }

@@ -76,6 +76,46 @@ namespace staff.Controllers
             return Redirect("/");
         }
 
+        public class Password
+        {
+            public string newPassword { get; set; }
+            public string curPassword { get; set; }
+        }
+
+        [HttpGet]
+        [Route("{Id?}/ChangePass")]
+        public IActionResult ChangePass(int Id)
+        {
+            ViewData["Id"] = Id;
+            ViewBag.Active = "No";
+            return View();
+        }
+
+        [HttpPost]
+        [Route("{Id?}/ChangePass")]
+        public IActionResult ChangePass([FromBody] Password password, int Id)
+        {
+            var profile = JsonConvert.DeserializeObject<Account>(HttpContext.Session.GetString("profile"));
+            ViewData["Profile"] = profile;
+            var jsonChangePass = Account.changePass(Id, password.newPassword, password.curPassword);
+            var changePass = JsonConvert.DeserializeObject(jsonChangePass) as JObject;
+
+            return Json(new
+            {
+                msg = changePass["msg"].ToString()
+            });
+        }
+
+        [HttpGet]
+        [Route("Profile")]
+        public IActionResult Profile()
+        {
+            var profile = JsonConvert.DeserializeObject<Account>(HttpContext.Session.GetString("profile"));
+            ViewData["Profile"] = profile;
+            ViewBag.Active = "No";
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
