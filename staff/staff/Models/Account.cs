@@ -107,7 +107,7 @@ namespace staff.Models
         public static string signin(string email, string password)
         {
             Account account = context.Accounts
-                                   .Where(a => a.Email == email).SingleOrDefault();
+                                   .Where(a => a.Email == email && a.Role == "staff").SingleOrDefault();
 
             if (account == null)
                 return JsonConvert.SerializeObject(new { Error = "Account not found" });
