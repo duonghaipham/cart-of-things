@@ -49,6 +49,14 @@
         </div>
     </footer>
     @RenderSection("Scripts", required: false)
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = () => {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
 </body>
 </html>
 

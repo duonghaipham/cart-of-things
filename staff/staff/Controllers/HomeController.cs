@@ -21,7 +21,7 @@ namespace staff.Controllers
         [Route("")]
         public IActionResult Index()
         {
-            return Redirect("/signin");
+            return Redirect("/products");
         }
 
         [HttpGet]
