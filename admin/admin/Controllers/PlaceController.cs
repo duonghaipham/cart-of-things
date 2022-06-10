@@ -18,11 +18,42 @@ namespace admin.Controllers
     {
         [HttpGet]
         [Route("Places")]
-        public IActionResult Retrieve()
+        public IActionResult Retrieve(string search, string sort)
         {
             ViewBag.Active = "Places";
-            ViewData["listPlaces"] = Place.getList();
+            //System.Diagnostics.Debug.WriteLine(sort);
+            if (search != null)
+            {
+                ViewData["searchOfPlace"] = Place.search(search, sort);
+                ViewData["keySearch"] = (string)search;
+                ViewData["keySort"] = (string)sort;
+                ViewBag.search = true;
+            }
+            else
+            {
+                ViewData["keySearch"] = "";
+            }
             return View();
+        }
+
+        [HttpGet]
+        [Route("GetPlaces")]
+        public IActionResult getPlaces(int page)
+        {
+            var jsonList = Place.getListOfPag(page);
+            return Json(new
+            { success = jsonList });
+        }
+
+        [HttpGet]
+        [Route("GetTotalPlace")]
+        public IActionResult getTotalPlace()
+        {
+            return Json(new
+            {
+                total = Place.totalPlace(),
+                limit = Pagination.ITEM_PER_PAGE
+            });
         }
 
         public class NewPlace

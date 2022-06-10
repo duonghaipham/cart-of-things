@@ -1,6 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using admin.Helpers;
+using System.Web;
+using System.Security.Cryptography;
+using System.Text.Json;
+using Newtonsoft.Json;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -14,23 +22,56 @@ namespace admin.Models
         public string Name { get; set; }
 
         private static ShopContext context = new ShopContext();
+        public static string getListOfPag(int page)
+        {
+            var list = context.Places;
+
+            var listPaged = list
+                .Skip((page - 1) * Pagination.ITEM_PER_PAGE)
+                .Take(Pagination.ITEM_PER_PAGE)
+                .ToList();
+
+            return JsonConvert.SerializeObject(listPaged);
+        }
+
         public static List<Place> getList()
         {
             var listPlace = context.Places.ToList();
 
             return listPlace;
         }
+
         public static List<Place> getList(int Id)
         {
 
-            var listStaff = context.Places
+            var list = context.Places
                                    .Where(s => s.Id != Id).ToList();
 
-            return listStaff;
+            return list;
         }
         public static Place getPlace(int Id)
         {
             return context.Places.Find(Id);
+        }
+        public static int totalPlace()
+        {
+            var list = context.Places;
+
+            return list.Count();
+        }
+
+        public static List<Place> search(string search, string sort)
+        {
+            var place = ( from p in context.Places
+                         where EF.Functions.Like(p.Name, $"%{search}%")
+                         select p);
+            if (sort == "name")
+                place = place.OrderBy(p => p.Name);
+
+            if (sort == "numberStaff")
+                place = place.OrderBy(p => p.NumberStaff);
+
+            return place.ToList();
         }
 
         public static bool updateNumberStaff(int Id, int number)

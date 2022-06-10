@@ -24,7 +24,7 @@ namespace admin.Controllers
 
         public IActionResult Index()
         {
-            return Redirect("/SignIn");
+            return Redirect("/Places");
         }
 
         public IActionResult Privacy()
@@ -96,8 +96,8 @@ namespace admin.Controllers
         [Route("{Id?}/ChangePass")]
         public IActionResult ChangePass([FromBody] Password password, int Id)
         {
-            //var profile = JsonConvert.DeserializeObject<Account>(HttpContext.Session.GetString("profile"));
-            //ViewData["Profile"] = profile;
+            var profile = JsonConvert.DeserializeObject<Account>(HttpContext.Session.GetString("profile"));
+            ViewData["Profile"] = profile;
             var jsonChangePass = Account.changePass(Id, password.newPassword, password.curPassword);
             var changePass = JsonConvert.DeserializeObject(jsonChangePass) as JObject;
 

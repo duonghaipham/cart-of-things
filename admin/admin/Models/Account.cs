@@ -21,18 +21,17 @@ namespace admin.Models
         public string IdentityCard { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-
         public string Avatar { get; set; }
         public string Role { get; set; }
         public int? IdState { get; set; }
         public int? IdPlace { get; set; }
-        public int? Lock { get; set; }
+        public int Lock { get; set; }
+        public int? VerifiedEmail { get; set; }
 
         private static ShopContext context = new ShopContext();
-        public static string getList()
+        public static string getList(int page)
         {
-
-            var listStaff = (from a in context.Accounts
+            var listStaffs = (from a in context.Accounts
                             join p in context.Places on a.IdPlace equals p.Id
                             where a.Role == "staff"
                             select new
@@ -45,11 +44,46 @@ namespace admin.Models
                                 Lock = a.Lock, 
                                 NamePlace = p.Name
                             });
-            string jsonOrders = JsonConvert.SerializeObject(listStaff);
 
-            return jsonOrders;
+            var listStaffsPaged = listStaffs
+                .Skip((page - 1) * Pagination.ITEM_PER_PAGE) 
+                .Take(Pagination.ITEM_PER_PAGE) 
+                .ToList();
+
+            return JsonConvert.SerializeObject(listStaffsPaged);
+
         }
 
+        public static string search(string search, string sort)
+        {
+            var staff = (from a in context.Accounts
+                              join p in context.Places on a.IdPlace equals p.Id
+                              where EF.Functions.Like(a.Name, $"%{search}%") || EF.Functions.Like(a.IdentityCard, $"%{search}%")
+                              select new
+                              {
+                                  Id = a.Id,
+                                  Name = a.Name,
+                                  IdentityCard = a.IdentityCard,
+                                  Email = a.Email,
+                                  Avatar = a.Avatar,
+                                  Lock = a.Lock,
+                                  NamePlace = p.Name
+                              });
+            if (sort == "name")
+                staff = staff.OrderBy(a => a.Name);
+
+            if (sort == "email")
+                staff = staff.OrderBy(a => a.Email);
+
+            return JsonConvert.SerializeObject(staff);
+        }
+
+        public static int totalStaff()
+        {
+            var listStaffs = context.Accounts.Where(a => a.Role == "staff");
+
+            return listStaffs.Count();
+        }
         public static Account updateLock(int Id)
         {
             var account = context.Accounts.Find(Id);
@@ -127,7 +161,7 @@ namespace admin.Models
         public static string signin(string email, string password)
         {
             Account account = context.Accounts
-                                   .Where(a => a.Email == email).SingleOrDefault();
+                                   .Where(a => a.Email == email && a.Role == "admin").SingleOrDefault();
 
             if (account == null)
                 return JsonConvert.SerializeObject(new { Error = "Account not found" });

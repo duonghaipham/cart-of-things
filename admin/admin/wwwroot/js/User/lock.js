@@ -11,8 +11,6 @@ const createElement = (literal) => {
 const getChildrenLock = (newState) => {
     const newChildren = [];
 
-
-
     if (newState == 1) {
         const [svg] = createElement(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                          class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
