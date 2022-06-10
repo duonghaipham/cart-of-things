@@ -19,11 +19,42 @@ namespace staff.Controllers
     {
         [HttpGet]
         [Route("Customers")]
-        public IActionResult Retrieve()
+        public IActionResult Retrieve(string search, string sort)
         {
-            ViewData["listCustomers"] = Account.getList(); ;
             ViewBag.Active = "Customers";
+            //System.Diagnostics.Debug.WriteLine(sort);
+            if (search != null)
+            {
+                ViewData["jsonSearch"] = Account.search(search, sort);
+                ViewData["keySearch"] = (string)search;
+                ViewData["keySort"] = (string)sort;
+                ViewBag.search = true;
+            }
+            else
+            {
+                ViewData["keySearch"] = "";
+            }
             return View();
+        }
+
+        [HttpGet]
+        [Route("GetCustomers")]
+        public IActionResult getUsers(int page)
+        {
+            var jsonList = Account.getList(page);
+            return Json(new
+            { success = jsonList });
+        }
+
+        [HttpGet]
+        [Route("GetTotalCustomer")]
+        public IActionResult getTotalStaff()
+        {
+            return Json(new
+            {
+                total = Account.totalCustomer(),
+                limit = Pagination.ITEM_PER_PAGE
+            });
         }
 
         [HttpPut]

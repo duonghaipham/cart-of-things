@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     @RenderSection("Css", required: false)
-    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 </head>
 <body>
 
@@ -74,5 +74,13 @@
     </footer>
 
     @RenderSection("Scripts", required: false)
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = () => {
+                alert("@ViewBag.Message");
+            };
+        </script>
+}
 </body>
 </html>

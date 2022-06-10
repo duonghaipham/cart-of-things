@@ -1,138 +1,139 @@
-@import "global.css";
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 .search__icon {
-  height: 25px;
-  cursor: pointer;
-  width: 25px;
-  background-color: transparent;
-  border: none;
+    height: 25px;
+    cursor: pointer;
+    width: 25px;
+    background-color: transparent;
+    border: none;
 }
 
-.shop {
-  padding: 20px 330px;
+.main__top {
+    padding: 40px 330px;
 }
 
-.shop__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.main__top__path > a,
+.main__top__path > span {
+    color: rgb(63, 62, 62);
+    font-size: 110%;
+}
+.main__shop #state,
+.main__shop #role {
+    outline: 1px solid #ced4da;
 }
 
-.shop__header a {
-  color: black;
+.main__shop .shop-detail {
+    font-family: "Poppins", sans-serif;
+    background: rgba(240, 239, 239, 0.938);
+    padding: 30px;
+    border-radius: 10px;
 }
 
-.shop__header span {
-  color: gray;
+    .main__shop .shop-detail button {
+        background-color: rgb(124, 18, 129);
+    }
+
+.main__shop .save-shop {
+    text-align: center;
+    padding: 30px 0px 30px;
 }
+
+    .main__shop .save-shop button {
+        text-transform: uppercase;
+        height: 50px;
+        width: 200px;
+        background-color: black;
+        font-size: 18px;
+    }
 
 .shop__features {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 50px;
-  margin-bottom: 20px;
-  width: 100%;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 50px;
+    margin-bottom: 20px;
 }
 
-.shop__features__categories {
-  width: 200px;
-}
 .shop__features__left,
 .shop__features__right {
-  display: flex;
-  align-items: center;
-  border: 1px solid gray;
-  padding: 0px 10px;
-  border-radius: 7px;
-}
-
-.shop__features__categories {
-  border-right: 1px solid gray;
+    display: flex;
+    align-items: center;
+    border: 1px solid gray;
+    padding: 0px 10px;
+    border-radius: 7px;
 }
 
 .shop__features__search input {
-  border: none;
-  font-size: 20px;
-  color: gray;
-  padding: 4px 10px 4px 20px;
-  width: 300px;
+    border: none;
+    font-size: 20px;
+    color: gray;
+    padding: 4px 10px 4px 20px;
+    width: 250px;
+    height: 50px;
 }
-.shop__features__search input:focus-visible {
-  outline-width: 0;
-}
+
+    .shop__features__search input:focus-visible {
+        outline-width: 0;
+    }
+
 .shop__features__sort {
-  width: 200px;
+    width: 150px;
+    padding-left: 15px;
 }
 
-.form-select {
-  border: none !important;
+.table td, .table th {
+    vertical-align: middle;
 }
 
-.form-select:focus {
-  outline-width: 0 !important;
-  box-shadow: none !important;
+td img {
+    display: block;
+    width: 50px;
+    height: 50px;
 }
 
 .shop__products {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
+
+    .shop__products a {
+        color: black !important;
+    }
 
 .product {
-  margin: 10px;
-  cursor: pointer;
+    margin: 10px;
+    cursor: pointer;
 }
 
-.product:hover span {
-  background-color: #f08632;
-  color: white;
-  transition: all, 0.3s;
-}
+    .product:hover span {
+        background-color: #f08632;
+        color: white;
+        transition: all, 0.3s;
+    }
 
 .product__img {
-  position: relative;
+    position: relative;
 }
 
 .product span {
-  position: absolute;
-  bottom: -17px;
-  left: 50%;
-  transform: translate(-50%, 0);
-  font-size: 15px;
-  background-color: #ffffff;
-  padding: 5px 15px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  border-radius: 6px;
+    position: absolute;
+    bottom: -17px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: 15px;
+    background-color: #ffffff;
+    padding: 5px 15px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 6px;
 }
 
 .product__info {
-  margin-top: 35px;
-}
-.product__info h5 {
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 18px;
+    margin-top: 35px;
 }
 
-.shop_pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-.pagination {
-  display: flex;
-  align-items: center;
-
-  border: none !important;
-}
-
-.page-item {
-  border: none !important;
-  color: black;
-}
-
-.next {
-  height: 20px;
-  padding: 0;
-}
+    .product__info h5 {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 18px;
+    }

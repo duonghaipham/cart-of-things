@@ -20,20 +20,49 @@ namespace staff.Controllers
     {
         [HttpGet]
         [Route("Products")]
-        public IActionResult Retrieve()
+        public IActionResult Retrieve(string search, string sort)
         {
-            //string jsonCategories = Category.GetAll();
-            var jsonProducts = Product.RetrieveProducts();
-
-            //ViewData["jsonCategories"] = jsonCategories;
-            ViewData["jsonProducts"] = jsonProducts;
+            ViewBag.Active = "Products";
+            //System.Diagnostics.Debug.WriteLine(sort);
+            if (search != null)
+            {
+                ViewData["jsonSearch"] = Product.search(search, sort);
+                ViewData["keySearch"] = (string)search;
+                ViewData["keySort"] = (string)sort;
+                ViewBag.search = true;
+            }
+            else
+            {
+                ViewData["keySearch"] = "";
+            }
             return View();
+        }
+
+        [HttpGet]
+        [Route("GetProducts")]
+        public IActionResult getProducts(int page)
+        {
+            var jsonList = Product.getList(page);
+            return Json(new
+            { success = jsonList });
+        }
+
+        [HttpGet]
+        [Route("GetTotalProduct")]
+        public IActionResult getTotalProduct()
+        {
+            return Json(new
+            {
+                total = Product.totalProduct(),
+                limit = Pagination.ITEM_PER_PAGE
+            });
         }
 
         [HttpGet]
         [Route("Products/create")]
         public IActionResult Create()
         {
+            ViewBag.Active = "Products";
             ViewData["Categories"] = Category.getList();
             return View();
         }
@@ -70,6 +99,7 @@ namespace staff.Controllers
         [Route("Products/{Id?}/update")]
         public IActionResult Update(int Id)
         {
+            ViewBag.Active = "Products";
             ViewData["Product"] = Product.getProduct(Id);
             ViewData["Categories"] = Category.getList();
             return View();
@@ -79,6 +109,7 @@ namespace staff.Controllers
         [Route("Products/{Id?}/update")]
         public IActionResult Update(int Id, IFormFile avatar, int category, string introduction, double price, string description, string name)
         {
+
             string pathAvatar = "";
             if (avatar?.Length > 0)
                 pathAvatar = ImageManager.GetInstance().Upload(avatar).SecureUrl.AbsoluteUri.ToString();
@@ -107,9 +138,9 @@ namespace staff.Controllers
         [Route("Products/{Id?}/delete")]
         public IActionResult Delete(int Id)
         {
-
             try
             {
+                ViewBag.Active = "Products";
                 var rs = Product.deleteProduct(Id);
                 
                 if (rs)

@@ -40,39 +40,3 @@
   font-weight: 500;
   padding-left: 50px;
 }
-
-.pagination-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 0px;
-}
-
-.pagination-bar a {
-  color: black;
-  float: left;
-  padding: 8px 15px;
-  text-decoration: none;
-  border: 1px solid #dddddd;
-}
-
-.pagination-bar > a.active {
-  background-color: rgb(124, 18, 129);
-  color: white;
-}
-
-.pagination-bar > a > svg {
-  padding-bottom: 4px;
-}
-
-.pagination-bar > a.previous-button {
-  border-radius: 50px 0px 0px 50px;
-}
-
-.pagination-bar > a.next-button {
-  border-radius: 0px 50px 50px 0px;
-}
-
-.pagination-bar > a:hover:not(.active) {
-  background-color: rgb(172, 227, 248);
-}

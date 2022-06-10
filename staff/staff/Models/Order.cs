@@ -13,7 +13,9 @@ namespace staff.Models
         public string Phone { get; set; }
         public string Note { get; set; }
         public DateTime CreatedAt { get; set; }
-        public int? IdPayment { get; set; }
+        public string PaymentState { get; set; }
         public int? IdAccount { get; set; }
+        public double? Total { get; set; }
+        public string PaymentId { get; set; }
     }
 }

@@ -25,33 +25,49 @@ namespace staff.Models
         public string Role { get; set; }
         public int? IdState { get; set; }
         public int? IdPlace { get; set; }
-        public int? Lock { get; set; }
+        public int Lock { get; set; }
+        public int? VerifiedEmail { get; set; }
 
         private static ShopContext context = new ShopContext();
-        //public static string getList()
-        //{
+        public static string search(string search, string sort)
+        {
+            var staff = (from a in context.Accounts
+                         where EF.Functions.Like(a.Name, $"%{search}%") && a.Role == "customer"
+                         select a);
+            if (sort == "name")
+                staff = staff.OrderBy(a => a.Name);
 
-        //    var listStaff = (from a in context.Accounts
-        //                     join p in context.Places on a.IdPlace equals p.Id
-        //                     where a.Role == "staff"
-        //                     select new
-        //                     {
-        //                         Id = a.Id,
-        //                         Name = a.Name,
-        //                         IdentityCard = a.IdentityCard,
-        //                         Email = a.Email,
-        //                         Avatar = a.Avatar,
-        //                         Lock = a.Lock,
-        //                         NamePlace = p.Name
-        //                     });
-        //    string jsonOrders = JsonConvert.SerializeObject(listStaff);
+            if (sort == "email")
+                staff = staff.OrderBy(a => a.Email);
 
-        //    return jsonOrders;
-        //}
+            return JsonConvert.SerializeObject(staff);
+        }
 
         public static List<Account> getList()
         {
             return context.Accounts.Where(a => a.Role == "customer").ToList();
+        }
+
+        public static string getList(int page)
+        {
+            var listCustomers = (from a in context.Accounts
+                              where a.Role == "customer"
+                              select a);
+
+            var listCustomersPaged = listCustomers
+                .Skip((page - 1) * Pagination.ITEM_PER_PAGE)
+                .Take(Pagination.ITEM_PER_PAGE)
+                .ToList();
+
+            return JsonConvert.SerializeObject(listCustomersPaged);
+
+        }
+
+        public static int totalCustomer()
+        {
+            var list = context.Accounts.Where(a => a.Role == "customer");
+
+            return list.Count();
         }
 
         public static Account updateLock(int Id)
@@ -73,7 +89,6 @@ namespace staff.Models
             var account = context.Accounts.Find(Id);
             if (avatar == "" && account.Name == name && account.Email == email && account.IdentityCard == identityCard)
                     return true;
-
             if (avatar != "")
                 account.Avatar = avatar;
             account.Name = name;

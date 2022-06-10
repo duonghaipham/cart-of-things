@@ -18,7 +18,6 @@ namespace staff.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Avatar { get; set; }
         private static ShopContext context = new ShopContext();
         public static List<Category> getList()
         {

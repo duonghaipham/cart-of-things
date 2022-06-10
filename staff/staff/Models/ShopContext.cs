@@ -18,11 +18,9 @@ namespace staff.Models
         }
 
         public virtual DbSet<Account> Accounts { get; set; }
-        public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<Place> Places { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<State> States { get; set; }
@@ -80,19 +78,9 @@ namespace staff.Models
                     .IsRequired()
                     .HasMaxLength(200)
                     .HasColumnName("role");
-            });
 
-            modelBuilder.Entity<Cart>(entity =>
-            {
-                entity.ToTable("Cart");
+                entity.Property(e => e.VerifiedEmail).HasColumnName("verified_email");
 
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Amount).HasColumnName("amount");
-
-                entity.Property(e => e.IdAccount).HasColumnName("id_account");
-
-                entity.Property(e => e.IdProduct).HasColumnName("id_product");
             });
 
             modelBuilder.Entity<Category>(entity =>
@@ -100,10 +88,6 @@ namespace staff.Models
                 entity.ToTable("Category");
 
                 entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Avatar)
-                    .HasMaxLength(200)
-                    .HasColumnName("avatar");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -148,12 +132,18 @@ namespace staff.Models
 
                 entity.Property(e => e.IdAccount).HasColumnName("id_account");
 
-                entity.Property(e => e.IdPayment).HasColumnName("id_payment");
-
                 entity.Property(e => e.Note)
                     .IsRequired()
                     .HasMaxLength(200)
                     .HasColumnName("note");
+
+                entity.Property(e => e.PaymentId)
+                    .HasMaxLength(50)
+                    .HasColumnName("payment_id");
+
+                entity.Property(e => e.PaymentState)
+                    .HasMaxLength(50)
+                    .HasColumnName("payment_state");
 
                 entity.Property(e => e.Phone)
                     .IsRequired()
@@ -164,26 +154,9 @@ namespace staff.Models
                     .IsRequired()
                     .HasMaxLength(200)
                     .HasColumnName("recipient_name");
-            });
 
-            modelBuilder.Entity<Payment>(entity =>
-            {
-                entity.ToTable("Payment");
+                entity.Property(e => e.Total).HasColumnName("total");
 
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Cost).HasColumnName("cost");
-
-                entity.Property(e => e.Details)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("details");
-
-                entity.Property(e => e.State).HasColumnName("state");
-
-                entity.Property(e => e.Time)
-                    .HasColumnType("datetime")
-                    .HasColumnName("time");
             });
 
             modelBuilder.Entity<Place>(entity =>
@@ -198,7 +171,7 @@ namespace staff.Models
                     .HasColumnName("address");
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(255)
+                    .HasMaxLength(200)
                     .HasColumnName("name");
 
                 entity.Property(e => e.NumberStaff).HasColumnName("number_staff");
@@ -259,6 +232,7 @@ namespace staff.Models
                 entity.Property(e => e.IdOrder).HasColumnName("id_order");
 
                 entity.Property(e => e.IdProduct).HasColumnName("id_product");
+
             });
 
             OnModelCreatingPartial(modelBuilder);
