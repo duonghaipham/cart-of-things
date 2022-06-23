@@ -1,14 +1,23 @@
-﻿<!DOCTYPE html>
+﻿@using System.Net.Http
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - staff</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     @RenderSection("Css", required: false)
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 </head>
 <body>
+
     <header>
         <div class="header__top">
             <div class="header__top__left">
@@ -17,19 +26,14 @@
                 <img src="~/img/logo.png" alt="logo" />
             </div>
             <div class="header__top__right">
-                <% if (user) { %>
-                <a href="/signOut">Sign out</a>
-                <a href="/view"><%= user.name %></a>
-                <% } %>
+                <a href="/Profile"><i class="fa fa-user" aria-hidden="true" style="padding-right:3px"></i>@Context.Session.GetString("userName")</a>
+                <a href="/SignOut"><i class="fa fa-sign-out" aria-hidden="true" style="padding-right:3px"></i>Sign out</a>
             </div>
         </div>
-        <% if (user) { %>
         <div class="header__bottom">
-            <a href="/cakes" <% if (which == 'product') { %> class="active" <% } %>><div>Products List</div></a>
-            <a href="/users" <% if (which == 'user') { %> class="active" <% } %>><div>Users List</div></a>
-            <a href="/statistics" <% if (which == 'statistics') { %> class="active" <% } %>><div>Statistics</div></a>
+            <a href="/Products" @if (@ViewBag.Active == "Products") { @("class=active") }><div>Products List</div></a>
+            <a href="/Customers" @if (@ViewBag.Active == "Customers") { @("class=active") }><div>Customers List</div></a>
         </div>
-        <% } %>
     </header>
 
     @RenderBody()
@@ -42,7 +46,7 @@
                 <span>Sunday: 10:00 am - 16:30 pm</span>
             </div>
             <div class="footer__top__mid">
-                <img src="~/img/footer-logo.png" alt="footer-logo" />
+                <img src="~/img/logo.png" alt="footer-logo" />
                 <p>
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi
                     quasi excepturi obcaecati nobis deserunt. In maxime veritatis vero
@@ -68,7 +72,15 @@
             </div>
         </div>
     </footer>
+
     @RenderSection("Scripts", required: false)
-    <script src='~/js/queryParam.js' type="text/javascript"></script>
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = () => {
+                alert("@ViewBag.Message");
+            };
+        </script>
+}
 </body>
 </html>

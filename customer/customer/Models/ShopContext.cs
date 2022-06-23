@@ -90,10 +90,6 @@ namespace customer.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Avatar)
-                    .HasMaxLength(200)
-                    .HasColumnName("avatar");
-
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(200)
@@ -165,6 +161,10 @@ namespace customer.Models
                 entity.ToTable("Place");
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(200)
+                    .HasColumnName("name");
 
                 entity.Property(e => e.Address)
                     .IsRequired()

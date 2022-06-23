@@ -5,85 +5,23 @@
     <projectFile profileName="customer">customer/customer.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="914237e4-14bd-409f-8cb3-ae95c977ad10" name="Changes" comment="Search, category, sort and pagination products">
-      <change afterPath="$PROJECT_DIR$/customer/wwwroot/img/about-img.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/wwwroot/img/favicon.png" afterDir="false" />
+    <list default="true" id="914237e4-14bd-409f-8cb3-ae95c977ad10" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.customer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.customer/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/Views/Auth/ChangePassword.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Views/Auth/ChangePassword.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/Views/Auth/SignUp.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Views/Auth/SignUp.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/Views/Auth/UpdateInformation.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Views/Auth/UpdateInformation.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/Views/Auth/ViewInformation.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Views/Auth/ViewInformation.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Views/Home/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/Views/Home/ViewAbout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Views/Home/ViewAbout.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/Views/Home/ViewCart.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Views/Home/ViewCart.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/Views/Home/ViewContact.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Views/Home/ViewContact.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/Helpers/Pagination.cs" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Helpers/Pagination.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/Models/Account.cs" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Models/Account.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/Models/Category.cs" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Models/Category.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/Models/Place.cs" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Models/Place.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/Models/ShopContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Models/ShopContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/Views/Checkout/CheckOut.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Views/Checkout/CheckOut.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer/Views/Product/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Views/Product/Index.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer/Views/Product/View.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Views/Product/View.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/Views/Shared/Error.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Views/Shared/Error.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Views/Shared/_Layout.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/Views/Shared/_ValidationScriptsPartial.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/Views/Shared/_ValidationScriptsPartial.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/customer.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/customer/customer.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer/wwwroot/css/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/customer/wwwroot/css/global.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/css/site.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/biscuit.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/buttercake.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/cake-piece.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/color.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/cupcake.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/customer1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/wwwroot/img/customer1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/customer2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/wwwroot/img/customer2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/customer3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/wwwroot/img/customer3.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/donut.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/font.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/footer-bg.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/wwwroot/img/footer-bg.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/footer-logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/hero-1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/wwwroot/img/hero-1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/hero-2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/wwwroot/img/hero-2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/hero-3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/wwwroot/img/hero-3.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/instagram-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/instagram-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/instagram-3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/instagram-4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/instagram-5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/customer/wwwroot/img/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/product-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/product-10.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/product-11.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/product-12.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/product-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/product-3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/product-4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/product-5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/product-6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/product-7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/product-8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/product-9.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/product-big-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/product-big-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/product-big-3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/product-big-4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/product-big-5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/redvelvetcake.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/signin.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/wwwroot/img/signin.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/team-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/team-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/team-3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/team-4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/thumb-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/thumb-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/thumb-3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/thumb-4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/wwwroot/img/thumb-5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/wwwroot/js/cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/customer/wwwroot/js/cart.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/project/customer/customer/Views/Auth/ChangePassword.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/project/customer/customer/Views/Shared/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -96,17 +34,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.customer">
     <configuration name="customer" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/customer/customer.csproj" />
@@ -148,7 +86,9 @@
       <option name="presentableId" value="Default" />
       <updated>1654064554737</updated>
       <workItem from="1654064565563" duration="1625000" />
-      <workItem from="1654085401401" duration="11400000" />
+      <workItem from="1654085401401" duration="11765000" />
+      <workItem from="1654663192672" duration="179000" />
+      <workItem from="1655028132517" duration="88000" />
     </task>
     <task id="LOCAL-00001" summary="Search, category, sort and pagination products">
       <created>1654090719867</created>

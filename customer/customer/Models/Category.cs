@@ -13,8 +13,6 @@ namespace customer.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Avatar { get; set; }
-
         private static ShopContext _context = new ShopContext();
         
         public static string GetAll()

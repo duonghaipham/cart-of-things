@@ -1,12 +1,50 @@
-﻿@{ ViewData["Title"] = "Staff"; }
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+@using admin.Helpers
+@{
+    ViewData["Title"] = "Staffs";
+    string keySearch = (string)ViewData["keySearch"];
+    string keySort = (string)ViewData["keySort"];
+    JArray staffs = null;
+    if (@ViewData["jsonSearch"] != null)
+    {
+        staffs = JsonConvert.DeserializeObject((string)ViewData["jsonSearch"]) as JArray;
+    }
+}
 @section Scripts {
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/lock.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="~/js/User/lock.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    @if (@ViewBag.search == null)
+    {
+        <script src="~/js/User/PaginationUser.js"></script>
+    }
+    <script>
+        $(document).ready(() => {
+            // ẩn nút search khi không có tìm kiếm
+            @if(@ViewBag.search != null)
+            {
+                @:$('.btn-search').prop('disabled', false);
+            }
+            else
+            {
+                @:$('.btn-search').prop('disabled', true);
+            }
+
+            $('.search-box').keyup(function(){
+                if ($(this).val().length != 0) {
+                    $('.btn-search').prop('disabled', false);
+                }
+                else {
+                    $('.btn-search').prop('disabled', true);
+                }
+            });
+        });
+    </script>
 }
 
 @section Css {
@@ -36,11 +74,13 @@
                         <div class="user__features__search">
                             <input type="text"
                                    placeholder="Search"
-                                   class="query-control"
+                                   class="query-control search-box"
                                    name="search"
-                                   @*<% if (search !== undefined) { %>value=<%= search %><% } %>/>*@>
+                                   style="font-size: 15px;"
+                                   value="@keySearch" />
+
                         </div>
-                        <button type="submit" class="search__icon" id="btn-submit">
+                        <button type="submit" class="search__icon btn-search" id="btn-submit">
                             <svg xmlns="http://www.w3.org/2000/svg"
                                  class="search__icon"
                                  fill="none"
@@ -61,12 +101,14 @@
                                     name="sort"
                                     aria-label="Default select example">
                                 <option>Default sorting</option>
-                                @*<option value="name"
-                                      <% if (sort === 'name') { %>selected<% } %>
-                                    >Name</option>
-                                                    <option value="email"
-                                      <% if (sort === 'email') { %>selected<% } %>
-                                    >Email</option>*@
+                                <!option value="name"
+                                         @if (@keySort == "name") { @("selected") }>
+                                    name
+                                </!option>
+                                <!option value="email"
+                                         @if (@keySort == "email") { @("selected") }>
+                                    email
+                                </!option>
                             </select>
                         </div>
                     </div>
@@ -81,7 +123,6 @@
                         <span>&nbsp;Add a new user</span>
                     </button>
                 </div>
-
             </div>
 
             <div class="row">
@@ -93,77 +134,95 @@
                             <th scope="col">Name</th>
                             <th scope="col">Identity card</th>
                             <th scope="col">Email</th>
+                            <th scope="col">PlaceWork</th>
                             <th scope="col">Options</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @{int i = 1;}
-                        @foreach (var data in (List<Account>)ViewData["listStaff"])
+                    @if (@ViewBag.search != null)
+                    {
+                        @if (@ViewData["jsonSearch"] != null && @staffs != null)
                         {
-                    <tr>
-                        <th scope="row">@i</th>
-                        @{i++;}
-                        <td><img src="@data.Avatar" /></td>
-                        <td>@data.Name</td>
-                        <td>@data.IdentityCard</td>
-                        <td>@data.Email</td>
-                        <td>
-                            <div class="user__options__edit"
-                                 onclick="location.href='/Users/@data.Id/update'">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     width="24"
-                                     height="24"
-                                     viewBox="0 0 24 24">
-                                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-5 17l1.006-4.036 3.106 3.105-4.112.931zm5.16-1.879l-3.202-3.202 5.841-5.919 3.201 3.2-5.84 5.921z"></path>
-                                </svg>
-                                <span>Edit user</span>
-                            </div>
-
-                            <div class="user__options__block"
-                                 onclick="handleLock(this, @data.Id)">
-                                @if (@data.Lock == 1)
+                            @if (@staffs.Count == 0)
+                            {
+                                <tbody><tr><th scope="row" style="color:red">No data!</th></tr></tbody>
+                            }
+                            <tbody>
+                                @{int i = 1;}
+                                @foreach (var data in @staffs)
                                 {
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                         class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
-                                    </svg>
-                                    <span>Unlock</span>}
-                                else
-                                {
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                     height="24" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd" />
-                                </svg>
-                                    <span>Lock</span>}
+                                    <tr>
+                                        <th scope="row">@i</th>
+                                        @{i++;}
+                                        <td><img src="@data["Avatar"]" /></td>
+                                        <td>@data["Name"]</td>
+                                        <td>@data["IdentityCard"]</td>
+                                        <td>@data["Email"]</td>
+                                        <td>@data["NamePlace"]</td>
+                                        <td>
+                                            <div class="user__options__edit"
+                                                 onclick="location.href='/Users/@data["Id"]/update'">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     width="24"
+                                                     height="24"
+                                                     viewBox="0 0 24 24">
+                                                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-5 17l1.006-4.036 3.106 3.105-4.112.931zm5.16-1.879l-3.202-3.202 5.841-5.919 3.201 3.2-5.84 5.921z"></path>
+                                                </svg>
+                                                <span>Edit user</span>
+                                            </div>
 
-                            </div>
-                        </td>
-                    </tr>}
-                    </tbody>
+                                            <div class="user__options__block"
+                                                 onclick="handleLock(this, @data["Id"])">
+                                                @if ((int)@data["Lock"] == 1)
+                                                {
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                         class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                                                    </svg>
+                                                    <span>Unlock</span>
+                                                }
+                                                else
+                                                {
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                         height="24" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd" />
+                                                    </svg>
+                                                    <span>Lock</span>
+                                                }
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        }
+                    }
+                    else
+                    {
+                        <tbody id="result"></tbody>
+                    }
                 </table>
             </div>
-            <div class="row">
-                <div class="col text-center">
-                    <div class="pagination-bar">
-                        <a href="#" class="previous-button">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 width="10"
-                                 height="25.5"
-                                 viewBox="0 0 24 24">
-                                <path d="M3 12l18-12v24z"></path>
-                            </svg>
-                        </a>
-                        <a href="" class="next-button">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 width="10"
-                                 height="25.5"
-                                 viewBox="0 0 24 24">
-                                <path d="M21 12l-18 12v-24z"></path>
-                            </svg>
-                        </a>
+            @if (@ViewBag.search == null)
+            {
+                <div class="row">
+                    <div class="col" style="display: flex; align-items: center; justify-content: center; width:100%">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <button class="page-link" id="prev-btn" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </button>
+                                </li>
+                                <li class="page-item">
+                                    <button class="page-link" id="next-btn" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
-            </div>
+            }
+
         </div>
     </section>
 </main>

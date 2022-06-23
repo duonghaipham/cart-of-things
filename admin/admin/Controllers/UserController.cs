@@ -15,23 +15,48 @@ using Newtonsoft.Json.Linq;
 //System.Diagnostics.Debug.WriteLine();
 namespace admin.Controllers
 {
+    
     public class UserController : Controller
     {
         [HttpGet]
         [Route("Users")]
-        public IActionResult Retrieve()
+        public IActionResult Retrieve(string search, string sort)
         {
-            List<Account> list = Account.getList();
-            ViewData["listStaff"] = list;
             ViewBag.Active = "Users";
+            //System.Diagnostics.Debug.WriteLine(sort);
+            if (search != null)
+            {
+                ViewData["jsonSearch"] = Account.search(search, sort);
+                ViewData["keySearch"] = (string)search;
+                ViewData["keySort"] = (string)sort;
+                ViewBag.search = true;
+            }
+            else
+            {
+                ViewData["keySearch"] = "";
+            }
             return View();
         }
-        //public IEnumerable<Place> Retrieve()
-        //{
-        //    ShopContext context = new ShopContext();
 
-        //    return context.Places.ToList();
-        //}
+        [HttpGet]
+        [Route("GetUsers")]
+        public IActionResult getUsers(int page)
+        {
+            var jsonList = Account.getList(page);
+            return Json(new
+            { success = jsonList });
+        }
+        
+        [HttpGet]
+        [Route("GetTotalStaff")]
+        public IActionResult getTotalStaff()
+        {
+            return Json(new
+            {
+                total = Account.totalStaff(),
+                limit = Pagination.ITEM_PER_PAGE
+            });
+        }
 
         [HttpGet]
         [Route("Users/create")]
@@ -102,7 +127,7 @@ namespace admin.Controllers
             ViewData["workPlace"] = placeWork;
             return View();
         }
-
+        
         [HttpPut]
         [Route("Users/{Id?}/update")]
         public IActionResult Update([FromBody] Staff account, int Id)

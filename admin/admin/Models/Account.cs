@@ -7,6 +7,8 @@ using System.Security.Cryptography;
 using System.Text.Json;
 using Newtonsoft.Json;
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -23,23 +25,71 @@ namespace admin.Models
         public string Role { get; set; }
         public int? IdState { get; set; }
         public int? IdPlace { get; set; }
-        public int? Lock { get; set; }
+        public int Lock { get; set; }
+        public int? VerifiedEmail { get; set; }
 
         private static ShopContext context = new ShopContext();
-        public static List<Account> getList(){
-      
-            var listStaff = context.Accounts
-                                   .Where(a => a.Role == "staff").ToList();
+        public static string getList(int page)
+        {
+            var listStaffs = (from a in context.Accounts
+                            join p in context.Places on a.IdPlace equals p.Id
+                            where a.Role == "staff"
+                            select new
+                            {
+                                Id = a.Id,
+                                Name = a.Name,
+                                IdentityCard = a.IdentityCard,
+                                Email = a.Email,
+                                Avatar = a.Avatar,
+                                Lock = a.Lock, 
+                                NamePlace = p.Name
+                            });
 
-            return listStaff;
+            var listStaffsPaged = listStaffs
+                .Skip((page - 1) * Pagination.ITEM_PER_PAGE) 
+                .Take(Pagination.ITEM_PER_PAGE) 
+                .ToList();
+
+            return JsonConvert.SerializeObject(listStaffsPaged);
+
         }
 
+        public static string search(string search, string sort)
+        {
+            var staff = (from a in context.Accounts
+                              join p in context.Places on a.IdPlace equals p.Id
+                              where EF.Functions.Like(a.Name, $"%{search}%") || EF.Functions.Like(a.IdentityCard, $"%{search}%")
+                              select new
+                              {
+                                  Id = a.Id,
+                                  Name = a.Name,
+                                  IdentityCard = a.IdentityCard,
+                                  Email = a.Email,
+                                  Avatar = a.Avatar,
+                                  Lock = a.Lock,
+                                  NamePlace = p.Name
+                              });
+            if (sort == "name")
+                staff = staff.OrderBy(a => a.Name);
+
+            if (sort == "email")
+                staff = staff.OrderBy(a => a.Email);
+
+            return JsonConvert.SerializeObject(staff);
+        }
+
+        public static int totalStaff()
+        {
+            var listStaffs = context.Accounts.Where(a => a.Role == "staff");
+
+            return listStaffs.Count();
+        }
         public static Account updateLock(int Id)
         {
             var account = context.Accounts.Find(Id);
             account.Lock = account.Lock == 1 ? 0 : 1;
             context.SaveChanges();
-            return account;            
+            return account;
         }
 
         public static Account getStaff(int Id)
@@ -52,9 +102,9 @@ namespace admin.Models
         {
             var account = context.Accounts.Find(Id);
             if (avatar == "" && account.Name == name && account.Email == email && account.IdentityCard == identityCard)
-                if (idPlace == 0 && account.Role == "admin")
+                if (account.Role == "admin")
                     return true;
-                else if (idPlace != 0 && account.Role == "staff")
+                else if (idPlace == account.IdPlace && account.Role == "staff")
                     return true;
 
             if (avatar != "")
@@ -62,7 +112,7 @@ namespace admin.Models
             account.Name = name;
             account.Email = email;
             account.IdentityCard = identityCard;
-            if(idPlace != 0)
+            if (idPlace != 0)
                 account.IdPlace = idPlace;
             var rs = context.SaveChanges();
             if (rs == 0)
@@ -105,13 +155,13 @@ namespace admin.Models
             if (rs == 0)
                 return JsonConvert.SerializeObject(new { msg = "failed update password" });
 
-            return JsonConvert.SerializeObject(new { msg = "successed"});
+            return JsonConvert.SerializeObject(new { msg = "successed" });
         }
 
         public static string signin(string email, string password)
         {
             Account account = context.Accounts
-                                   .Where(a => a.Email == email).SingleOrDefault();
+                                   .Where(a => a.Email == email && a.Role == "admin").SingleOrDefault();
 
             if (account == null)
                 return JsonConvert.SerializeObject(new { Error = "Account not found" });

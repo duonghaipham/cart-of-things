@@ -1,6 +1,18 @@
-﻿@{
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Places";
+    string keySearch = (string)ViewData["keySearch"];
+    string keySort = (string)ViewData["keySort"];
 }
 @section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    @if (@ViewBag.search == null)
+    {
+        <script src="~/js/Place/PaginationPlace.js"></script>
+    }
+
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <!-- Bootstrap JS -->
@@ -11,264 +23,200 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 
+    <script src="~/js/Place/addPlace.js"></script>
     <script>
-        $(document).ready(function () {
-            var dialog, form,
-                placeName = $("#placeName"),
-                number_staff = $("#number_staff"),
-                address = $("#address"),
-                allFields = $([]).add(placeName).add(number_staff).add(address),
-                tips = $(".validateTips");
-
-            function updateTips(t) {
-                tips.text(t).addClass("ui-state-highlight");
-                setTimeout(function () {
-                    tips.removeClass("ui-state-highlight", 1500);
-                }, 500);
+        $(document).ready(() => {
+            // ẩn nút search khi không có tìm kiếm
+            @if(@ViewBag.search != null)
+            {
+                @:$('.btn-search').prop('disabled', false);
+            }
+            else
+            {
+                @:$('.btn-search').prop('disabled', true);
             }
 
-            function checkRegexp(o, regexp, n) {
-                if (!(regexp.test(o.val()))) {
-                    o.addClass("ui-state-error");
-                    updateTips(n);
-                    return false;
-                } else {
-                    return true;
+            $('.search-box').keyup(function(){
+                if ($(this).val().length != 0) {
+                    $('.btn-search').prop('disabled', false);
                 }
-            }
-
-            function checkNumber(cap, cur, n) {
-                if (parseInt(cap.val()) < parseInt(cur.val())) {
-                    cap.addClass("ui-state-error");
-                    updateTips(n);
-                    return false;
-                } else {
-                    return true;
+                else {
+                    $('.btn-search').prop('disabled', true);
                 }
-            }
-
-            function addPlace() {
-                var option = $("input[name='gridRadios']:checked");
-                var valid = true;
-                allFields.removeClass("ui-state-error");
-
-                //valid = valid && checkRegexp(placeName, /^\S*[AĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴAĂÂÁẮẤÀẰẦẢẲẨÃẴẪẠẶẬĐEÊÉẾÈỀẺỂẼỄẸỆIÍÌỈĨỊOÔƠÓỐỚÒỒỜỎỔỞÕỖỠỌỘỢUƯÚỨÙỪỦỬŨỮỤỰYÝỲỶỸỴA-Z]+\S*/i, "Tên địa điểm có thể bao gồm a-z, 0-9, dấu cách và phải bắt đầu bằng một chữ cái.");
-
-                //valid = valid && checkRegexp(number_staff, /\d/, "Điền thông tin sức chứa.");
-                //valid = valid && checkRegexp(number, /\d/, "Điền thông tin số lượng hiện tại.");
-                //valid = valid && checkNumber(number_staff, number, "Số lương tiếp nhận phải nhỏ hơn sức chứa.");
-
-                if (valid) {
-                    $.ajax({
-                        url: "/admin/places/add",
-                        method: "POST",
-                        contentType: "application/json",
-                        data: JSON.stringify({
-                            placeName: placeName.val(),
-                            number_staff: number_staff.val(),
-                            address: address.val(),
-                            option: option.val()
-                        }),
-                        success: function (res) {
-                            if (res.success) {
-                                dialog.dialog("close");
-                                window.location.href = res.redirect;
-                            }
-                            else {
-                                placeName.addClass("ui-state-error");
-                                updateTips("Địa điểm đã tồn tại.");
-                            }
-                        }
-                    });
-                }
-                return valid;
-            }
-
-            dialog = $("#dialog-form").dialog({
-                autoOpen: false,
-                height: 450,
-                width: 430,
-                modal: true,
-                buttons: {
-                    CreatePlace: {
-                        class: "CreateButton btn btn-primary",
-                        text: "Create",
-                        click: addPlace
-                    },
-                    Cancel: {
-                        class: "CancelButton btn btn-primary",
-                        text: "Cancel",
-                        click: function () {
-                            tips.text("Điền các trường được yêu cầu.");
-                            dialog.dialog("close");
-                        }
-                    }
-                },
-                close: function () {
-                    form[0].reset();
-                    tips.text("Điền các trường được yêu cầu.");
-                    allFields.removeClass("ui-state-error");
-                }
-            });
-
-            form = dialog.find("form").on("submit", function (event) {
-                event.preventDefault();
-                addPlace();
-            });
-
-            $("#create-place").button().on("click", function () {
-                dialog.dialog("open");
             });
         });
     </script>
 }
 
 @section Css {
-
-    <link rel="stylesheet" href="~/css/global.css" />
     <!-- Jquery ui CSS -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Mulish' rel='stylesheet'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Mulish'>
     <!-- Font Awesome JS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <style>
-        .CreateButton {
-            right: 65%;
-        }
-
-        .CancelButton {
-            right: 65%;
-        }
-
-        label,
-        input {
-            display: block;
-        }
-
-            input.text {
-                margin-bottom: 12px;
-                width: 95%;
-                padding: .4em;
-            }
-
-        fieldset {
-            padding: 0;
-            border: 0;
-            margin-top: 25px;
-        }
-
-        div#users-contain {
-            width: 350px;
-            margin: 20px 0;
-        }
-
-            div#users-contain table {
-                margin: 1em 0;
-                border-collapse: collapse;
-                width: 100%;
-            }
-
-                div#users-contain table td,
-                div#users-contain table th {
-                    /*border: 1px solid #eee;*/
-                    padding: .6em 10px;
-                    text-align: left;
-                }
-
-        .ui-dialog .ui-state-error {
-            padding: .3em;
-            color: red;
-        }
-
-        .validateTips {
-            border: 1px solid transparent;
-            padding: 0.3em;
-        }
-    </style>
+    <link rel="stylesheet" href="~/css/global.css" />
+    <link rel="stylesheet" href="~/css/User/user.css" />
+    <link rel="stylesheet" href="~/css/User/listUser.css" />
+    <link rel="stylesheet" href="~/css/User/pagination.css" />
+    <link rel="stylesheet" href="~/css/Place/dialog.css" />
 }
 
-<div style="margin:50px 300px 100px;">
-    <div class="card" style="border: black solid 2px;">
-        <div class="card-header text-center bg-linear">
-            <div class="row align-items-center">
-                <div class="mx-auto pl-5">
-                    <i class="fa-solid fa-location-dot" style="font-size: 25px;"></i>
-                    <b style="font-size: 25px;">Quản lí địa điểm</b>
-                </div>
-                <div class="float-right">
-                    <a class="btn btn-primary float-right" style="color: white;" id="create-place" href="cs:;"
-                       role="button" title="Add">
-                        <i class="fa fa-plus" aria-hidden="true"></i> Thêm
-                    </a>
+<main>
+    <section class="main__top">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <div class="title__thin">
+                        <h1><b>Places List</b></h1>
+                    </div>
                 </div>
             </div>
         </div>
-        @*{{#if this.empty}}
-        <div class="card-body">
-            <p class="card-text">Không có dữ liệu.</p>
+    </section>
+    <section>
+        <div class="container">
+            <div class="row">
+                <form class="user__features" id="form-query">
+                    <div class="user__features__left">
+                        <div class="user__features__search">
+                            <input type="text"
+                                   placeholder="Search"
+                                   class="query-control search-box"
+                                   name="search"
+                                   style="font-size: 15px;"
+                                   value="@keySearch">
+                        </div>
+                        <button type="submit" class="search__icon btn-search" id="btn-submit">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 class="search__icon"
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="user__features__right">
+                        <span>Sort by:</span>
+                        <div class="user__features__sort">
+                            <select id="select-sort"
+                                    class="form-select query-control"
+                                    name="sort"
+                                    aria-label="Default select example">
+                                <option>Default sorting</option>
+                                <!option value="name"
+                                         @if (@keySort == "name") { @("selected") }>
+                                    name
+                                </!option>
+                                <!option value="numberStaff"
+                                         @if (@keySort == "numberStaff") { @("selected") }>
+                                    numberStaff
+                                </!option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row" style="display: flex; align-items: center; justify-content: center;">
+                <div class="add-user">
+                    <button type="button"
+                            class="btn btn-primary"
+                            onclick="javascript:;" id="create-place">
+                        <img src="~/img/add-icon.png" alt="Add icon" />
+                        <span>&nbsp;Add a new user</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Place name</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Number staff</th>
+                            <th scope="col">Options</th>
+                        </tr>
+                    </thead>
+                    @if (@ViewBag.search != null)
+                    {
+                        <tbody>
+                            @{int i = 1;}
+                            @foreach (var data in (List<Place>)@ViewData["searchOfPlace"])
+                            {
+                                <tr>
+                                    <th scope="row">@i</th>
+                                    @{i++;}
+                                    <td>@data.Name</td>
+                                    <td>@data.Address</td>
+                                    <td>@data.NumberStaff</td>
+                                    <td>
+                                        <div class="user__options__edit"
+                                             onclick="location.href='/Places/@data.Id/update'">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 width="24"
+                                                 height="24"
+                                                 viewBox="0 0 24 24">
+                                                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-5 17l1.006-4.036 3.106 3.105-4.112.931zm5.16-1.879l-3.202-3.202 5.841-5.919 3.201 3.2-5.84 5.921z"></path>
+                                            </svg>
+                                            <span>Edit place</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                            @if(i == 1)
+                            {
+                                <tr><th scope="row" style="color:red">No data!</th></tr>
+                            }
+                        </tbody>
+                    }
+                    else
+                    {
+                        <tbody id="result"></tbody>
+                    }
+                </table>
+            </div>
+            @if (@ViewBag.search == null)
+            {
+                <div class="row">
+                    <div class="col" style="display: flex; align-items: center; justify-content: center; width:100%">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <button class="page-link" id="prev-btn" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </button>
+                                </li>
+                                <li class="page-item">
+                                    <button class="page-link" id="next-btn" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            }
         </div>
-        {{else}}*@
-        <div class="card-body">
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">STT</th>
-                        <th scope="col">Tên địa điểm</th>
-                        <th scope="col">Địa chỉ</th>
-                        <th scope="col">Số lượng nhân viên</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @*{{#each this.places}}*@
-                    @*<tr>
-            <th scope="row">1{{Stt}}</th>
-            <td>{{NamePlace}}</td>
-            <td>{{Size}}</td>
-            <td style="padding-left: 100px">{{Amount}}</td>
-            <td class="text-right">
-                <a class="btn btn-primary" href="/admin/places/edit?id={{Id}}&&page={{../page}}" role="button" title="edit">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                </a>
-            </td>
-        </tr>*@
+    </section>
+</main>
 
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Vân Anh 1</td>
-                        <td>123 Hồ Hảo</td>
-                        <td style="padding-left: 100px">5</td>
-                        <td class="text-right">
-                            <a class="btn btn-primary" href="/admin/places/edit" role="button" title="edit">
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                            </a>
-                            <a class="btn btn-danger" href="/admin/places/edit" role="button" title="edit">
-                                <i class="fa fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
 
-                    @*{{/each}}*@
-                </tbody>
-            </table>
-        </div>
-        @*{{/if}}*@
-    </div>
-
-</div>
-<div id="dialog-form" title="Tạo địa điểm mới" style="display: none;">
-    <p class="validateTips">Điền các trường được yêu cầu</p>
+<div id="dialog-form" title="Add new place" style="display: none;">
+    <p class="validateTips">Fill in the required fields</p>
     <form method="POST">
         <fieldset>
             <label for="placeName">Place name</label>
             <input type="text" name="placeName" id="placeName" class="text ui-widget-content ui-corner-all" autofocus>
             <label for="text">Address</label>
-            <input type="text" name="text" id="text" class="text ui-widget-content ui-corner-all">
-            <label for="number_staff">Number staff</label>
-            <input type="number" name="number_staff" id="number_staff" class="text ui-widget-content ui-corner-all">
+            <input type="text" name="address" id="address" class="text ui-widget-content ui-corner-all" required>
             <!-- Allow form submission with keyboard without duplicating the dialog button -->
             <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
         </fieldset>

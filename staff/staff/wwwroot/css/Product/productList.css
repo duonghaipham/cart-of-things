@@ -1,0 +1,42 @@
+.main__top {
+  padding: 40px 330px;
+}
+
+.add-product {
+  text-align: center;
+  padding: 0px 0px 40px;
+}
+
+.add-product > button {
+  height: 60px;
+  width: 350px;
+  background-color: black;
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.product:hover:not(.buttons) {
+  cursor: default;
+}
+
+.product:hover .product__info h5 {
+  color: rgb(50, 30, 223);
+}
+
+.product .buttons {
+  opacity: 0;
+}
+
+.product:hover .buttons {
+  opacity: 1;
+}
+
+.buttons__edit-product,
+.buttons__remove-product {
+  cursor: pointer;
+  margin-bottom: 8px;
+  color: rgb(250, 105, 8);
+  font-size: 18px;
+  font-weight: 500;
+  padding-left: 50px;
+}

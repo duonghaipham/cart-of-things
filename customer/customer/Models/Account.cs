@@ -105,7 +105,9 @@ namespace customer.Models
                 Password = hashedPassword,
                 Avatar = DEFAULT_AVATAR,
                 Role = "customer",
-                IdentityCard = phone
+                IdentityCard = "",
+                Lock = 0,
+                VerifiedEmail = 0
             };
             
             _context.Accounts.Add(account);

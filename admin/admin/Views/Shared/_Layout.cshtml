@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,13 +30,6 @@
                 <a href="/SignOut"><i class="fa fa-sign-out" aria-hidden="true"style="padding-right:3px"></i>Sign out</a>
             </div>
         </div>
-        @*<% if (user) { %>
-            <div class="header__bottom">
-                <a href="/cakes" <% if (which == 'product') { %> class="active" <% } %>><div>Products List</div></a>
-                <a href="/users" <% if (which == 'user') { %> class="active" <% } %>><div>Users List</div></a>
-                <a href="/statistics" <% if (which == 'statistics') { %> class="active" <% } %>><div>Statistics</div></a>
-            </div>
-            <% } %>*@
         <div class="header__bottom">
             <a href="/Places" @if (@ViewBag.Active == "Places") {@("class=active")}><div>Places List</div></a>
             <a href="/Users" @if (@ViewBag.Active == "Users") {@("class=active")} ><div>Users List</div></a>
@@ -45,7 +37,7 @@
     </header>
 
     @RenderBody()
-    <footer style="background-image: url(~/img/footer-bg.jpg)">
+    <footer>
         <div class="footer__top">
             <div class="footer__top__left">
                 <h4>Working hours</h4>
@@ -54,7 +46,7 @@
                 <span>Sunday: 10:00 am - 16:30 pm</span>
             </div>
             <div class="footer__top__mid">
-                <img src="~/img/footer-logo.png" alt="footer-logo" />
+                <img src="~/img/logo.png" alt="footer-logo" />
                 <p>
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi
                     quasi excepturi obcaecati nobis deserunt. In maxime veritatis vero

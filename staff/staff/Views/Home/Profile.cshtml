@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Profile";
+    Account profile = (Account)ViewData["Profile"];
+}
+@section Scripts {
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function readURL_user(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#user-big-image")
+                        .attr("src", e.target.result)
+                        .width(150)
+                        .height(150);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}
+@section Css {
+    <link rel="stylesheet" href="~/css/global.css" />
+    <link rel="stylesheet" href="~/css/profile.css" />
+}
+<main class="profile-admin">
+    <section>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="profile">
+                    <div class="profile-image">
+                        <img height="200"
+                             width="200"
+                             src="@profile.Avatar"
+                             alt="PROFILE IMAGE" />
+                    </div>
+                    <div class="info">
+                        <div class="name">
+                            <span class="field-title">Name:</span>
+                            <span class="field-value">@profile.Name</span>
+                        </div>
+                        <div class="identityCard">
+                            <span class="field-title">IdentityCard:</span>
+                            <span class="field-value">@profile.IdentityCard</span>
+                        </div>
+                        <div class="role">
+                            <span class="field-title">Role:</span>
+                            <span class="field-value">staff</span>
+                        </div>
+                        <div class="email">
+                            <span class="field-title">Email:</span>
+                            <span class="field-value">@profile.Email</span>
+                        </div>
+                        <div class="update">
+                            <button class="btn btn-primary"
+                                    onclick="location.href = '/Customers/@profile.Id/Update'">
+                                EDIT PROFILE
+                            </button>
+
+                            <button class="btn btn-primary"
+                                    onclick="location.href = '/@profile.Id/ChangePass'">
+                                Change Pass
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

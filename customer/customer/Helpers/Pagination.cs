@@ -11,7 +11,7 @@ namespace customer.Helpers
         public int Max { get; set; }
         public int End { get; set; }
         
-        public static int ITEM_PER_PAGE = 8;
+        public static int ITEM_PER_PAGE = 3;
         public static int PAGE_PER_PAGINATION = 5;
 
         public Pagination(int numObjects, int page)

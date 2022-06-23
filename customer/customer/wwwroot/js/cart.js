@@ -297,4 +297,6 @@ const checkout = () => {
 
 checkout();
 onLoadCartNumbers();
-displayCart();
+if (document.title === 'Cart') {
+    displayCart();
+}
