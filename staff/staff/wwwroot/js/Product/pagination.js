@@ -68,7 +68,7 @@
                                     </div>
                                     <div class="product__info">
                                         <h5>${data.Name}</h5>
-                                        <h5 style="font-size:large; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; ">$ 15</h5>
+                                        <h5 style="font-size:large; font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; ">$ ${data.Price}</h5>
                                     </div>
                                     <div class="buttons">
                                         <div class="buttons__edit-product" onclick="location.href = '/products/${data.Id}/update'">

@@ -23,6 +23,7 @@
             body: JSON.stringify(data)
         })
         const result = await response.json()
+        //console.log(result)
         if (result.msg == "successed")
             window.location.href = '/Customers'
         else

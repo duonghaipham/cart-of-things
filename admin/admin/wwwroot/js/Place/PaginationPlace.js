@@ -69,14 +69,14 @@
                                     <td>${data.NumberStaff}</td>
                                     <td>
                                         <div class="user__options__edit"
-                                             onclick="location.href='/Users/${data.Id}/update'">
+                                             onclick="location.href='/Places/${data.Id}/update'">
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                  width="24"
                                                  height="24"
                                                  viewBox="0 0 24 24">
                                                 <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-5 17l1.006-4.036 3.106 3.105-4.112.931zm5.16-1.879l-3.202-3.202 5.841-5.919 3.201 3.2-5.84 5.921z"></path>
                                             </svg>
-                                            <span>Edit user</span>
+                                            <span>Edit place</span>
                                         </div>
                                     </td>
                                   </tr>`;

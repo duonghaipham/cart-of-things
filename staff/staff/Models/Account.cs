@@ -123,7 +123,7 @@ namespace staff.Models
         {
             Account account = context.Accounts
                                    .Where(a => a.Email == email && a.Role == "staff").SingleOrDefault();
-
+            //System.Diagnostics.Debug.WriteLine(account);
             if (account == null)
                 return JsonConvert.SerializeObject(new { Error = "Account not found" });
 

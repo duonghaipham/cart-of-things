@@ -7,6 +7,6 @@ namespace staff.Helpers
 {
     public class Pagination
     {
-        public static int ITEM_PER_PAGE = 2;
+        public static int ITEM_PER_PAGE = 3;
     }
 }

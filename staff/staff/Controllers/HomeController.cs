@@ -56,6 +56,7 @@ namespace staff.Controllers
             if (lockVal == 1)
                 return Json(new
                 {
+                    user = jsonAccount,
                     msg = "failed",
                     error = "Your account is locked. Please contact your administrator."
                 });

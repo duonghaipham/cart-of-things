@@ -58,7 +58,7 @@ namespace admin.Models
         {
             var staff = (from a in context.Accounts
                               join p in context.Places on a.IdPlace equals p.Id
-                              where EF.Functions.Like(a.Name, $"%{search}%") || EF.Functions.Like(a.IdentityCard, $"%{search}%")
+                              where (EF.Functions.Like(a.Name, $"%{search}%") || EF.Functions.Like(a.IdentityCard, $"%{search}%")) && a.Role == "staff"
                               select new
                               {
                                   Id = a.Id,

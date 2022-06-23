@@ -30,7 +30,7 @@ namespace staff.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=Shop;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=Shop;Trusted_Connection=True;MultipleActiveResultSets=true");
             }
         }
 

@@ -24,7 +24,7 @@ namespace admin.Controllers
 
         public IActionResult Index()
         {
-            return Redirect("/Places");
+            return Redirect("/Signin");
         }
 
         public IActionResult Privacy()

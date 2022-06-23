@@ -11,9 +11,16 @@
     @RenderSection("Css", required: false)
 </head>
 <body>
-
+    <header>
+        <div class="header__top" style="display: flex; align-items: center; justify-content: center; width:100%">
+            <div class="header__top__mid">
+                <img src="/img/logo.png" alt="logo" />
+            </div>
+            
+        </div>
+    </header>
     @RenderBody()
-    <footer style="background-image: url(/img/footer-bg.jpg)">
+    <footer>
         <div class="footer__top">
             <div class="footer__top__left">
                 <h4>Working hours</h4>
